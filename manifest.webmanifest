@@ -1,0 +1,19 @@
+{
+  "name": "English Quest \u2014 Learn English",
+  "short_name": "English Quest",
+  "description": "Your personal English learning journey from A1 to C2.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f7fb",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
