@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#18243a">
+<title>English Quest</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#18243a;--muted:#657089;--accent:#6658d3;--accent2:#e9e6ff;--good:#18794e;--bad:#b42318;--line:#e2e6ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:11px 15px;background:var(--accent);color:white;font-weight:650}button.secondary{background:#eef0f7;color:var(--ink)}button.ghost{background:transparent;color:var(--accent);padding:8px}button:disabled{opacity:.45;cursor:not-allowed}.app{max-width:920px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 20px}.brand{font-size:1.25rem;font-weight:850;letter-spacing:-.03em}.brand span{color:var(--accent)}.pill{font-size:.8rem;background:var(--accent2);color:var(--accent);padding:5px 10px;border-radius:999px;font-weight:700}.hero{background:linear-gradient(135deg,#242c53,#6658d3);color:white;border-radius:24px;padding:25px;margin-bottom:18px}.hero h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.08;margin:10px 0}.hero p{max-width:580px;color:#eeedff}.hero .pill{background:#ffffff26;color:white}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}.card h2,.card h3{margin:0 0 8px}.muted{color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.stat{background:#ffffff18;border-radius:14px;padding:12px}.stat strong{display:block;font-size:1.4rem}.nav{display:flex;gap:8px;overflow:auto;padding:2px 0 12px;margin-bottom:8px}.nav button{white-space:nowrap}.nav button.active{background:var(--ink)}.view{display:none}.view.active{display:block}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.progress{height:9px;background:#e9eaf3;border-radius:99px;overflow:hidden;margin:10px 0}.progress div{height:100%;background:var(--accent);width:0;transition:width .2s}.choice-list{display:grid;gap:10px;margin:18px 0}.choice{width:100%;text-align:left;background:#f7f8fc;color:var(--ink);border:1px solid var(--line)}.choice.correct{background:#e8f7ef;border-color:#8dd3ae;color:#145c39}.choice.wrong{background:#fff0ef;border-color:#f2aaa4;color:#8e2019}.bigword{font-size:clamp(2rem,7vw,3rem);font-weight:850;letter-spacing:-.04em;margin:14px 0}.feedback{padding:12px;border-radius:12px;margin:12px 0;background:#f1f2f8}.feedback.good{background:#e8f7ef;color:#145c39}.feedback.bad{background:#fff0ef;color:#8e2019}.wordbank{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.wordbank button{background:#f0efff;color:#3d348b;border:1px solid #d9d4ff}.wordbank button:disabled{opacity:.35}.answerline{min-height:52px;border:2px dashed #c7c9dc;border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;gap:7px}.answerline button{background:#dff5e9;color:#145c39}.listitem{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}.small{font-size:.9rem}.flash{min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#f0efff;border-radius:18px;padding:24px;margin:14px 0}.flash .bigword{margin:6px}.footer{text-align:center;color:var(--muted);font-size:.82rem;padding:20px 0 8px}@media(max-width:600px){.app{padding:13px}.hero{padding:20px}.grid{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:9px}.card{padding:15px}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top"><div class="brand">✦ English <span>Quest</span></div><div class="pill">Beginner · A1</div></header>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-view="home">Home</button><button data-view="path">Learning path</button><button data-view="games">Games</button><button data-view="review">Review</button><button data-view="progress">Progress</button>
+  </nav>
+
+  <section id="home" class="view active">
+    <div class="hero"><div class="pill">YOUR DAILY QUEST · 20 MIN</div><h1>Small steps.<br>Real progress.</h1><p>Build your English, one useful phrase at a time. Practise a little every day and keep your streak going.</p><div class="stats"><div class="stat"><strong id="homeXp">0</strong><span class="small">XP earned</span></div><div class="stat"><strong id="homeWords">0</strong><span class="small">Words reviewed</span></div><div class="stat"><strong id="homeDays">0</strong><span class="small">Study days</span></div></div><button onclick="startLesson()">Continue learning →</button></div>
+    <div class="grid">
+      <div class="card"><h3>📚 Today's lesson</h3><p class="muted">Greetings and introductions</p><div class="progress"><div id="lessonBar"></div></div><button class="secondary" onclick="startLesson()">Start lesson</button></div>
+      <div class="card"><h3>🎯 Quick challenge</h3><p class="muted">Test what you know with a short quiz.</p><button class="secondary" onclick="startQuiz()">Play Quest Quiz</button></div>
+    </div>
+  </section>
+
+  <section id="path" class="view">
+    <div class="card"><h2>Your learning path</h2><p class="muted">Complete each quest to build a strong foundation.</p><div id="unitList"></div></div>
+  </section>
+
+  <section id="games" class="view">
+    <div class="card"><h2>Choose a game</h2><p class="muted">Short practice sessions help you remember what you learn.</p><div class="grid">
+      <div class="card"><h3>🧩 Word Match</h3><p class="muted">Connect English words with their meanings.</p><button onclick="startMatch()">Play Word Match</button></div>
+      <div class="card"><h3>🔤 Sentence Builder</h3><p class="muted">Put the words in the correct order.</p><button onclick="startBuilder()">Build a sentence</button></div>
+      <div class="card"><h3>⚡ Quest Quiz</h3><p class="muted">Answer questions and read the explanations.</p><button onclick="startQuiz()">Start quiz</button></div>
+      <div class="card"><h3>🗂️ Flashcards</h3><p class="muted">Flip cards to practise vocabulary.</p><button onclick="go('review')">Open flashcards</button></div>
+    </div></div>
+  </section>
+
+  <section id="lesson" class="view"><div class="card"><button class="ghost" onclick="go('path')">← Learning path</button><div class="pill">LESSON 1</div><h2>Meeting people</h2><p class="muted">Learn these essential greetings.</p><div id="lessonContent"></div><div class="actions"><button onclick="lessonNext()">Next phrase →</button></div></div></section>
+  <section id="match" class="view"><div class="card"><button class="ghost" onclick="go('games')">← Games</button><h2>Word Match</h2><p class="muted">Choose an English word, then choose its meaning.</p><div id="matchContent"></div></div></section>
+  <section id="builder" class="view"><div class="card"><button class="ghost" onclick="go('games')">← Games</button><h2>Sentence Builder</h2><p class="muted">Tap the words in the right order.</p><div id="builderContent"></div></div></section>
+  <section id="quiz" class="view"><div class="card"><button class="ghost" onclick="go('games')">← Games</button><h2>Quest Quiz</h2><div id="quizContent"></div></div></section>
+  <section id="review" class="view"><div class="card"><h2>Flashcards & review</h2><p class="muted">Try to remember the meaning before revealing the answer.</p><div class="flash" id="flashcard"></div><div class="actions"><button class="secondary" onclick="flipCard()">Reveal meaning</button><button onclick="nextCard()">Next card →</button></div><div id="reviewNote" class="muted small"></div></div></section>
+  <section id="progress" class="view"><div class="card"><h2>Your progress</h2><p class="muted">Your progress is saved in this browser on this device.</p><div class="stats"><div class="stat" style="background:#f0efff"><strong id="pXp">0</strong><span class="small">XP</span></div><div class="stat" style="background:#f0efff"><strong id="pCorrect">0</strong><span class="small">Correct answers</span></div><div class="stat" style="background:#f0efff"><strong id="pMinutes">0</strong><span class="small">Practice actions</span></div></div><h3>Lesson progress</h3><div class="progress"><div id="pBar"></div></div><p id="pSummary" class="muted"></p><button class="secondary" onclick="resetProgress()">Reset progress</button></div></section>
+  <div class="footer">English Quest · Practise a little every day ✦</div>
+</div>
+<script>
+const vocab=[
+ {en:"Hello",es:"Hola",example:"Hello! My name is Alex."},
+ {en:"Good morning",es:"Buenos días",example:"Good morning, teacher."},
+ {en:"Goodbye",es:"Adiós",example:"Goodbye! See you tomorrow."},
+ {en:"Please",es:"Por favor",example:"Water, please."},
+ {en:"Thank you",es:"Gracias",example:"Thank you for your help."},
+ {en:"Sorry",es:"Lo siento / Perdón",example:"Sorry, I am late."},
+ {en:"Name",es:"Nombre",example:"What is your name?"},
+ {en:"Friend",es:"Amigo/a",example:"She is my friend."},
+ {en:"Yes",es:"Sí",example:"Yes, I understand."},
+ {en:"No",es:"No",example:"No, thank you."}
+];
+const questions=[
+ {q:"How do you say “Hola” in English?",opts:["Hello","Goodbye","Sorry"],a:"Hello",why:"“Hello” is a common greeting. You can use it at any time of day."},
+ {q:"What does “Thank you” mean?",opts:["Por favor","Gracias","Adiós"],a:"Gracias",why:"Use “Thank you” to show gratitude."},
+ {q:"Complete: “Good ___” (Buenos días)",opts:["night","morning","bye"],a:"morning",why:"“Good morning” means “Buenos días” and is used in the morning."},
+ {q:"Which phrase is polite when asking for something?",opts:["Please","No","Goodbye"],a:"Please",why:"“Please” makes a request more polite."},
+ {q:"“What is your name?” asks for your…",opts:["friend","name","morning"],a:"name",why:"The question asks what someone is called."}
+];
+const sentences=[
+ {target:["I","am","happy"],meaning:"Estoy feliz.",pool:["happy","I","am","good"]},
+ {target:["My","name","is","Alex"],meaning:"Mi nombre es Alex.",pool:["Alex","name","My","is","hello"]},
+ {target:["Thank","you","very","much"],meaning:"Muchas gracias.",pool:["much","Thank","very","you","please"]}
+];
+const units=["Greetings & introductions","Everyday phrases","Numbers & time","Food & ordering","Travel basics","Daily routines","Conversation practice"];
+let state={xp:0,correct:0,actions:0,completed:[],reviewed:[],days:[],lastDate:"",unit:0};
+try{const saved=JSON.parse(localStorage.getItem("englishQuestProgress")||"null");if(saved)state={...state,...saved}}catch(e){}
+function save(){try{localStorage.setItem("englishQuestProgress",JSON.stringify(state))}catch(e){}}
+function record(xp=1,correct=false){state.xp+=xp;state.actions++;if(correct)state.correct++;const today=new Date().toISOString().slice(0,10);if(!state.days.includes(today))state.days.push(today);state.lastDate=today;save();refresh()}
+function go(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));if(id==="path")renderPath();if(id==="review")renderCard();if(id==="progress")refresh();window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.view)));
+function refresh(){document.getElementById("homeXp").textContent=state.xp;document.getElementById("homeWords").textContent=state.reviewed.length;document.getElementById("homeDays").textContent=state.days.length;document.getElementById("pXp").textContent=state.xp;document.getElementById("pCorrect").textContent=state.correct;document.getElementById("pMinutes").textContent=state.actions;const pct=Math.min(100,state.completed.length/units.length*100);document.getElementById("lessonBar").style.width=pct+"%";document.getElementById("pBar").style.width=pct+"%";document.getElementById("pSummary").textContent=state.completed.length+" of "+units.length+" learning quests completed. Keep going!";renderPath()}
+function renderPath(){const box=document.getElementById("unitList");if(!box)return;box.innerHTML=units.map((u,i)=>`<div class="listitem"><div><strong>${i+1}. ${u}</strong><div class="muted small">${state.completed.includes(i)?"Completed ✓":i===0?"Ready to start":"Keep practising to unlock more"}</div></div><button class="${state.completed.includes(i)?"secondary":""}" onclick="openUnit(${i})">${state.completed.includes(i)?"Review":i===0||state.completed.includes(i-1)?"Start":"Locked"}</button></div>`).join("")}
+function openUnit(i){if(i>0&&!state.completed.includes(i-1)){alert("Complete the previous quest first.");return}state.unit=i;if(i===0)startLesson();else{alert("This quest is coming soon. Practise the games and review the vocabulary for now.");go("games")}}
+const lessonPhrases=[["Hello!","¡Hola!","Say “Hello” to greet someone."],["My name is Alex.","Mi nombre es Alex.","Use “My name is…” to introduce yourself."],["What is your name?","¿Cómo te llamas?","Ask this when you want to know someone's name."],["Nice to meet you.","Mucho gusto.","Say this when you meet someone for the first time."],["Goodbye!","¡Adiós!","Use “Goodbye” when leaving."]];
+let li=0;function startLesson(){li=0;renderLesson();go("lesson")}
+function renderLesson(){const p=lessonPhrases[li];document.getElementById("lessonContent").innerHTML=`<div class="bigword">${p[0]}</div><p>${p[1]}</p><div class="feedback">${p[2]}</div><p class="muted small">Phrase ${li+1} of ${lessonPhrases.length}</p>`;document.querySelector("#lesson .actions button").textContent=li===lessonPhrases.length-1?"Complete lesson ✓":"Next phrase →"}
+function lessonNext(){record(2);if(li<lessonPhrases.length-1){li++;renderLesson()}else{if(!state.completed.includes(0))state.completed.push(0);save();refresh();alert("Quest complete! You earned XP. Great work!");go("path")}}
+let matchState={selected:null,matched:[],options:[]};function startMatch(){matchState={selected:null,matched:[],options:vocab.slice(0,5).sort(()=>Math.random()-.5)};renderMatch();go("match")}
+function renderMatch(){const s=matchState;const es=[...s.options].sort(()=>Math.random()-.5);document.getElementById("matchContent").innerHTML=`<div class="grid"><div><h3>English</h3>${s.options.map(w=>`<button class="choice ${s.matched.includes(w.en)?"correct":""}" ${s.matched.includes(w.en)?"disabled":""} onclick="pickEnglish('${w.en.replace(/'/g,"\\'")}')">${w.en}</button>`).join("")}</div><div><h3>Spanish</h3>${es.map(w=>`<button class="choice" onclick="pickSpanish('${w.en.replace(/'/g,"\\'")}')">${w.es}</button>`).join("")}</div></div><p id="matchMsg" class="muted">${s.matched.length} of ${s.options.length} matched</p><button onclick="startMatch()">New round</button>`}
+function pickEnglish(en){matchState.selected=en;document.getElementById("matchMsg").textContent="Now choose the Spanish meaning for “"+en+"”."}
+function pickSpanish(en){if(!matchState.selected){document.getElementById("matchMsg").textContent="Choose an English word first.";return}const ok=matchState.selected===en;if(ok){if(!matchState.matched.includes(en))matchState.matched.push(en);record(2,true);document.getElementById("matchMsg").textContent="Correct! "+matchState.matched.length+" of "+matchState.options.length+" matched."}else{record(0,false);document.getElementById("matchMsg").textContent="Not quite—try matching the meanings again."}matchState.selected=null;renderMatch();if(matchState.matched.length===matchState.options.length){document.getElementById("matchMsg").textContent="Excellent! All words matched. +XP earned.";}}
+let bi=0,chosen=[];function startBuilder(){bi=Math.floor(Math.random()*sentences.length);chosen=[];renderBuilder();go("builder")}
+function renderBuilder(){const s=sentences[bi];const remaining=s.pool.filter((w,i)=>{let used=chosen.filter(x=>x===w).length;let total=s.pool.filter(x=>x===w).length;return used<total});document.getElementById("builderContent").innerHTML=`<div class="feedback">${s.meaning}</div><div class="answerline">${chosen.map((w,i)=>`<button onclick="removeWord(${i})">${w} ×</button>`).join("")||'<span class="muted">Your sentence will appear here…</span>'}</div><div class="wordbank">${remaining.sort(()=>Math.random()-.5).map(w=>`<button onclick="addWord('${w}')">${w}</button>`).join("")}</div><div class="actions"><button onclick="checkSentence()">Check sentence</button><button class="secondary" onclick="startBuilder()">New sentence</button><button class="ghost" onclick="chosen=[];renderBuilder()">Clear</button></div><div id="builderMsg"></div>`}
+function addWord(w){chosen.push(w);renderBuilder()}function removeWord(i){chosen.splice(i,1);renderBuilder()}
+function checkSentence(){const target=sentences[bi].target;const ok=chosen.join(" ")===target.join(" ");const box=document.getElementById("builderMsg");box.className="feedback "+(ok?"good":"bad");box.textContent=ok?"Correct! "+chosen.join(" ")+" ✓":"Not yet. Hint: start with “"+target[0]+"”.";record(ok?4:0,ok);if(ok)box.innerHTML+=" <button onclick='startBuilder()'>Next sentence</button>"}
+let qi=0,qscore=0,qanswered=false;function startQuiz(){qi=0;qscore=0;qanswered=false;renderQuiz();go("quiz")}
+function renderQuiz(){const box=document.getElementById("quizContent");if(qi>=questions.length){box.innerHTML=`<div class="pill">QUIZ COMPLETE</div><h3>You scored ${qscore} / ${questions.length}</h3><p>${qscore===questions.length?"Perfect score! Excellent work.":"Good effort! Review the explanations and try again."}</p><button onclick="startQuiz()">Try again</button>`;return}const q=questions[qi];box.innerHTML=`<p class="muted small">QUESTION ${qi+1} OF ${questions.length}</p><div class="progress"><div style="width:${qi/questions.length*100}%"></div></div><h3>${q.q}</h3><div class="choice-list">${q.opts.map(o=>`<button class="choice" onclick="answerQuiz(this,'${o.replace(/'/g,"\\'")}')">${o}</button>`).join("")}</div><div id="quizFeedback"></div><div class="actions"><button id="quizNext" style="display:none" onclick="nextQuestion()">Next question →</button></div>`}
+function answerQuiz(btn,opt){if(qanswered)return;qanswered=true;const q=questions[qi],ok=opt===q.a;document.querySelectorAll("#quizContent .choice").forEach(b=>{b.disabled=true;if(b.textContent===q.a)b.classList.add("correct")});if(!ok)btn.classList.add("wrong");if(ok)qscore++;record(ok?3:0,ok);const f=document.getElementById("quizFeedback");f.className="feedback "+(ok?"good":"bad");f.textContent=(ok?"Correct! ":"Not quite. The answer is “"+q.a+"”. ")+q.why;document.getElementById("quizNext").style.display="inline-block"}
+function nextQuestion(){qi++;qanswered=false;if(qi>=questions.length){if(!state.completed.includes(0))state.completed.push(0);save();refresh()}renderQuiz()}
+let ci=0,revealed=false;function renderCard(){const w=vocab[ci%vocab.length];document.getElementById("flashcard").innerHTML=`<div class="pill">FLASHCARD ${ci+1} / ${vocab.length}</div><div class="bigword">${w.en}</div><div>${revealed?w.es:"Think of the meaning, then reveal it."}</div><p class="muted small">${revealed?w.example:"Tap “Reveal meaning” when ready."}</p>`;document.getElementById("reviewNote").textContent=state.reviewed.length+" vocabulary words reviewed so far."}
+function flipCard(){revealed=true;const en=vocab[ci%vocab.length].en;if(!state.reviewed.includes(en))state.reviewed.push(en);record(1);renderCard()}
+function nextCard(){ci=(ci+1)%vocab.length;revealed=false;renderCard()}
+function resetProgress(){if(confirm("Reset all English Quest progress on this device?")){state={xp:0,correct:0,actions:0,completed:[],reviewed:[],days:[],lastDate:"",unit:0};save();refresh();renderCard()}}
+refresh();renderCard();
+</script>
+</body>
+</html>
