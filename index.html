@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>English Quest — Aprende inglés a tu ritmo</title>
+<title>English Quest — Tu aventura en inglés</title>
 <meta name="description" content="Practica inglés con lecciones, vocabulario, juegos y seguimiento de progreso desde A1 hasta C2.">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
 <meta name="theme-color" content="#050816">
@@ -243,7 +243,53 @@ nav button.on span{opacity:1;filter:none!important}
 @media(max-width:420px){main{padding-left:13px;padding-right:13px}.tb{padding-left:13px;padding-right:13px}.card{padding:14px}.hero{padding:20px}.fab{width:54px;height:54px;right:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-</style></head><body>
+</style>
+<style id="quest-adventure-redesign">
+:root{--bg:#f5f7ff;--card:#fff;--ink:#202447;--mut:#747b9d;--p:#7657e8;--p2:#5540c8;--mint:#e1faed;--ok:#16a66a;--bad:#e34f72;--line:#e3e7f5;--ib:#f0efff}
+:root[data-t=dark]{--bg:#111329;--card:#1b1e3c;--ink:#f7f5ff;--mut:#a6aac8;--p:#9278ff;--p2:#6d55e8;--mint:#183d36;--ok:#48d7a0;--bad:#ff7898;--line:#303354;--ib:#292b50}
+body{font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;background:radial-gradient(ellipse at 15% 0%,rgba(169,151,255,.18),transparent 38%),var(--bg)}
+#v{padding-top:14px}
+h2{font-size:23px;letter-spacing:-.5px}
+.card,.glass,.hero,.adaptive-hero{border-radius:24px;box-shadow:0 7px 0 color-mix(in srgb,var(--line) 65%,transparent);border:2px solid var(--line)}
+.card{padding:18px}
+.btn,button.btn{border-radius:17px;box-shadow:0 4px 0 color-mix(in srgb,var(--p2) 70%,transparent);transition:transform .15s,filter .15s}
+button.btn:active,.game:active,.chip:active{transform:translateY(2px) scale(.99);box-shadow:none}
+button:focus-visible{outline:3px solid #ffbf47;outline-offset:3px}
+.chip{border-width:2px;border-radius:15px;padding:9px 15px}
+.chip.on{background:#7657e8;color:#fff;border-color:#7657e8}
+.game{border-width:2px;border-radius:22px;box-shadow:0 5px 0 var(--line);transition:transform .15s}
+.game span{font-size:32px}
+.opt{border-radius:17px;border-width:2px}
+nav{background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(14px);border-top:2px solid var(--line);padding-top:9px}
+nav button{border-radius:15px;margin:0 2px}
+nav button.on{background:color-mix(in srgb,var(--p) 12%,var(--card));color:var(--p)}
+nav span{font-size:23px}
+.tb{padding:8px 12px}
+.ib{border-radius:16px}
+.quest-map{position:relative;overflow:hidden;padding:18px;margin:12px 0 18px;border-radius:26px;background:linear-gradient(145deg,#e7f9e9,#e9e5ff 72%,#ffe9f0);color:#25254d;border:2px solid rgba(255,255,255,.8);box-shadow:0 6px 0 #d7d4f0}
+:root[data-t=dark] .quest-map{background:linear-gradient(145deg,#254b48,#34305f 72%,#543149);color:#fff;border-color:#46416d;box-shadow:0 6px 0 #292747}
+.quest-map-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.quest-map-head h3{margin:0;font-size:18px}
+.quest-map-head p{margin:4px 0 0;font-size:12px;opacity:.76}
+.pip{display:flex;align-items:center;gap:12px;padding:12px;margin:14px 0 16px;border-radius:19px;background:rgba(255,255,255,.58)}
+:root[data-t=dark] .pip{background:rgba(0,0,0,.2)}
+.pip-face{display:grid;place-items:center;flex:none;width:60px;height:60px;border-radius:20px;background:#ffd66b;font-size:36px;box-shadow:inset 0 -4px 0 #e6ac48;animation:pip-bob 3s ease-in-out infinite}
+.pip strong{display:block;font-size:14px}
+.pip small{display:block;line-height:1.4;margin-top:3px;opacity:.8}
+.quest-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;position:relative}
+.quest-node{min-width:0;min-height:88px;border:0;border-radius:19px;padding:10px 5px;color:#28244f;background:rgba(255,255,255,.76);font:inherit;font-weight:800;box-shadow:0 4px 0 rgba(72,61,140,.18);cursor:pointer}
+:root[data-t=dark] .quest-node{color:#fff;background:rgba(255,255,255,.12)}
+.quest-node span{display:block;font-size:26px;margin-bottom:3px}
+.quest-node small{display:block;font-size:11px;opacity:.8}
+.quest-node.current{background:#7657e8;color:#fff;transform:translateY(-3px);box-shadow:0 6px 0 #4f39b4}
+.quest-node.done{background:#c7f5d9;color:#24533a}
+:root[data-t=dark] .quest-node.done{background:#245344;color:#d9ffea}
+.quest-map-foot{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;margin-top:14px;opacity:.82}
+@keyframes pip-bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
+@media(min-width:600px){main{padding:22px}.quest-map{padding:22px}.quest-node{min-height:96px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head><body>
 <div class="tb"><span class="ib pillb">🔥 <b id="sk">0</b></span><button class="ib" data-v="profile" aria-label="Perfil">🏅</button><button class="ib" id="th" aria-label="Tema">🌓</button></div>
 <main id="v"></main>
 <button class="fab" data-g="les" aria-label="Lección diaria">▶</button>
@@ -851,4 +897,32 @@ hud();go("home");
 })();
 </script>
 
+<script id="quest-adventure-map">
+(()=>{
+ const originalHome=window.home;
+ if(typeof originalHome!=='function')return;
+ const levels=['A1','A2','B1','B2','C1','C2'];
+ const emoji={A1:'🌱',A2:'🧭',B1:'🏕️',B2:'🚀',C1:'🏰',C2:'👑'};
+ window.home=function(){
+   originalHome();
+   const heading=[...document.querySelectorAll('#v h2')].find(x=>x.textContent.includes('Inicio'));
+   if(!heading||document.querySelector('#quest-adventure-map-ui'))return;
+   const map=document.createElement('section');
+   map.className='quest-map';map.id='quest-adventure-map-ui';
+   const current=levels.indexOf(S.base||S.lvl||'A1');
+   map.innerHTML=`<div class="quest-map-head"><div><h3>🗺️ Tu ruta de aventura</h3><p>Un paso pequeño cada día te lleva más lejos.</p></div><span style="font-size:26px">✨</span></div>
+    <div class="pip"><div class="pip-face" aria-label="Pip, tu compañero">🦊</div><div><strong>¡Hey, explorador!</strong><small>Soy Pip. ¿Listo para desbloquear nuevas palabras? ¡Vamos a por la siguiente misión!</small></div></div>
+    <div class="quest-path">${levels.map((l,i)=>`<button class="quest-node ${i===current?'current':i<current?'done':''}" data-quest-level="${l}" aria-label="Explorar nivel ${l}"><span>${i<current?'⭐':emoji[l]}</span>${l}<small>${i<current?'¡Completado!':i===current?'Tu aventura':'Próxima zona'}</small></button>`).join('')}</div>
+    <div class="quest-map-foot"><span>🎯 Meta de hoy: 20 XP</span><span>🏆 Nivel ${Math.floor((S.xp||0)/100)+1}</span></div>`;
+   heading.insertAdjacentElement('afterend',map);
+ };
+ document.addEventListener('click',e=>{
+   const b=e.target.closest('[data-quest-level]');if(!b)return;
+   const level=b.dataset.questLevel;
+   S.lvl=level;try{localStorage.setItem('eq',JSON.stringify(S))}catch(_){}
+   if(typeof toast==='function')toast('🗺️ Zona '+level+' seleccionada');
+   if(typeof home==='function')home();
+ },true);
+})();
+</script>
 </body></html>

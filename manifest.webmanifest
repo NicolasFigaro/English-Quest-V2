@@ -1,6 +1,6 @@
 {
   "id": "./",
-  "name": "English Quest — Game Premium",
+  "name": "English Quest — Aventura en inglés",
   "short_name": "English Quest",
   "description": "Aprende inglés con lecciones, juegos, progreso y recompensas desde A1 hasta C2.",
   "lang": "es",
@@ -8,8 +8,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#090b18",
-  "theme_color": "#090b18",
+  "background_color": "#f5f7ff",
+  "theme_color": "#f5f7ff",
   "icons": [
     {
       "src": "./icon.svg",

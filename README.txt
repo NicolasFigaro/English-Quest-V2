@@ -1,10 +1,10 @@
-ENGLISH QUEST — GAME PREMIUM
+ENGLISH QUEST — AVENTURA
 Paquete listo para GitHub Pages.
 
 ARCHIVOS
 - index.html: aplicación completa (HTML, CSS y JavaScript).
 - manifest.webmanifest: configuración de instalación tipo app (PWA).
-- sw.js: caché offline; versión v4 para actualizar instalaciones anteriores.
+- sw.js: caché offline; versión v5 para actualizar instalaciones anteriores.
 - icon.svg: icono de la app.
 
 PUBLICAR EN GITHUB PAGES
@@ -15,7 +15,7 @@ PUBLICAR EN GITHUB PAGES
 5. Abre la URL con HTTPS y recarga. Si la app estaba instalada, ciérrala y vuelve a abrirla para que se actualice el service worker.
 
 REDISEÑO
-- Dirección visual game premium: gradientes índigo/violeta, acentos dorados/cian, tarjetas con profundidad y estados interactivos.
+- Dirección visual estilo aventura: mapa A1–C2, compañero Pip, botones redondeados, tarjetas más juguetonas y navegación móvil.
 - Selector de tema claro/oscuro, persistido con el progreso.
 - Animación de recompensa con XP y confeti; efecto de subida de nivel.
 - Transiciones de pantalla, navegación inferior adaptada a móviles, estados de foco accesibles y soporte para reducir movimiento.
