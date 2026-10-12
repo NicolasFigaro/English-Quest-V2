@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>English Quest</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
 <meta name="theme-color" content="#050816">
@@ -79,11 +79,49 @@ main>*{animation:up .35s both}@keyframes up{from{opacity:0;transform:translateY(
 nav{backdrop-filter:blur(14px);border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.18)}nav button{font-size:10px}nav button.on{position:relative}nav button.on::after{content:"";position:absolute;left:30%;right:30%;top:-6px;height:3px;border-radius:3px;background:var(--p)}
 .gf{font:600 14px ui-monospace,monospace;background:var(--mint);border-radius:10px;padding:8px 10px;margin:8px 0}.bad2{color:var(--bad);text-decoration:line-through;font-weight:600}
 header,.hero{box-shadow:0 12px 36px rgba(109,93,246,.35)}
+
+/* English Quest · responsive polish */
+:root{color-scheme:dark;--safe-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-t=light]{color-scheme:light}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overscroll-behavior-y:contain}
+body{padding-bottom:calc(84px + var(--safe-bottom));-webkit-tap-highlight-color:transparent;overscroll-behavior-y:contain}
+button,input,select,textarea{font:inherit;touch-action:manipulation}
+button{min-height:42px}
+.tb{position:sticky;top:0;z-index:8;display:flex;justify-content:flex-end;gap:8px;max-width:560px;margin:0 auto;padding:10px 16px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.tb .pillb{margin-right:auto;display:flex;align-items:center;gap:5px}
+main{min-height:60vh;padding-top:12px;padding-bottom:30px}
+nav{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-left:5px;padding-right:5px;padding-bottom:calc(6px + var(--safe-bottom));-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+nav button{min-width:68px;flex:1 0 68px;padding:7px 3px;white-space:nowrap}
+nav button span{font-size:20px}
+.card,.game{border-color:color-mix(in srgb,var(--line) 85%,transparent)}
+.btn,.opt,.chip,.game,.ib,.fab{transition:transform .16s ease,filter .16s ease,opacity .16s ease}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}
+button:active{filter:brightness(1.08)}
+.progress-track{height:9px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0 12px}
+.progress-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--p),#8b7cff);transition:width .35s ease}
+.metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--card)}
+.metric b{font-size:24px;display:block;letter-spacing:-.04em;margin-top:4px}
+.metric small{color:var(--mut)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;align-items:end;height:120px;margin-top:12px}
+.week-day{display:flex;flex-direction:column;align-items:center;justify-content:end;gap:6px;height:100%;font-size:11px;color:var(--mut)}
+.week-bar{width:100%;max-width:25px;min-height:4px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#a78bfa,var(--p))}
+.lesson-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.level-card{border:1px solid var(--line);border-radius:17px;background:var(--card);padding:14px;min-width:0}
+.level-card .level{font-weight:850;font-size:20px;letter-spacing:-.04em}
+.coach-line{padding:12px 14px;border-radius:16px;background:var(--ib);margin:8px 0;line-height:1.55}
+.coach-line.me{background:var(--mint)}
+.pill-action{border:1px solid var(--line);border-radius:99px;padding:9px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.mini-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
+@media(min-width:600px){body{padding-bottom:100px}.tb,main,header{max-width:560px}nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,560px);border:1px solid var(--line);border-bottom:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
 </style></head><body>
 <div class="tb"><span class="ib pillb">🔥 <b id="sk">0</b></span><button class="ib" data-v="profile" aria-label="Perfil">🏅</button><button class="ib" id="th" aria-label="Tema">🌓</button></div>
 <main id="v"></main>
 <button class="fab" data-g="les" aria-label="Lección diaria">▶</button>
-<nav><button data-v="home" class="on"><span>🏠</span>Inicio</button><button data-v="learn"><span>🎓</span>Aprender</button><button data-v="games"><span>🎮</span>Juegos</button><button data-v="gram"><span>📐</span>Gramática</button><button data-v="words"><span>📖</span>Palabras</button><button data-v="profile"><span>🏅</span>Perfil</button></nav>
+<nav><button data-v="home" class="on"><span>🏠</span>Inicio</button><button data-v="learn"><span>🎓</span>Aprender</button><button data-v="games"><span>🎮</span>Juegos</button><button data-v="gram"><span>📐</span>Gramática</button><button data-v="words"><span>📖</span>Palabras</button><button data-v="profile"><span>🏅</span>Perfil</button><button data-v="progress"><span>📈</span>Progreso</button></nav>
 <script>
 const D={A1:[["house","casa"],["water","agua"],["friend","amigo"],["happy","feliz"],["book","libro"],["morning","mañana"],["window","ventana"],["dog","perro"]],
 A2:[["travel","viajar"],["weather","clima"],["borrow","pedir prestado"],["tired","cansado"],["cheap","barato"],["neighbor","vecino"],["sometimes","a veces"],["ticket","boleto"]],
@@ -345,4 +383,77 @@ $("#th").onclick=()=>{S.theme=S.theme=="light"?"":"light";document.documentEleme
 document.documentElement.dataset.t=S.theme;
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 hud();go("home");
-</script></body></html>
+</script>
+<script>
+/* English Quest upgrade layer — preserves the original lessons and games. */
+(()=>{
+  const $=s=>document.querySelector(s), today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+  const safeSave=()=>{try{localStorage.setItem('eq',JSON.stringify(S))}catch(e){toast('No se pudo guardar. Exporta tu progreso para tener una copia.')}};
+  // Broaden the starter vocabulary so every CEFR band has more than a tiny sample.
+  const EXTRA={
+    A1:[['family','familia'],['food','comida'],['school','escuela'],['work','trabajo'],['city','ciudad'],['street','calle'],['today','hoy'],['tomorrow','mañana'],['beautiful','bonito'],['small','pequeño'],['big','grande'],['need','necesitar'],['want','querer'],['speak','hablar'],['listen','escuchar'],['read','leer'],['write','escribir'],['learn','aprender'],['always','siempre'],['usually','normalmente'],['sometimes','a veces'],['because','porque'],['where','dónde'],['when','cuándo']],
+    A2:[['journey','viaje'],['advice','consejo'],['appointment','cita'],['comfortable','cómodo'],['crowded','lleno de gente'],['expensive','caro'],['healthy','saludable'],['invite','invitar'],['decide','decidir'],['explain','explicar'],['forget','olvidar'],['remember','recordar'],['arrive','llegar'],['leave','salir'],['during','durante'],['although','aunque'],['enough','suficiente'],['probably','probablemente'],['recently','recientemente'],['immediately','inmediatamente'],['improve','mejorar'],['borrow','pedir prestado']],
+    B1:[['opportunity','oportunidad'],['challenge','desafío'],['decision','decisión'],['environment','medioambiente'],['experience','experiencia'],['goal','meta'],['habit','hábito'],['knowledge','conocimiento'],['opinion','opinión'],['purpose','propósito'],['relationship','relación'],['skill','habilidad'],['support','apoyar'],['achieve','lograr'],['avoid','evitar'],['consider','considerar'],['develop','desarrollar'],['encourage','animar'],['manage','gestionar'],['provide','proporcionar'],['realize','darse cuenta'],['suggest','sugerir']],
+    B2:[['awareness','conciencia'],['circumstance','circunstancia'],['consequence','consecuencia'],['controversial','polémico'],['drawback','desventaja'],['evidence','evidencia'],['insight','perspectiva profunda'],['issue','asunto'],['outcome','resultado'],['perspective','perspectiva'],['priority','prioridad'],['reliable','fiable'],['significant','significativo'],['sustainable','sostenible'],['approach','enfoque'],['assess','evaluar'],['assume','suponer'],['contribute','contribuir'],['emphasize','enfatizar'],['establish','establecer'],['justify','justificar'],['maintain','mantener']],
+    C1:[['ambiguous','ambiguo'],['compelling','convincente'],['comprehensive','exhaustivo'],['constraint','limitación'],['discrepancy','discrepancia'],['feasible','viable'],['inherent','inherente'],['notion','noción'],['plausible','verosímil'],['prevalent','predominante'],['profound','profundo'],['rigorous','riguroso'],['subtle','sutil'],['tentative','provisional'],['undermine','socavar'],['advocate','defender'],['allocate','asignar'],['articulate','expresar con claridad'],['coherent','coherente'],['contemplate','contemplar'],['differentiate','diferenciar'],['inhibit','inhibir']],
+    C2:[['albeit','aunque'],['conundrum','dilema complejo'],['delineate','delimitar'],['discerning','perspicaz'],['eloquent','elocuente'],['exacerbate','agravar'],['inadvertent','involuntario'],['incongruous','incongruente'],['ostensibly','aparentemente'],['pervasive','generalizado'],['predicament','aprieto'],['reconcile','conciliar'],['scrutinize','examinar minuciosamente'],['ubiquitous','omnipresente'],['unprecedented','sin precedentes'],['vindicate','vindicar'],['ambivalent','ambivalente'],['convoluted','enrevesado'],['disparate','dispar'],['epitomize','personificar'],['meticulous','meticuloso'],['unequivocal','inequívoco']]
+  };
+  for(const [level,items] of Object.entries(EXTRA)) if(Array.isArray(D[level])){const seen=new Set(D[level].map(x=>String(x[0]).toLowerCase()));D[level].push(...items.filter(x=>!seen.has(x[0].toLowerCase())))}
+  // Daily goal and spaced-repetition records survive app upgrades.
+  S.goal=Number(S.goal)||20; S.review=S.review||{}; S.history=S.history||{}; S.practiceMinutes=S.practiceMinutes||0;
+  const originalGain=gain, originalMark=mark;
+  gain=function(n,t){originalGain(n,t);const d=today();S.history[d]=Number(S.history[d]||0)+Number(n||0);safeSave()};
+  mark=function(w,ok){originalMark(w,ok);const k=w.en,old=S.review[k]||{interval:0,reps:0,lapses:0};let interval=ok?[1,3,7,14,30][Math.min(4,old.reps||0)]:0;S.review[k]={interval,reps:ok?Math.min(5,(old.reps||0)+1):0,lapses:(old.lapses||0)+(ok?0:1),last:today(),due:addDays(today(),interval),level:S.lvl};safeSave()};
+  function addDays(date,n){const d=new Date(date+'T12:00:00');d.setDate(d.getDate()+n);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+  function dueWords(){return Object.entries(S.review).filter(([,r])=>r.due&&r.due<=today()).map(([en])=>en)}
+  const oldPick=pick;
+  pick=function(n){const p=pool(),due=new Set(dueWords()),dueFirst=p.filter(w=>due.has(w.en));const weak=p.filter(w=>box(w)<4).sort((a,b)=>box(a)-box(b));return shuf([...new Map([...dueFirst,...weak,...p].map(w=>[w.en,w])).values()]).slice(0,n).sort((a,b)=>(due.has(a.en)?-1:0)-(due.has(b.en)?-1:0)+(box(a)-box(b))*.2)};
+  const originalGo=go;
+  go=function(x){if(x==='progress'){nav(x);$('.fab').style.display='';progress();return}originalGo(x)};
+  function progress(){const xp=Number(S.xp||0),daily= S.daily&&S.daily.d===today()?Number(S.daily.n||0):0, masteredCount=Object.values(S.box||{}).filter(n=>n>=4).length, reviewed=Object.keys(S.review).length, due=dueWords().length;
+    const levels=['A1','A2','B1','B2','C1','C2'];
+    const week=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;return {key,label:['D','L','M','X','J','V','S'][d.getDay()],n:Number(S.history[key]||0)}});
+    const max=Math.max(20,...week.map(x=>x.n));
+    const base=S.base||S.lvl||'A1';
+    v.innerHTML=`<div class="hr"><div><div class="mini-label">Tu camino</div><h2 style="margin:4px 0">Progreso</h2></div><span class="pill">${base}</span></div>
+      <div class="card"><div class="hr"><div><div class="mini-label">Meta diaria</div><b style="font-size:25px">${daily} / ${S.goal} XP</b></div><span style="font-size:30px">🎯</span></div><div class="progress-track"><i style="width:${Math.min(100,daily/S.goal*100)}%"></i></div><div class="row">${[10,20,30,50].map(n=>`<button class="pill-action" data-goal="${n}" style="flex:1;${S.goal===n?'border-color:var(--p);background:var(--ib)':''}">${n} XP</button>`).join('')}</div></div>
+      <div class="metric-grid"><div class="metric"><small>✨ XP acumulados</small><b>${xp}</b></div><div class="metric"><small>🔥 Racha actual</small><b>${S.streak||0} días</b></div><div class="metric"><small>🧠 Palabras dominadas</small><b>${masteredCount}</b></div><div class="metric"><small>🔁 Para repasar hoy</small><b>${due}</b></div></div>
+      <div class="card" style="margin-top:12px"><div class="hr"><b>Actividad de los últimos 7 días</b><span class="m">XP/día</span></div><div class="week">${week.map(d=>`<div class="week-day"><span>${d.n||''}</span><div class="week-bar" style="height:${Math.max(4,d.n/max*78)}px;opacity:${d.n?1:.28}"></div><span>${d.label}</span></div>`).join('')}</div></div>
+      <h2 style="margin-top:20px">Mapa de niveles</h2><p class="m">Elige un nivel para estudiar su vocabulario y sus actividades. El progreso aquí refleja tu práctica registrada, no una certificación oficial CEFR.</p><div class="lesson-map">${levels.map((l,i)=>{const words=(D[l]||[]).length,known=(D[l]||[]).filter(w=>(S.box[w[0]]||0)>=4).length;return `<div class="level-card"><div class="hr"><span class="level">${l}</span><span>${known>=words?'🏆':i===levels.indexOf(base)?'📍':'📘'}</span></div><div class="m">${['Inicial','Básico','Intermedio','Intermedio alto','Avanzado','Maestría'][i]}</div><div class="progress-track"><i style="width:${words?known/words*100:0}%"></i></div><small class="m">${known}/${words} palabras dominadas</small><button class="btn ghost" style="margin-top:10px;padding:10px" data-level-open="${l}">Estudiar ${l}</button></div>`}).join('')}</div>
+      <div class="card" style="margin-top:12px"><b>🛟 Cuidar tu progreso</b><p class="m">Tus datos se guardan en este navegador y dispositivo. Exporta una copia desde Perfil antes de borrar datos o cambiar de móvil.</p><button class="btn ghost" data-v="profile">Abrir perfil y copias de seguridad</button></div>`;
+  }
+  // A lightweight guided conversation simulator, using authored prompts (not an AI service).
+  const scenarios=[
+    {title:'Conocer a alguien',level:'A1',prompt:'You meet someone at a language exchange. What do you say first?',options:[['Hi! My name is Alex. Nice to meet you.','Saludo natural y presentación.'],['I am agree with you.','“Agree” es verbo; no necesita “am”.'],['Yesterday I go home.','Para ayer, usa el pasado: “went”.']],correct:0,tip:'Una presentación sencilla abre la conversación. Después puedes preguntar: “Where are you from?”'},
+    {title:'Pedir en una cafetería',level:'A2',prompt:'You want to order politely. Choose the most natural sentence.',options:[['I want coffee now.','Se entiende, pero suena directo.'],['Could I have a coffee, please?','Muy buena fórmula cortés.'],['I take a coffee yesterday.','El tiempo verbal no corresponde.']],correct:1,tip:'“Could I have…?” y “I’d like…” son fórmulas útiles para pedir.'},
+    {title:'Explicar una meta',level:'B1',prompt:'Tell a friend why you are learning English.',options:[['I learn English since two years.','Con “since” para duración hasta ahora, normalmente usamos present perfect.'],['I have been learning English for two years.','Excelente: present perfect continuous + “for”.'],['I am learning English two years ago.','“Two years ago” exige pasado.']],correct:1,tip:'“I’ve been learning English because I want to travel and meet new people.”'},
+    {title:'Dar una opinión',level:'B2',prompt:'You disagree respectfully during a discussion.',options:[['You are totally wrong, obviously.','Puede sonar agresivo.'],['I see your point, although I would argue that…','Reconoce la otra postura y presenta la tuya.'],['I am not agree in this.','La forma correcta es “I don’t agree”.']],correct:1,tip:'Matiza tu opinión con “I see what you mean, but…” o “That said, …”.'},
+    {title:'Matizar una conclusión',level:'C1',prompt:'You need to express a careful, nuanced conclusion.',options:[['This proves everything without doubt.','Es una afirmación demasiado absoluta.'],['The evidence appears to suggest a more nuanced interpretation.','Registro académico y cauteloso apropiado.'],['The evidence are saying a nuance.','La estructura no es natural.']],correct:1,tip:'En registros avanzados, usa “appears to suggest”, “to some extent” y “nevertheless” con precisión.'},
+    {title:'Argumentación avanzada',level:'C2',prompt:'You want to concede one point while maintaining your argument.',options:[['Be that as it may, the broader implications remain unresolved.','Concesión formal y argumento matizado.'],['Anyway, this thing is bad.','Demasiado vago para un argumento sofisticado.'],['Despite of the evidence, I disagree.','Se dice “despite the evidence” o “in spite of the evidence”.']],correct:0,tip:'“Be that as it may” es formal; úsalo cuando el registro y el contexto lo permitan.'}
+  ];
+  let ci=0,cs=0;
+  function coach(){ci=0;cs=0;coachQuestion()}
+  function coachQuestion(){if(ci>=scenarios.length){v.innerHTML=`<div class="card"><div class="big">🗣️</div><h2>Práctica guiada terminada</h2><p>Acertaste ${cs} de ${scenarios.length} situaciones.</p><p class="m">No es una prueba oficial; úsala para detectar estructuras que conviene repasar.</p><button class="btn" data-coach="restart">Practicar de nuevo</button><button class="btn ghost" style="margin-top:8px" data-v="progress">Ver progreso</button></div>`;gain(cs*5,true);return}
+    const q=scenarios[ci];v.innerHTML=`<div class="hr"><button class="pill-action" data-v="home">← Inicio</button><span class="pill">${q.level} · ${ci+1}/${scenarios.length}</span></div><h2 style="margin-top:16px">🗣️ Práctica guiada</h2><div class="card"><div class="mini-label">${q.title}</div><h2 style="line-height:1.4;margin-top:10px">${q.prompt}</h2><p class="m">Elige la respuesta que suena más natural en este contexto.</p>${q.options.map((o,i)=>`<button class="opt" data-coach-answer="${i}">${o[0]}</button>`).join('')}<div id="coach-feedback"></div></div>`;
+  }
+  function answerCoach(n){const q=scenarios[ci],fb=$('#coach-feedback');if(!fb)return;const correct=n===q.correct;if(correct)cs++;document.querySelectorAll('[data-coach-answer]').forEach(b=>{b.disabled=true;const k=Number(b.dataset.coachAnswer);if(k===q.correct)b.classList.add('ok');else if(k===n)b.classList.add('bad')});fb.innerHTML=`<div class="coach-line ${correct?'me':''}"><b>${correct?'✓ ¡Muy bien!':'💡 Vamos a aprenderlo'}</b><p>${q.options[n][1]}</p><p class="m">${q.tip}</p><button class="btn" id="coach-next">${ci===scenarios.length-1?'Ver resultado':'Siguiente situación'}</button></div>`;$('#coach-next').onclick=()=>{ci++;coachQuestion()}}
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-goal],[data-level-open],[data-coach],[data-coach-answer]');if(!t)return;if(t.dataset.goal){S.goal=Number(t.dataset.goal);safeSave();progress()}else if(t.dataset.levelOpen){S.lvl=t.dataset.levelOpen;safeSave();go('words')}else if(t.dataset.coach==='restart')coach();else if(t.dataset.coachAnswer!==undefined)answerCoach(Number(t.dataset.coachAnswer))});
+  // Surface guided conversation from the home screen without replacing the existing learning flow.
+  const oldHome=home;home=function(){oldHome();const main=$('#v');if(main&&!$('#guided-coach')){const c=document.createElement('div');c.className='card';c.id='guided-coach';c.innerHTML='<div class="hr"><div><div class="mini-label">Habla con intención</div><b style="font-size:18px">Práctica de situaciones reales</b></div><span style="font-size:26px">🗣️</span></div><p class="m">Entrena cómo saludar, pedir, explicar tus metas y argumentar en inglés, desde A1 hasta C2.</p><button class="btn" id="start-coach">Iniciar práctica guiada</button>';main.appendChild(c);$('#start-coach').onclick=coach;}}
+  // Respect iOS viewport behavior while avoiding accidental double-tap/pinch zoom in app mode.
+  document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
+  let lastTouchEnd=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTouchEnd<=300)e.preventDefault();lastTouchEnd=now},{passive:false});
+  // Make speech controls fail gracefully on unsupported browsers.
+  const originalSay=say;say=function(text){if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){toast('La lectura de voz no está disponible en este navegador.');return}originalSay(text)};
+  // Upgrade due-review hint on the existing dashboard.
+  const oldProgress=progress;document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&S.rem&&S.rem.on)try{remind()}catch(_){}});
+  // Keep existing route working, and add the new screen to the global click router.
+  const oldClickRoute=document.querySelector('nav');
+  // Patch the original nav dispatcher through a delegated handler that recognizes our page.
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-v="progress"]');if(t){e.preventDefault();e.stopImmediatePropagation();go('progress')}},{capture:true});
+  // Render the enhanced dashboard once so the new guided-practice card appears immediately.
+  home();
+})();
+</script>
+
+</body></html>
