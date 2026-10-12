@@ -1,19 +1,16 @@
 {
-  "name": "English Quest \u2014 Learn English",
+  "id": "./",
+  "name": "English Quest — Aprende inglés",
   "short_name": "English Quest",
-  "description": "Your personal English learning journey from A1 to C2.",
+  "description": "Practica inglés con lecciones, vocabulario, juegos y seguimiento de progreso.",
+  "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "background_color": "#050816",
   "theme_color": "#050816",
   "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
   ]
 }

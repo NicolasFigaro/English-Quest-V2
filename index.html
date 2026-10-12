@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>English Quest</title>
+<title>English Quest — Aprende inglés a tu ritmo</title>
+<meta name="description" content="Practica inglés con lecciones, vocabulario, juegos y seguimiento de progreso desde A1 hasta C2.">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
 <meta name="theme-color" content="#050816">
 <style>
@@ -116,6 +117,39 @@ button:active{filter:brightness(1.08)}
 .mini-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
 @media(min-width:600px){body{padding-bottom:100px}.tb,main,header{max-width:560px}nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,560px);border:1px solid var(--line);border-bottom:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Premium polish layer: responsive layout, tactile controls, and restrained motion. */
+:root{color-scheme:dark;--shadow-soft:0 12px 32px rgba(0,0,0,.12);--ease-out:cubic-bezier(.2,.8,.2,1)}
+:root[data-t=light]{color-scheme:light}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
+body{padding-bottom:calc(82px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit}
+button{touch-action:manipulation;transition:transform .16s var(--ease-out),filter .16s var(--ease-out),border-color .16s ease,background-color .16s ease}
+button:active:not(:disabled){transform:scale(.975)}
+button:disabled{cursor:default;opacity:.75}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--p) 72%,white);outline-offset:3px}
+.btn{box-shadow:0 6px 18px rgba(80,65,220,.18);min-height:46px}
+.opt{min-height:48px;transition:transform .16s var(--ease-out),border-color .18s ease,background .18s ease}
+.card,.game,.level-card,.metric{box-shadow:var(--shadow-soft);transition:transform .22s var(--ease-out),border-color .22s ease,box-shadow .22s ease}
+.hero{position:relative;overflow:hidden;isolation:isolate;box-shadow:0 18px 40px rgba(67,56,202,.2)}
+.hero:after{content:"";position:absolute;width:190px;height:190px;right:-88px;top:-95px;border-radius:50%;background:rgba(255,255,255,.075);pointer-events:none;z-index:-1}
+.progress-track{overflow:hidden;position:relative}
+.progress-track i,.bar i{transition:width .65s var(--ease-out)}
+nav{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-left:max(4px,env(safe-area-inset-left));padding-right:max(4px,env(safe-area-inset-right));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:color-mix(in srgb,var(--card) 90%,transparent);z-index:20}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 68px;min-width:60px;max-width:none;min-height:56px;border-radius:14px;position:relative}
+nav button.on{background:color-mix(in srgb,var(--p) 12%,transparent)}
+nav button.on:after{content:"";position:absolute;bottom:0;left:27%;right:27%;height:3px;border-radius:5px;background:var(--p)}
+main{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+#v.view-enter{animation:eq-view-in .24s var(--ease-out) both}
+.eq-reveal{animation:eq-reveal-in .3s var(--ease-out) both}
+@keyframes eq-view-in{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes eq-reveal-in{from{opacity:.45;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.eq-live{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(hover:hover) and (pointer:fine){.card:hover,.game:hover,.level-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--p) 35%,var(--line))}.opt:hover:not(:disabled){border-color:var(--p)}}
+@media(min-width:600px){main{padding-top:22px}nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,560px);border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:18px 18px 0 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button,.card,.game,.level-card,.metric,.progress-track i,.bar i{transition:none!important}#v.view-enter,.eq-reveal{animation:none!important}}
 
 </style></head><body>
 <div class="tb"><span class="ib pillb">🔥 <b id="sk">0</b></span><button class="ib" data-v="profile" aria-label="Perfil">🏅</button><button class="ib" id="th" aria-label="Tema">🌓</button></div>
@@ -453,6 +487,57 @@ hud();go("home");
   document.addEventListener('click',e=>{const t=e.target.closest('[data-v="progress"]');if(t){e.preventDefault();e.stopImmediatePropagation();go('progress')}},{capture:true});
   // Render the enhanced dashboard once so the new guided-practice card appears immediately.
   home();
+})();
+</script>
+
+
+<script>
+/* English Quest interaction and performance polish. No external libraries required. */
+(()=>{
+  const root=document.documentElement, main=document.querySelector('#v');
+  if(!main)return;
+  // A single polite live region improves feedback for assistive technology.
+  let live=document.querySelector('#eq-live');
+  if(!live){live=document.createElement('div');live.id='eq-live';live.className='eq-live';live.setAttribute('aria-live','polite');live.setAttribute('aria-atomic','true');document.body.appendChild(live)}
+  // Animate only when the user has not requested reduced motion.
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let frame=0;
+  const animateView=()=>{
+    cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(()=>{
+      if(reduce)return;
+      main.classList.remove('view-enter');
+      // Force a style boundary only for the small view container, not the full page.
+      void main.offsetWidth;
+      main.classList.add('view-enter');
+    });
+  };
+  const observe=new MutationObserver(records=>{
+    const replaced=records.some(r=>r.type==='childList'&&r.target===main);
+    if(replaced){animateView();}
+  });
+  observe.observe(main,{childList:true});
+  // Animate newly rendered cards once; do not run a permanent animation loop.
+  const reveal=new MutationObserver(()=>{
+    if(reduce)return;
+    main.querySelectorAll('.card:not([data-eq-seen]),.game:not([data-eq-seen]),.level-card:not([data-eq-seen]),.metric:not([data-eq-seen])').forEach((el,i)=>{
+      el.dataset.eqSeen='1';el.classList.add('eq-reveal');el.style.animationDelay=Math.min(i*28,140)+'ms';
+      el.addEventListener('animationend',()=>{el.classList.remove('eq-reveal');el.style.animationDelay=''}, {once:true});
+    });
+  });
+  reveal.observe(main,{childList:true,subtree:true});
+  // Gentle haptics on answer selection where supported. Never required for function.
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('button');
+    if(!b||b.disabled||!navigator.vibrate)return;
+    if(b.matches('.opt,[data-coach-answer],[data-g],[data-v]')){try{navigator.vibrate(8)}catch(_){}}
+  },{passive:true});
+  // Keep the viewport stable in app-like use while retaining OS accessibility settings.
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')root.classList.add('eq-active')},{passive:true});
+  // Expose a tiny helper for concise screen-reader announcements from later features.
+  window.eqAnnounce=(message)=>{live.textContent='';requestAnimationFrame(()=>{live.textContent=String(message||'')})};
+  // Warn before leaving with unsaved form text only when a future screen uses a draft field.
+  window.addEventListener('error',e=>{if(typeof toast==='function'&&e.message)toast('Ocurrió un error inesperado. Puedes volver a Inicio e intentarlo de nuevo.')});
 })();
 </script>
 
