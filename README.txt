@@ -1,32 +1,26 @@
-ENGLISH QUEST — AVENTURA (edición modular)
+ENGLISH QUEST — AVENTURA AMIGABLE
 
-ARCHIVOS PRINCIPALES
-- index.html: estructura de la aplicación.
-- styles.css: diseño, navegación, temas, animaciones y adaptación móvil/escritorio.
-- app.js: lecciones, juegos, vocabulario, progreso, XP, repasos, prueba adaptativa y Pip.
-- sw.js: service worker con actualización stale-while-revalidate y fallback offline.
-- manifest.webmanifest: instalación PWA.
-- icon.svg y icons/icon-192.png / icon-512.png: iconos de aplicación.
+CONTENIDO DEL PAQUETE
+- index.html: aplicación completa (HTML, CSS y JavaScript).
+- manifest.webmanifest: configuración PWA con iconos PNG para instalación.
+- sw.js: service worker v6 con estrategia stale-while-revalidate y guardado solo de respuestas correctas.
+- icon.svg, icon-192.png, icon-512.png, apple-touch-icon.png: iconos de la app.
 
 PUBLICAR EN GITHUB PAGES
-1. Guarda una copia de la versión publicada y exporta tu progreso desde Perfil.
-2. Descomprime el paquete y sube todos los archivos/carpetas a la raíz publicada del repositorio.
-3. En Settings > Pages confirma la rama y carpeta correctas.
-4. Abre el sitio mediante HTTPS. Para forzar actualización, cierra la app instalada y vuelve a abrirla; si queda código antiguo, borra los datos del sitio una vez.
+1. Exporta primero una copia de tu progreso desde Perfil.
+2. Descomprime este ZIP y sube todos los archivos a la raíz de la carpeta publicada.
+3. En GitHub, ve a Settings > Pages y confirma la rama/carpeta.
+4. Abre la web mediante HTTPS y recarga. Si la app estaba instalada, ciérrala y vuelve a abrirla.
 
-CAMBIOS
-- Inicio rediseñado con resumen, objetivo diario, lección principal, ruta A1-C2 y juegos rápidos.
-- Navegación lateral en escritorio y navegación inferior en móvil.
-- Fecha local unificada para racha, XP y misión diaria (evita el desfase UTC).
-- Eliminado el bloqueo de doble toque y el bloqueo de zoom del viewport.
-- Pip se minimiza en pantallas pequeñas para no cubrir respuestas; la acción rápida queda separada.
-- XP completo de lección diaria solo en la primera finalización del día; las repeticiones dan XP reducido.
-- Service worker cachea solo respuestas correctas y refresca recursos estáticos en segundo plano.
-- Íconos PNG de 192 y 512 para instalación en Android/Chrome e icono táctil para iOS.
-- Mensaje de recordatorios corregido: sin Web Push no se garantiza una notificación con la app cerrada.
+CAMBIOS PRINCIPALES
+- Inicio rediseñado como aventura: mascota Pip, meta diaria, racha, XP, ruta de misiones, siguiente unidad y accesos rápidos.
+- Paleta verde, crema y cian, tarjetas con volumen, botones táctiles y mejor distribución móvil; se conserva el tema claro/oscuro.
+- Fecha unificada con calendario local para evitar desajustes de UTC.
+- Eliminado el bloqueo de doble toque y restaurado el zoom del navegador para accesibilidad.
+- Recompensa de XP de la lección diaria limitada a una vez por día local, incluso si se repite la lección.
+- Recordatorio descrito con honestidad: el temporizador de una página no garantiza avisos cuando la app está cerrada o suspendida.
+- Schema version 2 añadido sin borrar el progreso existente (localStorage key: eq).
+- Distractores C1/C2 de la práctica guiada mejorados para ser más plausibles.
 
 DATOS Y LIMITACIONES
-- Se mantiene la clave localStorage `eq` y los datos de progreso existentes; no se requiere backend.
-- Los datos viven en el navegador/dispositivo. Exporta una copia desde Perfil antes de cambiar de dispositivo.
-- Los niveles CEFR son una referencia pedagógica orientativa, no una certificación oficial.
-- La sintaxis JavaScript se valida con Node.js; debe hacerse una prueba manual en navegador y en GitHub Pages antes de sustituir la versión publicada.
+El progreso sigue guardándose localmente en este navegador y dispositivo; no hay sincronización entre dispositivos. Exporta un respaldo antes de reemplazar la versión. El modo offline depende de que el service worker se instale correctamente en HTTPS. La app es una herramienta de práctica, no una certificación oficial CEFR.
