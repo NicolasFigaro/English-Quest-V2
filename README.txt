@@ -1,20 +1,27 @@
-ENGLISH QUEST — paquete de publicación
+ENGLISH QUEST — paquete de publicación (currículo ampliado)
 
 ARCHIVOS
-- index.html: aplicación con las mejoras de interfaz, animación e interacción.
+- index.html: app con diseño adaptable, lecciones y seguimiento del aprendizaje.
 - manifest.webmanifest: configuración para instalarla como aplicación web.
-- icon.svg: icono de la aplicación.
-- sw.js: caché básica del shell para abrir la app sin conexión después de la primera carga.
+- icon.svg: icono.
+- sw.js: caché básica del shell para la primera carga sin conexión.
+
+NOVEDADES
+- 12 unidades didácticas nuevas repartidas entre A1, A2, B1, B2, C1 y C2.
+- Mapa de aprendizaje agrupado por nivel con porcentaje de unidades completadas.
+- Evaluaciones de dominio de 10 preguntas por nivel, disponibles al completar sus unidades; el umbral es 80 %.
+- Cuaderno de errores de evaluaciones y prácticas de vocabulario, con opción de marcar elementos revisados.
+- Resultados guardados localmente. Aprobar una evaluación actualiza el nivel de referencia, pero no equivale a una certificación oficial.
 
 PUBLICAR EN GITHUB PAGES
-1. Haz una copia de seguridad de los archivos actuales de tu repositorio.
-2. Sube los cuatro archivos a la misma carpeta publicada por GitHub Pages.
-3. Asegúrate de que el HTML se llame exactamente index.html.
-4. Abre la URL HTTPS de GitHub Pages una vez con conexión para que se instale el service worker.
-5. Si ya había una versión anterior del service worker, puede tardar una recarga o dos en actualizarse.
+1. Haz una copia de seguridad del repositorio actual.
+2. Descomprime el ZIP y sube los cuatro archivos de esta carpeta a la carpeta publicada por GitHub Pages.
+3. El HTML debe llamarse exactamente index.html.
+4. Abre la URL HTTPS de GitHub Pages con conexión para actualizar el service worker.
+5. Si aparece una versión anterior, recarga la página o cierra y vuelve a abrir la app.
 
 NOTAS
-- El progreso se guarda en localStorage: es específico de ese navegador/dispositivo. Usa Perfil > Exportar para hacer copias de seguridad.
-- La caché offline cubre el shell de la aplicación y sus archivos locales; funciones de voz y notificaciones dependen del navegador y pueden no estar disponibles sin conexión.
-- La app no necesita librerías JavaScript externas.
-- La sintaxis de los bloques JavaScript del HTML se comprobó con Node.js. Aun así, conviene probar los flujos completos en Chrome y Safari/iPhone antes de sustituir la versión publicada.
+- El progreso se guarda en localStorage de ese navegador/dispositivo. Usa Perfil > Exportar para crear copias de seguridad.
+- Las funciones de voz y notificaciones dependen del navegador y pueden no estar disponibles sin conexión.
+- No necesita librerías JavaScript externas.
+- Se comprobó la sintaxis de los cuatro bloques JavaScript con Node.js. No se completó una prueba integral automatizada en navegador; prueba los recorridos principales en Chrome y Safari/iPhone antes de sustituir la versión publicada.
