@@ -243,6 +243,27 @@ nav button.on span{opacity:1;filter:none!important}
 @media(max-width:420px){main{padding-left:13px;padding-right:13px}.tb{padding-left:13px;padding-right:13px}.card{padding:14px}.hero{padding:20px}.fab{width:54px;height:54px;right:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+
+/* Pip companion: persistent, expressive and accessible */
+.pip-companion{position:fixed;z-index:40;right:16px;bottom:calc(86px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px;max-width:min(360px,calc(100vw - 28px));padding:9px 13px 9px 9px;border:2px solid var(--line);border-radius:22px;background:var(--card);color:var(--ink);box-shadow:0 7px 0 color-mix(in srgb,var(--line) 75%,transparent);cursor:pointer;text-align:left;transition:transform .22s,opacity .22s;}
+.pip-companion:hover{transform:translateY(-3px)}.pip-companion:focus-visible{outline:3px solid #ffbf47;outline-offset:3px}
+.pip-avatar{width:58px;height:58px;flex:none;display:grid;place-items:center;border-radius:18px;background:linear-gradient(145deg,#fff0b7,#ffc96c);box-shadow:inset 0 -4px 0 #e8a64e;overflow:hidden}
+.pip-avatar svg{width:55px;height:55px;overflow:visible;transform-origin:50% 75%;animation:pip-idle 2.8s ease-in-out infinite}
+.pip-companion[data-mood="happy"] .pip-avatar svg,.pip-companion[data-mood="celebrate"] .pip-avatar svg{animation:pip-happy .55s ease-in-out 2}
+.pip-companion[data-mood="think"] .pip-avatar svg{animation:pip-think 1.2s ease-in-out}
+.pip-companion[data-mood="oops"] .pip-avatar svg{animation:pip-oops .4s ease-in-out 2}
+.pip-companion[data-mood="sleep"] .pip-avatar svg{animation:pip-sleep 2s ease-in-out infinite}
+.pip-bubble{min-width:0}.pip-bubble strong{display:block;font-size:13px;line-height:1.2}.pip-bubble span{display:block;font-size:12px;line-height:1.3;opacity:.82;margin-top:3px;max-width:245px}
+.pip-spark{position:absolute;top:-8px;right:12px;font-size:19px;opacity:0;pointer-events:none}.pip-companion[data-mood="celebrate"] .pip-spark{opacity:1;animation:pip-sparkle .7s ease-in-out 3}
+@keyframes pip-idle{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
+@keyframes pip-happy{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-9px) rotate(-9deg)}70%{transform:translateY(-3px) rotate(8deg)}}
+@keyframes pip-think{0%,100%{transform:rotate(0)}35%{transform:rotate(9deg) translateY(-2px)}70%{transform:rotate(-6deg)}}
+@keyframes pip-oops{0%,100%{transform:translateX(0)}30%{transform:translateX(-3px) rotate(-5deg)}70%{transform:translateX(3px) rotate(5deg)}}
+@keyframes pip-sleep{0%,100%{transform:translateY(0) scale(.98)}50%{transform:translateY(2px) scale(1)}}
+@keyframes pip-sparkle{0%,100%{transform:scale(.5) rotate(-15deg)}50%{transform:scale(1.25) rotate(15deg)}}
+@media(max-width:520px){.pip-companion{right:10px;bottom:calc(82px + env(safe-area-inset-bottom));max-width:calc(100vw - 20px);padding:7px 10px 7px 7px}.pip-avatar{width:49px;height:49px;border-radius:15px}.pip-avatar svg{width:48px;height:48px}.pip-bubble span{max-width:210px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.pip-avatar svg,.pip-spark{animation:none!important}}
+
 </style>
 <style id="quest-adventure-redesign">
 :root{--bg:#f5f7ff;--card:#fff;--ink:#202447;--mut:#747b9d;--p:#7657e8;--p2:#5540c8;--mint:#e1faed;--ok:#16a66a;--bad:#e34f72;--line:#e3e7f5;--ib:#f0efff}
@@ -925,4 +946,46 @@ hud();go("home");
  },true);
 })();
 </script>
+
+<script id="pip-reactive-companion">
+(()=>{
+  if(document.getElementById('pip-companion'))return;
+  const lines={
+    idle:[['¡Vamos a explorar!','Un poquito de inglés cada día suma muchísimo.'],['¡Estoy contigo!','Tú aprende a tu ritmo; yo te acompaño.'],['¿Listo para la misión?','Cada pregunta es una oportunidad para descubrir algo.']],
+    happy:[['¡Lo hiciste!','¡Respuesta correcta! Guarda ese aprendizaje.'],['¡Esooo!','Tu esfuerzo está dando frutos.'],['¡Bien pensado!','Una respuesta más para tu colección de logros.']],
+    oops:[['¡No pasa nada!','Equivocarse también es aprender. Vamos otra vez.'],['¡Tranqui, explorador!','Mira la explicación y prueba de nuevo.'],['¡Aquí seguimos!','Los errores nos muestran qué practicar.']],
+    think:[['Pensemos juntos…','Fíjate en las pistas de la frase.'],['Modo detective 🕵️','¿Qué palabra encaja mejor con el contexto?'],['Tómate tu tiempo','No hay prisa: entender vale más que correr.']],
+    celebrate:[['¡MISIÓN COMPLETADA!','¡Mira todo lo que has avanzado!'],['¡Nivel de energía al máximo!','Tus XP van creciendo. ¡Sigue así!'],['¡Fiesta de aprendizaje!','Cada paso te acerca a tu siguiente meta.']],
+    sleep:[['Pausa de explorador','Descansar también forma parte del aprendizaje.']]
+  };
+  const fox=`<svg viewBox="0 0 100 100" role="img" aria-label="Pip, zorro compañero de aprendizaje"><path d="M17 42 12 12 38 27Q50 21 62 27L88 12 83 43Q91 56 84 72 76 91 50 91 24 91 16 72 9 56 17 42Z" fill="#e98543" stroke="#8f482d" stroke-width="3" stroke-linejoin="round"/><path d="M18 35 17 19 32 30Z M82 35 83 19 68 30Z" fill="#ffb2a2"/><path d="M24 51Q34 42 43 51M57 51Q66 42 76 51" fill="none" stroke="#4a2e2b" stroke-width="4" stroke-linecap="round"/><path d="M28 62Q50 52 72 62L66 77Q50 87 34 77Z" fill="#fff1d8"/><path d="M45 64Q50 59 55 64L50 69Z" fill="#4a2e2b"/><path d="M42 75Q50 81 58 75" fill="none" stroke="#a94d45" stroke-width="2.8" stroke-linecap="round"/><path d="M38 28Q50 20 62 28" fill="none" stroke="#ffbd68" stroke-width="4" stroke-linecap="round"/><circle cx="29" cy="60" r="4" fill="#ff9b9b" opacity=".7"/><circle cx="71" cy="60" r="4" fill="#ff9b9b" opacity=".7"/></svg>`;
+  const el=document.createElement('button');el.type='button';el.id='pip-companion';el.className='pip-companion';el.dataset.mood='idle';el.setAttribute('aria-label','Hablar con Pip, tu compañero de inglés');
+  el.innerHTML=`<i class="pip-spark" aria-hidden="true">✨</i><div class="pip-avatar">${fox}</div><div class="pip-bubble"><strong id="pip-title">¡Hola, explorador!</strong><span id="pip-message">Soy Pip. ¡Vamos a aprender algo nuevo!</span></div>`;
+  document.body.appendChild(el);
+  let lastMood='idle',lastAt=0,manualIndex=0;
+  function react(mood,force=false){const now=Date.now();if(!force&&now-lastAt<1300)return;lastAt=now;lastMood=mood;const choices=lines[mood]||lines.idle;const item=choices[Math.floor(Math.random()*choices.length)];el.dataset.mood=mood;document.getElementById('pip-title').textContent=item[0];document.getElementById('pip-message').textContent=item[1];}
+  el.addEventListener('click',()=>{manualIndex++;const moods=['think','happy','idle'];react(moods[manualIndex%moods.length],true)});
+  // Detect feedback across quizzes, lessons, assessments and the adaptive practice.
+  const root=document.getElementById('v');let lastFeedback='';
+  function scan(){if(!root)return;const text=(root.innerText||'').slice(-1800).toLowerCase();
+    const correctNodes=root.querySelectorAll('.ok,.correct,[style*="--ok"]');
+    const wrongNodes=root.querySelectorAll('.bad,.incorrect');
+    const feedback=[...root.querySelectorAll('#fb,#coach-feedback,#assessment-feedback,#adaptive-feedback,#guided-feedback,#practice-feedback')].map(n=>n.innerText||'').join(' ').toLowerCase();
+    const combined=feedback||text;
+    if(combined===lastFeedback)return;
+    if(/¡nivel superado!|partida perfecta|misión completada|sesión completada|100%/.test(combined)){lastFeedback=combined;react('celebrate');return}
+    if(wrongNodes.length||/vamos a aprenderlo|era:|incorrect|no es correcto/.test(combined)){lastFeedback=combined;react('oops');return}
+    if(correctNodes.length||/¡correcto!|muy bien|respuesta correcta|¡perfecto!|well done/.test(combined)){lastFeedback=combined;react('happy');return}
+    if(/¿qué|elige|completa|escribe|ordena|pregunta|traduce/.test(text)){lastFeedback=combined;react('think');}
+  }
+  if(root){new MutationObserver(()=>setTimeout(scan,80)).observe(root,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style']});}
+  // React to XP rewards and level-ups emitted by the app's existing reward UI.
+  new MutationObserver(()=>{const reward=document.querySelector('.eq-reward');if(reward){const txt=reward.innerText||'';react(/nivel|buen trabajo/i.test(txt)?'celebrate':'happy',true)}}).observe(document.body,{subtree:true,childList:true});
+  // Start with a friendly greeting, then react gently when the learner is idle.
+  setTimeout(()=>react('idle',true),250);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)react('sleep',true);else react('idle',true)});
+  window.Pip={react:(mood)=>react(lines[mood]?mood:'idle',true),greet:()=>react('idle',true)};
+})();
+</script>
+
 </body></html>
