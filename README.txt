@@ -1,27 +1,25 @@
-ENGLISH QUEST — paquete de publicación (currículo ampliado)
+ENGLISH QUEST — PAQUETE PARA GITHUB PAGES
 
-ARCHIVOS
-- index.html: app con diseño adaptable, lecciones y seguimiento del aprendizaje.
-- manifest.webmanifest: configuración para instalarla como aplicación web.
-- icon.svg: icono.
-- sw.js: caché básica del shell para la primera carga sin conexión.
-
-NOVEDADES
-- 12 unidades didácticas nuevas repartidas entre A1, A2, B1, B2, C1 y C2.
-- Mapa de aprendizaje agrupado por nivel con porcentaje de unidades completadas.
-- Evaluaciones de dominio de 10 preguntas por nivel, disponibles al completar sus unidades; el umbral es 80 %.
-- Cuaderno de errores de evaluaciones y prácticas de vocabulario, con opción de marcar elementos revisados.
-- Resultados guardados localmente. Aprobar una evaluación actualiza el nivel de referencia, pero no equivale a una certificación oficial.
+Contenido:
+- index.html: aplicación completa (HTML, CSS y JavaScript).
+- manifest.webmanifest: metadatos para instalación tipo PWA.
+- icon.svg: icono de la aplicación.
+- sw.js: caché básica de la app shell para uso offline después de una primera carga correcta.
 
 PUBLICAR EN GITHUB PAGES
-1. Haz una copia de seguridad del repositorio actual.
-2. Descomprime el ZIP y sube los cuatro archivos de esta carpeta a la carpeta publicada por GitHub Pages.
-3. El HTML debe llamarse exactamente index.html.
-4. Abre la URL HTTPS de GitHub Pages con conexión para actualizar el service worker.
-5. Si aparece una versión anterior, recarga la página o cierra y vuelve a abrir la app.
+1. Haz una copia de seguridad de tu versión actual.
+2. Sube los cuatro archivos al directorio publicado por GitHub Pages.
+3. Abre el sitio con HTTPS y recarga la página.
+4. Si tenías una versión anterior instalada, cierra y vuelve a abrir la app para que el service worker v3 se active.
 
-NOTAS
-- El progreso se guarda en localStorage de ese navegador/dispositivo. Usa Perfil > Exportar para crear copias de seguridad.
-- Las funciones de voz y notificaciones dependen del navegador y pueden no estar disponibles sin conexión.
-- No necesita librerías JavaScript externas.
-- Se comprobó la sintaxis de los cuatro bloques JavaScript con Node.js. No se completó una prueba integral automatizada en navegador; prueba los recorridos principales en Chrome y Safari/iPhone antes de sustituir la versión publicada.
+NOVEDADES DE APRENDIZAJE
+- Práctica adaptativa de 10 preguntas, priorizando temas aún no completados y errores recientes.
+- Estadísticas de precisión por habilidad en sesiones adaptativas.
+- Centro de repaso con palabras vencidas según el calendario de repetición espaciada.
+- Cuaderno de errores y repaso de palabras con programación del siguiente repaso.
+
+NOTAS IMPORTANTES
+- El progreso se guarda en localStorage de este navegador/dispositivo; no se sincroniza automáticamente entre dispositivos.
+- El modo offline funciona una vez que el sitio se ha servido por HTTPS y el service worker se ha instalado correctamente.
+- Las estadísticas por habilidad se basan únicamente en respuestas registradas en las sesiones adaptativas. No son una certificación CEFR.
+- Comprueba las pantallas y el guardado en tu navegador antes de sustituir una versión publicada que uses a diario.

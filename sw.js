@@ -1,5 +1,5 @@
 /* Minimal app-shell service worker for the self-contained English Quest app. */
-const CACHE_NAME = 'english-quest-shell-v2';
+const CACHE_NAME = 'english-quest-shell-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', event => {
