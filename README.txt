@@ -1,25 +1,28 @@
-ENGLISH QUEST — PAQUETE PARA GITHUB PAGES
+ENGLISH QUEST — GAME PREMIUM
+Paquete listo para GitHub Pages.
 
-Contenido:
+ARCHIVOS
 - index.html: aplicación completa (HTML, CSS y JavaScript).
-- manifest.webmanifest: metadatos para instalación tipo PWA.
-- icon.svg: icono de la aplicación.
-- sw.js: caché básica de la app shell para uso offline después de una primera carga correcta.
+- manifest.webmanifest: configuración de instalación tipo app (PWA).
+- sw.js: caché offline; versión v4 para actualizar instalaciones anteriores.
+- icon.svg: icono de la app.
 
 PUBLICAR EN GITHUB PAGES
-1. Haz una copia de seguridad de tu versión actual.
-2. Sube los cuatro archivos al directorio publicado por GitHub Pages.
-3. Abre el sitio con HTTPS y recarga la página.
-4. Si tenías una versión anterior instalada, cierra y vuelve a abrir la app para que el service worker v3 se active.
+1. Haz una copia de seguridad de tu versión publicada.
+2. Descomprime este ZIP.
+3. Sube los cuatro archivos y este README a la raíz de tu repositorio (o a la carpeta que GitHub Pages publique).
+4. En GitHub, abre Settings → Pages y confirma la rama/carpeta publicada.
+5. Abre la URL con HTTPS y recarga. Si la app estaba instalada, ciérrala y vuelve a abrirla para que se actualice el service worker.
 
-NOVEDADES DE APRENDIZAJE
-- Práctica adaptativa de 10 preguntas, priorizando temas aún no completados y errores recientes.
-- Estadísticas de precisión por habilidad en sesiones adaptativas.
-- Centro de repaso con palabras vencidas según el calendario de repetición espaciada.
-- Cuaderno de errores y repaso de palabras con programación del siguiente repaso.
+REDISEÑO
+- Dirección visual game premium: gradientes índigo/violeta, acentos dorados/cian, tarjetas con profundidad y estados interactivos.
+- Selector de tema claro/oscuro, persistido con el progreso.
+- Animación de recompensa con XP y confeti; efecto de subida de nivel.
+- Transiciones de pantalla, navegación inferior adaptada a móviles, estados de foco accesibles y soporte para reducir movimiento.
+- Se conserva la lógica de lecciones, vocabulario, juegos, gramática, perfil, logros, prueba de nivel, repaso, estadísticas, exportación/importación y guardado existentes en el HTML base.
 
-NOTAS IMPORTANTES
-- El progreso se guarda en localStorage de este navegador/dispositivo; no se sincroniza automáticamente entre dispositivos.
-- El modo offline funciona una vez que el sitio se ha servido por HTTPS y el service worker se ha instalado correctamente.
-- Las estadísticas por habilidad se basan únicamente en respuestas registradas en las sesiones adaptativas. No son una certificación CEFR.
-- Comprueba las pantallas y el guardado en tu navegador antes de sustituir una versión publicada que uses a diario.
+PROGRESO Y LIMITACIONES
+- El progreso continúa guardándose en localStorage con la clave existente `eq`; no se borra ni se migra a otro formato.
+- localStorage es local a cada navegador/dispositivo; no hay sincronización automática entre dispositivos.
+- El modo offline requiere abrir el sitio mediante HTTPS y permitir que el service worker se instale.
+- Se validó la sintaxis de los seis bloques JavaScript con Node.js. Se intentó una prueba de navegador automatizada, pero el entorno bloqueó la navegación local; por eso no se afirma que se haya completado una prueba funcional integral de todas las pantallas.
