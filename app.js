@@ -23,30 +23,38 @@ let S=JSON.parse(localStorage.getItem("eq")||"null")||{xp:0,streak:0,last:"",box
 S.cs=S.cs||{};S.ach=S.ach||[];S.rem=S.rem||{on:false,h:19};
 const save=()=>{try{localStorage.setItem("eq",JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s),v=$("#v");
-const day=()=>new Date().toISOString().slice(0,10);
+// Una sola fecha local para que el progreso diario coincida con el calendario del usuario.
+const day=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const yesterday=()=>{const d=new Date();d.setDate(d.getDate()-1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
 const shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
 const pool=()=>D[S.lvl].map(([en,es])=>({en,es}));
 const box=w=>S.box[w.en]||1;
 function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
-function touch(){const d=day();if(S.last!==d){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.streak=S.last===y?S.streak+1:1;S.last=d}}
-function gain(n,t){if(t)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.daily.n+=n;S.xp+=n;save();hud()}
+function touch(){const d=day();if(S.last!==d){const y=yesterday();S.streak=S.last===y?S.streak+1:1;S.last=d}}
+function gain(n,t){if(t)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.daily.n+=n;S.xp+=n;save();hud();if(window.Pip&&n>0)window.Pip.react('happy')}
 function mark(w,ok){S.box[w.en]=ok?Math.min(5,box(w)+1):1;save();hud()}
 function hud(){const e=$("#sk");if(e)e.textContent=S.streak;ach()}
 function chips(){return `<div class="chips">${LV.map(l=>`<button class="chip ${l==S.lvl?"on":""}" data-l="${l}">${l}</button>`).join("")}</div>`}
 function nav(x){document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v==x))}
 function go(x){nav(x);$(".fab").style.display="";if(S.pv!==2)return gate();({home,games,words,profile,learn,gram})[x]()}
 const ring=(r,p,c)=>{const L=2*Math.PI*r;return `<circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${L*Math.min(1,p)} ${L}" transform="rotate(-90 60 60)"/>`};
-function home(){const g=20,n=S.daily.d===day()?S.daily.n:0,lvl=Math.floor(S.xp/100)+1;
-v.innerHTML=`<h2>Inicio</h2>${chips()}
-<div class="hero"><div class="hr"><div><div class="lab">XP de hoy</div><div class="big2">${n}<span style="font-size:20px;opacity:.7">/${g}</span></div></div>
-<svg width="112" height="112" viewBox="0 0 120 120" aria-label="Anillos de progreso">${ring(52,n/g,"#ff7aa8")}${ring(40,S.streak/7,"#7ff0c2")}${ring(28,mastered()/30,"#7cc4ff")}</svg></div>
-<div class="sub"><div class="lab">Siguiente nivel</div><b>${100-S.xp%100} XP</b><div style="opacity:.75;font-size:13px">Nivel ${lvl} · ${S.base||S.lvl}</div></div>
-<div class="cols"><div><div class="lab">Racha</div><b>🔥 ${S.streak}</b></div><div><div class="lab">XP total</div><b>${S.xp}</b></div><div><div class="lab">Dominadas</div><b>${mastered()}</b></div></div></div>
-<div class="glass"><span class="pill">TIP DEL DÍA</span><p style="font-size:18px;font-weight:700;margin:14px 0 0">${rnd(["Aprende 5 palabras al día y úsalas en una frase propia.","Escucha la pronunciación antes de escribir: oído y vista juntos fijan mejor.","Repasar 5 min cada día vence a estudiar 1 hora una vez a la semana.","Los errores son memoria en construcción: ¡repítelos hasta acertar!"])}</p></div>
-${(()=>{const u=nextU();return u?`<div class="card"><div class="lab">Aprende · ${u.l}</div><p style="font-size:18px;font-weight:700;margin:8px 0">${u.e} ${u.t}</p><p class="m">Te lo explico paso a paso: teoría, ejemplos con audio y 3 ejercicios guiados.</p><button class="btn" data-u="${u.id}">Empezar lección</button></div>`:""})()}
-${(()=>{const L=S.base||"A1",dn=S.les===day();return `<div class="card"><div class="hr"><div class="lab">Lección diaria · ${L}</div><span class="pill" style="background:${dn?"var(--mint)":"var(--ib)"}">${dn?"✓ HECHA":"PENDIENTE"}</span></div><p class="m">14 ejercicios: vocabulario, gramática, dictado y construcción de oraciones. Se aprueba con 80 %; los fallos vuelven al final. Solo una lección aprobada mantiene tu racha.</p><button class="btn" data-g="les">${dn?"Practicar más":"Empezar lección"}</button></div>`})()}
-<div class="card"><div class="lab">Repaso inteligente</div><p class="m">Las palabras que fallas aparecen más seguido (sistema Leitner).</p><button class="btn" data-g="cards">Empezar repaso</button></div>${S.placed?"":`<div class="card"><div class="lab">Prueba de nivel</div><p class="m">12 preguntas para descubrir tu nivel.</p><button class="btn ghost" data-g="place">Hacer prueba</button></div>`}`}
+function home(){
+  const goal=Number(S.goal||20),todayXP=S.daily.d===day()?Number(S.daily.n||0):0,progress=Math.min(100,Math.round(todayXP/goal*100));
+  const levels=['A1','A2','B1','B2','C1','C2'];const current=S.base||S.lvl||'A1';const ci=Math.max(0,levels.indexOf(current));
+  const nodes=levels.map((l,i)=>{const active=l===current,done=i<ci;return `<button class="path-node ${active?'current':''} ${done?'completed':''}" data-quest-level="${l}" aria-label="${l}${active?', nivel actual':done?', nivel anterior':''}"><span class="path-icon">${done?'✓':active?'★':i+1}</span><b>${l}</b><small>${done?'Completado':active?'Continuar':'Explorar'}</small></button>`}).join('');
+  const u=nextU();const dailyDone=S.les===day();
+  v.innerHTML=`
+    <section class="welcome-row"><div><div class="eyebrow">TU AVENTURA EMPIEZA AQUÍ</div><h1>¡Hola, explorador!</h1><p>Un poquito de inglés cada día te lleva más lejos.</p></div><div class="welcome-mascot" aria-hidden="true">🦊</div></section>
+    <section class="home-stats" aria-label="Tu resumen"><div class="stat-pill streak-stat"><span>🔥</span><div><b>${S.streak||0}</b><small>racha</small></div></div><div class="stat-pill xp-stat"><span>💎</span><div><b>${S.xp||0}</b><small>XP totales</small></div></div><div class="stat-pill heart-stat"><span>🎯</span><div><b>${mastered()}</b><small>dominadas</small></div></div></section>
+    <section class="daily-card"><div class="daily-copy"><span class="eyebrow">OBJETIVO DIARIO</span><h2>${todayXP>=goal?'¡Meta cumplida!':'Cada día cuenta'}</h2><p>${todayXP>=goal?'¡Buen trabajo! Mantén el impulso mañana.':`${todayXP} de ${goal} XP conseguidos hoy`}</p><div class="daily-track"><span style="width:${progress}%"></span></div></div><div class="daily-ring" style="--progress:${progress}%"><strong>${progress}%</strong></div></section>
+    <section class="continue-card"><div class="continue-art"><span>${dailyDone?'🏆':'🚀'}</span><small>${dailyDone?'MISIÓN COMPLETADA':'TU SIGUIENTE MISIÓN'}</small></div><div class="continue-copy"><div class="eyebrow">LECCIÓN DIARIA · ${current}</div><h2>${dailyDone?'¡Sigue sumando!':'Aprende algo nuevo'}</h2><p>${dailyDone?'Puedes repasar, jugar o avanzar en el mapa.':'14 ejercicios cortos para practicar vocabulario, gramática y frases.'}</p><button class="btn" data-g="les">${dailyDone?'Practicar otra vez':'Continuar aprendiendo'} <span aria-hidden="true">→</span></button></div></section>
+    <section class="path-section"><div class="section-heading"><div><div class="eyebrow">TU CAMINO</div><h2>Explora los niveles</h2></div><button class="text-action" data-v="learn">Ver lecciones →</button></div><div class="level-path">${nodes}</div><p class="path-note">Tu nivel actual es <b>${current}</b>. Elige una zona para practicarla; los niveles CEFR son una referencia orientativa, no una certificación oficial.</p></section>
+    <section class="quick-section"><div class="section-heading"><div><div class="eyebrow">CAMBIA DE RITMO</div><h2>Practica jugando</h2></div><button class="text-action" data-v="games">Todos los juegos →</button></div><div class="quick-games"><button class="quick-game" data-g="quiz"><span class="quick-icon purple">⚡</span><b>Quiz rápido</b><small>Responde y gana XP</small></button><button class="quick-game" data-g="cards"><span class="quick-icon green">🃏</span><b>Tarjetas</b><small>Refuerza tu memoria</small></button><button class="quick-game" data-g="match"><span class="quick-icon yellow">🧩</span><b>Parejas</b><small>Une inglés y español</small></button></div></section>
+    <section class="review-banner"><span>🧠</span><div><b>Tu memoria también entrena</b><p>Repasa palabras que estás a punto de olvidar.</p></div><button class="btn ghost" data-g="cards">Repasar</button></section>
+    ${u?`<section class="next-lesson card"><div class="eyebrow">SIGUIENTE LECCIÓN GUIADA · ${u.l}</div><h2>${u.e} ${u.t}</h2><p class="m">Explicación en español, ejemplos y ejercicios paso a paso.</p><button class="btn" data-u="${u.id}">Empezar lección →</button></section>`:''}
+    ${S.placed?'':`<section class="placement-banner"><span>🧭</span><div><b>¿Cuál es tu nivel de inglés?</b><p>Haz una prueba orientativa para adaptar tu ruta.</p></div><button class="btn ghost" data-g="place">Descubrir nivel</button></section>`}`;
+}
 function games(){v.innerHTML=`<h2>Juegos · ${S.lvl}</h2>${chips()}<div class="grid">
 <button class="game" data-g="cards"><span>🃏</span><b>Tarjetas</b><small>Voltea y repasa</small></button>
 <button class="game" data-g="quiz"><span>⚡</span><b>Quiz rápido</b><small>Elige la traducción</small></button>
@@ -249,8 +257,9 @@ const bs=[],draw=()=>{$("#gt").innerHTML=got.map(x=>`<span class="pill" style="b
 shuf(T).forEach(t=>{const b=document.createElement("button");b.className="opt";b.style.cssText="width:auto;margin:0;padding:10px 14px";b.textContent=t;
 b.onclick=()=>{b.disabled=1;b.style.opacity=.3;got.push(t);draw();if(got.length==T.length){const ok=got.join(" ")==q.a;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";say(q.a);fin(q,ok)}};bs.push(b);$("#ls").appendChild(b)});
 $("#un").onclick=()=>{if(got.length==T.length)return;got=[];draw();bs.forEach(b=>{b.disabled=0;b.style.opacity=1})}}}
-function lessonEnd(){const T=TOT,pc=Math.round(sc/T*100),ok=pc>=80,L=S.base||"A1",k=LV.indexOf(L),first=S.les!==day(),xp=sc*10+(ok&&first?30:0);let msg="";
-if(ok&&first)S.les=day();
+function lessonEnd(){const T=TOT,pc=Math.round(sc/T*100),ok=pc>=80,L=S.base||"A1",k=LV.indexOf(L),first=S.dailyReward!==day(),xp=(first?sc*10:Math.min(sc*2,10))+(ok&&first?30:0);let msg="";
+S.dailyReward=day();
+if(ok)S.les=day();
 if(pc>=90){if(S.up===L&&k<5){S.base=LV[k+1];S.up=S.dn=null;msg="🚀 ¡Subes a "+S.base+"!"}else{S.up=L;msg="Otro 90 % o más y subirás de nivel."}}
 else{S.up=null;if(pc<50){if(S.dn===L&&k>0){S.base=LV[k-1];S.dn=null;msg="Bajamos a "+S.base+" para reforzar las bases."}else{S.dn=L;msg="Repasa este nivel y reinténtalo."}}else S.dn=null}
 S.played=(S.played||0)+1;if(sc==T)S.perfect=(S.perfect||0)+1;
@@ -262,7 +271,7 @@ v.innerHTML=`<h2>Tu nivel: ${p}</h2><div class="hero"><div class="lab">Resultado
 function profile(){nav("profile");v.innerHTML=`<h2>Perfil</h2>
 <div class="card"><b>🏅 Logros (${S.ach.length}/${AC.length})</b><div class="grid" style="margin-top:10px">${AC.map(([e,n],k)=>`<div class="badge ${S.ach.includes(k)?"":"lock"}"><span>${e}</span><small>${n}</small></div>`).join("")}</div></div>
 <div class="card"><b>🧭 Prueba de nivel</b><p class="m">${S.placed?"Nivel actual de lecciones: "+(S.base||S.placed):"Prueba adaptativa de hasta 18 preguntas."}</p><button class="btn" data-g="place">Hacer prueba</button></div>
-<div class="card"><b>🔔 Recordatorio diario</b><div class="row" style="margin-top:8px"><select id="rh" class="in" style="padding:10px">${[8,12,18,19,20,21].map(h=>`<option value="${h}" ${S.rem.h==h?"selected":""}>${h}:00</option>`).join("")}</select><button class="btn" id="rem">${S.rem.on?"Desactivar":"Activar"}</button></div><p class="m">Te avisa si hoy no has practicado, mientras la app esté abierta o en segundo plano.</p></div>
+<div class="card"><b>🔔 Recordatorio diario</b><div class="row" style="margin-top:8px"><select id="rh" class="in" style="padding:10px">${[8,12,18,19,20,21].map(h=>`<option value="${h}" ${S.rem.h==h?"selected":""}>${h}:00</option>`).join("")}</select><button class="btn" id="rem">${S.rem.on?"Desactivar":"Activar"}</button></div><p class="m">Muestra un recordatorio cuando la app está abierta. El navegador puede suspenderlo si cierras la app; no es una notificación push garantizada.</p></div>
 <div class="card"><b>🤝 Retos con amigos</b><p class="m">Comparte tu progreso y reta a alguien.</p><button class="btn" id="sh">Compartir mi progreso</button></div>
 <div class="card"><b>💾 Tu progreso</b><div class="row" style="margin-top:8px"><button class="btn ghost" id="ex">Exportar</button><button class="btn ghost" id="im">Importar</button></div><input type="file" id="imf" accept=".json" hidden></div>`;
 $("#rem").onclick=async()=>{if(S.rem.on){S.rem.on=false;save();toast("Recordatorio desactivado");return profile()}
@@ -285,7 +294,7 @@ document.documentElement.dataset.t=S.theme;
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 hud();go("home");
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 /* English Quest upgrade layer — preserves the original lessons and games. */
 (()=>{
@@ -342,9 +351,7 @@ hud();go("home");
   document.addEventListener('click',e=>{const t=e.target.closest('[data-goal],[data-level-open],[data-coach],[data-coach-answer]');if(!t)return;if(t.dataset.goal){S.goal=Number(t.dataset.goal);safeSave();progress()}else if(t.dataset.levelOpen){S.lvl=t.dataset.levelOpen;safeSave();go('words')}else if(t.dataset.coach==='restart')coach();else if(t.dataset.coachAnswer!==undefined)answerCoach(Number(t.dataset.coachAnswer))});
   // Surface guided conversation from the home screen without replacing the existing learning flow.
   const oldHome=home;home=function(){oldHome();const main=$('#v');if(main&&!$('#guided-coach')){const c=document.createElement('div');c.className='card';c.id='guided-coach';c.innerHTML='<div class="hr"><div><div class="mini-label">Habla con intención</div><b style="font-size:18px">Práctica de situaciones reales</b></div><span style="font-size:26px">🗣️</span></div><p class="m">Entrena cómo saludar, pedir, explicar tus metas y argumentar en inglés, desde A1 hasta C2.</p><button class="btn" id="start-coach">Iniciar práctica guiada</button>';main.appendChild(c);$('#start-coach').onclick=coach;}}
-  // Respect iOS viewport behavior while avoiding accidental double-tap/pinch zoom in app mode.
-  document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
-  let lastTouchEnd=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTouchEnd<=300)e.preventDefault();lastTouchEnd=now},{passive:false});
+  // No bloqueamos gestos táctiles: el navegador conserva zoom y doble toque accesibles.
   // Make speech controls fail gracefully on unsupported browsers.
   const originalSay=say;say=function(text){if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){toast('La lectura de voz no está disponible en este navegador.');return}originalSay(text)};
   // Upgrade due-review hint on the existing dashboard.
@@ -357,7 +364,7 @@ hud();go("home");
   home();
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 /* English Quest interaction and performance polish. No external libraries required. */
 (()=>{
@@ -407,7 +414,7 @@ hud();go("home");
   window.addEventListener('error',e=>{if(typeof toast==='function'&&e.message)toast('Ocurrió un error inesperado. Puedes volver a Inicio e intentarlo de nuevo.')});
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 /* Mastery checks and error notebook: extends the existing course without external libraries. */
 (()=>{
@@ -464,7 +471,7 @@ hud();go("home");
   },true);
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 /* Adaptive practice v1: prioritizes weak topics and due review, with local-only skill analytics. */
 (()=>{
@@ -509,7 +516,7 @@ hud();go("home");
   // Keep the word-review buttons' labels independent from user-generated content.
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 /* Premium game layer: reward moments, improved theme control and accessible motion. */
 (()=>{
@@ -588,7 +595,7 @@ hud();go("home");
   }
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 (()=>{
  const originalHome=window.home;
@@ -617,7 +624,7 @@ hud();go("home");
  },true);
 })();
 
-/* ===== Módulo %d ===== */
+/* English Quest module */
 
 (()=>{
   if(document.getElementById('pip-companion'))return;
@@ -649,7 +656,7 @@ hud();go("home");
     if(correctNodes.length||/¡correcto!|muy bien|respuesta correcta|¡perfecto!|well done/.test(combined)){lastFeedback=combined;react('happy');return}
     if(/¿qué|elige|completa|escribe|ordena|pregunta|traduce/.test(text)){lastFeedback=combined;react('think');}
   }
-  if(root){new MutationObserver(()=>setTimeout(scan,80)).observe(root,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style']});}
+  if(root){new MutationObserver(()=>setTimeout(scan,120)).observe(root,{subtree:true,childList:true,characterData:true});}
   // React to XP rewards and level-ups emitted by the app's existing reward UI.
   new MutationObserver(()=>{const reward=document.querySelector('.eq-reward');if(reward){const txt=reward.innerText||'';react(/nivel|buen trabajo/i.test(txt)?'celebrate':'happy',true)}}).observe(document.body,{subtree:true,childList:true});
   // Start with a friendly greeting, then react gently when the learner is idle.

@@ -1,21 +1,18 @@
 {
   "id": "./",
-  "name": "English Quest — Aventura en inglés",
+  "name": "English Quest — Tu aventura en inglés",
   "short_name": "English Quest",
-  "description": "Aprende inglés con lecciones, juegos, progreso y recompensas desde A1 hasta C2.",
+  "description": "Aprende inglés con misiones, lecciones, juegos y progreso desde A1 hasta C2.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#f5f7ff",
-  "theme_color": "#f5f7ff",
+  "theme_color": "#7657e8",
   "icons": [
-    {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

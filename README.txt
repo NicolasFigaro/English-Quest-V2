@@ -1,37 +1,32 @@
-ENGLISH QUEST — AVENTURA
-Paquete listo para GitHub Pages.
+ENGLISH QUEST — AVENTURA (edición modular)
 
-ARCHIVOS
-- index.html: aplicación completa (HTML, CSS y JavaScript).
-- manifest.webmanifest: configuración de instalación tipo app (PWA).
-- sw.js: caché offline; versión v5 para actualizar instalaciones anteriores.
-- icon.svg: icono de la app.
+ARCHIVOS PRINCIPALES
+- index.html: estructura de la aplicación.
+- styles.css: diseño, navegación, temas, animaciones y adaptación móvil/escritorio.
+- app.js: lecciones, juegos, vocabulario, progreso, XP, repasos, prueba adaptativa y Pip.
+- sw.js: service worker con actualización stale-while-revalidate y fallback offline.
+- manifest.webmanifest: instalación PWA.
+- icon.svg y icons/icon-192.png / icon-512.png: iconos de aplicación.
 
 PUBLICAR EN GITHUB PAGES
-1. Haz una copia de seguridad de tu versión publicada.
-2. Descomprime este ZIP.
-3. Sube los cuatro archivos y este README a la raíz de tu repositorio (o a la carpeta que GitHub Pages publique).
-4. En GitHub, abre Settings → Pages y confirma la rama/carpeta publicada.
-5. Abre la URL con HTTPS y recarga. Si la app estaba instalada, ciérrala y vuelve a abrirla para que se actualice el service worker.
+1. Guarda una copia de la versión publicada y exporta tu progreso desde Perfil.
+2. Descomprime el paquete y sube todos los archivos/carpetas a la raíz publicada del repositorio.
+3. En Settings > Pages confirma la rama y carpeta correctas.
+4. Abre el sitio mediante HTTPS. Para forzar actualización, cierra la app instalada y vuelve a abrirla; si queda código antiguo, borra los datos del sitio una vez.
 
-REDISEÑO
-- Dirección visual estilo aventura: mapa A1–C2, compañero Pip, botones redondeados, tarjetas más juguetonas y navegación móvil.
-- Selector de tema claro/oscuro, persistido con el progreso.
-- Animación de recompensa con XP y confeti; efecto de subida de nivel.
-- Transiciones de pantalla, navegación inferior adaptada a móviles, estados de foco accesibles y soporte para reducir movimiento.
-- Se conserva la lógica de lecciones, vocabulario, juegos, gramática, perfil, logros, prueba de nivel, repaso, estadísticas, exportación/importación y guardado existentes en el HTML base.
+CAMBIOS
+- Inicio rediseñado con resumen, objetivo diario, lección principal, ruta A1-C2 y juegos rápidos.
+- Navegación lateral en escritorio y navegación inferior en móvil.
+- Fecha local unificada para racha, XP y misión diaria (evita el desfase UTC).
+- Eliminado el bloqueo de doble toque y el bloqueo de zoom del viewport.
+- Pip se minimiza en pantallas pequeñas para no cubrir respuestas; la acción rápida queda separada.
+- XP completo de lección diaria solo en la primera finalización del día; las repeticiones dan XP reducido.
+- Service worker cachea solo respuestas correctas y refresca recursos estáticos en segundo plano.
+- Íconos PNG de 192 y 512 para instalación en Android/Chrome e icono táctil para iOS.
+- Mensaje de recordatorios corregido: sin Web Push no se garantiza una notificación con la app cerrada.
 
-PROGRESO Y LIMITACIONES
-- El progreso continúa guardándose en localStorage con la clave existente `eq`; no se borra ni se migra a otro formato.
-- localStorage es local a cada navegador/dispositivo; no hay sincronización automática entre dispositivos.
-- El modo offline requiere abrir el sitio mediante HTTPS y permitir que el service worker se instale.
-- Se validó la sintaxis de los seis bloques JavaScript con Node.js. Se intentó una prueba de navegador automatizada, pero el entorno bloqueó la navegación local; por eso no se afirma que se haya completado una prueba funcional integral de todas las pantallas.
-
-
-ESTRUCTURA DEL PROYECTO
-- index.html: estructura y pantallas de la aplicación.
-- styles.css: todos los estilos visuales, temas y diseño adaptable.
-- app.js: lógica de lecciones, juegos, progreso, mapa y reacciones de Pip.
-- sw.js: caché offline (actualizada a v6).
-
-Mantén estos archivos en la misma carpeta al publicarlo en GitHub Pages.
+DATOS Y LIMITACIONES
+- Se mantiene la clave localStorage `eq` y los datos de progreso existentes; no se requiere backend.
+- Los datos viven en el navegador/dispositivo. Exporta una copia desde Perfil antes de cambiar de dispositivo.
+- Los niveles CEFR son una referencia pedagógica orientativa, no una certificación oficial.
+- La sintaxis JavaScript se valida con Node.js; debe hacerse una prueba manual en navegador y en GitHub Pages antes de sustituir la versión publicada.
