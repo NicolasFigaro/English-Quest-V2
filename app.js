@@ -530,7 +530,7 @@ hud();go("home");
       themeButton.title=light?'Cambiar a tema oscuro':'Cambiar a tema claro';
     }
     const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta)meta.content=light?'#f4f5ff':'#090b18';
+    if(meta)meta.content=light?'#f4f5ff':'#0d1022';
   };
   if(themeButton){
     themeButton.onclick=()=>{
@@ -641,7 +641,7 @@ hud();go("home");
   el.innerHTML=`<i class="pip-spark" aria-hidden="true">✨</i><div class="pip-avatar">${fox}</div><div class="pip-bubble"><strong id="pip-title">¡Hola, explorador!</strong><span id="pip-message">Soy Pip. ¡Vamos a aprender algo nuevo!</span></div>`;
   document.body.appendChild(el);
   let lastMood='idle',lastAt=0,manualIndex=0;
-  function react(mood,force=false){const now=Date.now();if(!force&&now-lastAt<1300)return;lastAt=now;lastMood=mood;const choices=lines[mood]||lines.idle;const item=choices[Math.floor(Math.random()*choices.length)];el.dataset.mood=mood;document.getElementById('pip-title').textContent=item[0];document.getElementById('pip-message').textContent=item[1];}
+  function react(mood,force=false){const now=Date.now();if(!force&&now-lastAt<1300)return;lastAt=now;lastMood=mood;const choices=lines[mood]||lines.idle;const item=choices[Math.floor(Math.random()*choices.length)];el.dataset.mood=mood;document.getElementById('pip-title').textContent=item[0];document.getElementById('pip-message').textContent=item[1];el.classList.add('is-talking');clearTimeout(el._talk);el._talk=setTimeout(()=>el.classList.remove('is-talking'),5200);}
   el.addEventListener('click',()=>{manualIndex++;const moods=['think','happy','idle'];react(moods[manualIndex%moods.length],true)});
   // Detect feedback across quizzes, lessons, assessments and the adaptive practice.
   const root=document.getElementById('v');let lastFeedback='';

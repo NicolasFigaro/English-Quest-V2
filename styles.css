@@ -353,3 +353,175 @@ body{background:var(--bg)}
 }
 @media(max-width:600px){#v{padding:12px 14px 36px}.welcome-row{margin-top:4px}.welcome-row h1{font-size:28px}.welcome-mascot{width:60px;height:60px;font-size:31px;border-radius:20px}.home-stats{gap:7px}.stat-pill{gap:6px;padding:10px 8px;border-radius:15px}.stat-pill>span{font-size:19px}.stat-pill b{font-size:17px}.stat-pill small{font-size:10px}.daily-card{padding:16px;gap:12px}.daily-ring{width:66px;height:66px}.continue-card{grid-template-columns:90px minmax(0,1fr)}.continue-art{padding:12px 7px}.continue-art>span{font-size:38px}.continue-art small{font-size:7px}.continue-copy{padding:16px 13px}.continue-copy h2{font-size:18px}.continue-copy p{font-size:12px}.continue-copy .btn{font-size:12px;padding:12px 10px}.level-path{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.path-node{padding:12px 5px}.quick-games{gap:7px}.quick-game{padding:10px;min-height:130px}.quick-game b{font-size:12px}.quick-game small{font-size:10px}.review-banner,.placement-banner{flex-wrap:wrap}.review-banner div,.placement-banner div{flex:1 1 calc(100% - 60px)}.review-banner .btn,.placement-banner .btn{margin-left:42px}.pip-companion{width:54px;height:54px;min-width:54px;padding:2px;right:10px;bottom:calc(86px + env(safe-area-inset-bottom));border-radius:18px;justify-content:center;box-shadow:0 4px 0 var(--line);background:var(--card)}.pip-bubble,.pip-spark{display:none}.pip-avatar{width:46px;height:46px;border-radius:14px}.pip-avatar svg{width:44px;height:44px}.fab{right:12px;bottom:calc(150px + env(safe-area-inset-bottom));width:48px;height:48px}}
 @media(max-width:360px){.home-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-pill{flex-direction:column;align-items:flex-start;gap:3px}.continue-card{grid-template-columns:72px minmax(0,1fr)}.section-heading h2{font-size:20px}}
+
+
+/* =====================================================================
+   CORRECCIONES VISUALES (capa final)
+   1. Tokens de tema unificados (antes había tres bloques que se pisaban)
+   2. Barra inferior móvil: caben las 7 pestañas, sin scroll oculto
+   3. Pip + botón ▶ + toast ya no tapan el contenido
+   4. Componentes que eran "solo claros" ahora funcionan en modo oscuro
+   5. Barra lateral de escritorio (marca) y alineación de la barra superior
+   6. Juegos: fuentes inválidas, columnas desiguales, insignias bloqueadas
+   ===================================================================== */
+
+/* ---------- 1. Tokens: oscuro por defecto, claro con data-t="light" ---------- */
+:root,:root[data-t=dark]{
+  color-scheme:dark;
+  --bg:#0d1022;--card:#161b33;--ink:#f4f5ff;--mut:#a3acc8;
+  --p:#8b6cf6;--p2:#5a48e0;--mint:#1d3d3b;--ok:#45e0b0;--bad:#ff7a96;
+  --line:#2b3157;--ib:#1f2648;--gold:#ffd166;--cyan:#68e1fd;
+  --accent-ink:#bdaeff;
+  --tint-purple:#2c2760;--tint-green:#16423a;--tint-yellow:#463a1a;
+  --art-from:#1c5a52;--art-to:#4b3fae;--art-ink:#eef0ff;
+  --done-bg:#15392f;--done-line:#2f7a5f;
+  --surface-shadow:0 10px 28px rgba(0,0,0,.28);
+}
+:root[data-t=light]{
+  color-scheme:light;
+  --bg:#f4f5ff;--card:#ffffff;--ink:#1c1e3a;--mut:#5d6486;
+  --p:#7048e8;--p2:#5238c9;--mint:#e0f8ec;--ok:#0f8f62;--bad:#d2365d;
+  --line:#dde1f3;--ib:#ecebff;--gold:#8a5a00;--cyan:#087d9b;
+  --accent-ink:#5238c9;
+  --tint-purple:#ece6ff;--tint-green:#dff7e7;--tint-yellow:#fff0c2;
+  --art-from:#c9f6e3;--art-to:#b8b3ff;--art-ink:#2f2a58;
+  --done-bg:#e9fbf0;--done-line:#8fd9ae;
+  --surface-shadow:0 10px 28px rgba(49,42,112,.10);
+}
+html{background:var(--bg)}
+body{
+  background:radial-gradient(ellipse at 10% 0%,color-mix(in srgb,var(--p) 16%,transparent),transparent 36rem),var(--bg);
+  color:var(--ink);
+}
+
+/* Contraste de textos secundarios y acentos */
+.m,.eyebrow,.mini-label,.stat-pill small,.path-node small,.quick-game small,.path-note,.review-banner p,.placement-banner p{color:var(--mut)}
+.text-action{color:var(--accent-ink)}
+.chip.on{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
+
+/* ---------- 2. Barra inferior móvil / tablet ---------- */
+@media(max-width:899px){
+  nav{
+    overflow:visible;gap:0;justify-content:stretch;
+    padding:6px max(4px,env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-right));
+  }
+  nav button{
+    flex:1 1 0;min-width:0;max-width:none;min-height:54px;margin:0;padding:6px 1px;
+    font-size:10px;line-height:1.2;letter-spacing:-.01em;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  nav button span{font-size:20px;margin-bottom:2px}
+  nav button.on{color:var(--accent-ink)}
+  nav button.on:after{left:30%;right:30%;bottom:0;top:auto}
+}
+@media(max-width:340px){nav button{font-size:9px}nav button span{font-size:18px}}
+
+/* ---------- 3. Elementos flotantes ---------- */
+#v{padding-bottom:170px}              /* el contenido nunca queda bajo Pip/▶ */
+.fab{width:48px;height:48px;font-size:19px;z-index:35}
+.pip-companion{z-index:36}
+.pip-companion .pip-bubble{display:none}
+.pip-companion.is-talking .pip-bubble,
+.pip-companion:hover .pip-bubble,
+.pip-companion:focus-visible .pip-bubble{display:block}
+.pip-companion{padding:4px;gap:0;border-radius:20px;max-width:none;box-shadow:0 4px 0 color-mix(in srgb,var(--line) 80%,transparent),var(--surface-shadow)}
+.pip-companion.is-talking,.pip-companion:hover{gap:10px;padding:6px 14px 6px 6px;max-width:min(330px,calc(100vw - 24px))}
+.pip-bubble strong{font-size:13px}
+.pip-bubble span{max-width:230px}
+@media(min-width:900px){
+  #v{padding-bottom:130px}
+  .pip-companion{right:24px;bottom:22px}
+  .fab{right:34px;bottom:96px}
+}
+@media(max-width:600px){
+  .pip-companion,.pip-companion.is-talking,.pip-companion:hover{padding:2px;gap:0}
+  .pip-companion .pip-bubble{display:none!important}
+}
+.toast{
+  z-index:70;pointer-events:none;text-align:center;
+  max-width:min(88vw,420px);bottom:calc(158px + env(safe-area-inset-bottom));
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+}
+@media(min-width:900px){.toast{bottom:36px;left:calc(50% + 115px)}}
+
+/* ---------- 4. Componentes que solo funcionaban en claro ---------- */
+.continue-card{
+  background:linear-gradient(125deg,color-mix(in srgb,var(--p) 14%,var(--card)),var(--card) 70%);
+  color:var(--ink);border-color:color-mix(in srgb,var(--p) 40%,var(--line));
+  box-shadow:0 5px 0 color-mix(in srgb,var(--p) 28%,var(--line));
+}
+.continue-art{background:linear-gradient(160deg,var(--art-from),var(--art-to))}
+.continue-art small{color:var(--art-ink)}
+.quick-icon.purple{background:var(--tint-purple)}
+.quick-icon.green{background:var(--tint-green)}
+.quick-icon.yellow{background:var(--tint-yellow)}
+.path-node.completed{background:var(--done-bg);border-color:var(--done-line);color:var(--ink);box-shadow:0 4px 0 var(--done-line)}
+.path-node.completed b{color:var(--ink)}
+.path-node.current{box-shadow:0 4px 0 var(--p2);border-color:var(--p)}
+.path-node.current .path-icon{background:var(--p)}
+.quest-map{color:var(--ink)}
+:root:not([data-t=light]) .quest-map{background:linear-gradient(145deg,#1f3f45,#2d2a5a 72%,#46304a);color:#f4f5ff}
+
+/* ---------- 5. Barra superior y marca ---------- */
+.tb .ib{background:var(--card);border:1px solid var(--line);box-shadow:0 2px 0 color-mix(in srgb,var(--line) 70%,transparent)}
+.ib.pillb{
+  background:color-mix(in srgb,var(--gold) 14%,var(--card));
+  border-color:color-mix(in srgb,var(--gold) 38%,var(--line));
+  box-shadow:0 2px 0 color-mix(in srgb,var(--gold) 20%,var(--line));
+  color:var(--ink);font-weight:800;
+}
+.nav-brand span{font-size:inherit;display:block;filter:none;opacity:1;width:auto}
+.nav-brand .brand-mark{display:grid;width:38px;height:38px;font-size:15px;letter-spacing:-.03em;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:0 3px 0 var(--p2)}
+.nav-brand>span:last-child{font-size:15px;font-weight:900;line-height:1.15}
+.nav-brand small{font-size:9px;letter-spacing:.14em;margin-top:3px}
+@media(min-width:900px){
+  .tb{padding-left:max(34px,calc((100% - 940px)/2 + 34px));padding-right:max(34px,calc((100% - 940px)/2 + 34px))}
+  nav{background:var(--card)}
+  nav button{color:var(--mut);font-weight:700}
+  nav button:hover{background:color-mix(in srgb,var(--p) 8%,var(--card));color:var(--ink)}
+  nav button.on{color:var(--accent-ink);background:color-mix(in srgb,var(--p) 16%,var(--card))}
+  nav button span{filter:none!important;opacity:1!important}
+}
+
+/* Bloques de bienvenida/avisos en móvil */
+@media(max-width:600px){
+  .review-banner .btn,.placement-banner .btn{flex:1 1 100%;margin-left:0;width:100%;padding:12px 14px;font-size:13px}
+}
+
+/* ---------- 6. Juegos ---------- */
+.mem{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tile{
+  font-family:inherit;font-size:14px;font-weight:700;line-height:1.2;
+  min-height:76px;height:auto;padding:8px 6px;
+  overflow-wrap:anywhere;hyphens:auto;
+}
+.tile.sel{background:color-mix(in srgb,var(--p) 14%,var(--card))}
+.opt{min-height:52px;font-size:16px;line-height:1.3}
+.big{overflow-wrap:anywhere}
+.lt{transition:transform .12s}
+.slot{border-style:dashed;background:color-mix(in srgb,var(--mint) 70%,var(--card))}
+input.in:focus-visible{border-color:var(--cyan)}
+
+/* Insignias bloqueadas legibles (antes opacity .35 + oscuro = invisibles) */
+.badge{background:var(--card)}
+.badge.lock,.lock{opacity:.62;filter:grayscale(1);border-style:dashed}
+.badge small{color:var(--mut);font-size:11px}
+
+/* Estado de ejercicios: contraste del color de acierto/error */
+.opt.ok{border-color:var(--ok)}.opt.bad{border-color:var(--bad)}
+.fb{color:var(--ink)}
+.bad2{color:var(--bad)}
+
+/* La barra superior deja ver el fondo para que no se note un corte de color */
+.tb{background:color-mix(in srgb,var(--bg) 55%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+/* Fondo y barra superior del mismo color: sin banda visible; píldora de racha amarilla limpia */
+body{background:var(--bg)}
+.tb{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+.ib.pillb{background:var(--tint-yellow);border-color:color-mix(in srgb,var(--gold) 35%,var(--line))}
+
+/* Parejas: palabras largas sin cortes feos */
+.tile{font-size:13px;padding:8px 4px;overflow-wrap:break-word;word-break:normal;hyphens:auto}
+@media(min-width:420px){.tile{font-size:14px}}
+@media(max-width:419px){.tile{font-size:12px}}
+.mem{margin-top:12px}
