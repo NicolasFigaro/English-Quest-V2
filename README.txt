@@ -26,3 +26,12 @@ PROGRESO Y LIMITACIONES
 - localStorage es local a cada navegador/dispositivo; no hay sincronización automática entre dispositivos.
 - El modo offline requiere abrir el sitio mediante HTTPS y permitir que el service worker se instale.
 - Se validó la sintaxis de los seis bloques JavaScript con Node.js. Se intentó una prueba de navegador automatizada, pero el entorno bloqueó la navegación local; por eso no se afirma que se haya completado una prueba funcional integral de todas las pantallas.
+
+
+ESTRUCTURA DEL PROYECTO
+- index.html: estructura y pantallas de la aplicación.
+- styles.css: todos los estilos visuales, temas y diseño adaptable.
+- app.js: lógica de lecciones, juegos, progreso, mapa y reacciones de Pip.
+- sw.js: caché offline (actualizada a v6).
+
+Mantén estos archivos en la misma carpeta al publicarlo en GitHub Pages.
