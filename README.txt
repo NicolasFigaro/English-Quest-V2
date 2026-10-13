@@ -18,6 +18,13 @@ Diseño
   Progreso está en la barra superior (móvil) y Gramática en el selector Lecciones/Gramática de Ruta.
 - Mascota: Pip (un único dibujo, definido una vez como PIP_PATHS en app.js).
 
+Novedades de esta revisión
+- Bienvenida: nombre opcional y elegir nivel a mano o hacer la prueba. El nombre y el nivel se cambian en Perfil.
+- Fluidez: sin :hover pegajoso en pantallas táctiles (marcaba la opción de la pregunta siguiente), animaciones de entrada
+  más cortas y avance más rápido tras acertar (más lento tras fallar para leer la corrección).
+- Contenido: ~45 palabras nuevas por nivel, 40 verbos irregulares, 30 phrasal verbs, 8 frases nuevas por nivel;
+  eliminadas 12 palabras repetidas entre niveles.
+
 Cambios respecto a v11
 - Rediseño de inicio y paleta verde con contraste >= 4.5:1 (claro y oscuro).
 - Vocabulario ampliado, distractores C1/C2 y esquema v2 recuperados de v09.

@@ -569,3 +569,21 @@ nav button.on::after{display:none}
   .quest-next{margin-top:0}
   .quest-side-grid{margin-top:0}
 }
+
+/* ---------- 9. Fluidez ---------- */
+/* Sin :hover "pegajoso" en pantallas táctiles: el hover del dedo marcaba la opción de la pregunta siguiente */
+@media(hover:none){
+  .opt:hover:not(:disabled){border-color:var(--line);transform:none}
+  .game:hover,.card:hover,.level-card:hover,.quest-side-card:hover{transform:none;border-color:var(--line)}
+  button.btn:hover{filter:none}
+  button.ghost:hover,button.btn.ghost:hover,.chip:hover,.tile:hover{border-color:var(--line)}
+  nav button:hover{background:none}
+  nav button.on:hover{background:var(--mint)}
+}
+.opt:active:not(:disabled),.tile:active,.chip:active,.quest-side-card:active{transform:scale(.98)}
+/* Una sola entrada breve (antes se apilaban tres animaciones de ~0,3 s en cada pregunta) */
+main>*{animation:eq-fade .12s ease-out both}
+#v.view-enter{animation:none}
+.eq-reveal{animation:none;animation-delay:0s}
+@keyframes eq-fade{from{opacity:0}to{opacity:1}}
+.hero .btn{background:#fff;color:#0f2d08}
