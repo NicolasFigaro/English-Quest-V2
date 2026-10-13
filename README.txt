@@ -1,41 +1,25 @@
-ENGLISH QUEST — AVENTURA (edición modular)
+English Quest v12
+=================
+Fusión de v11 (estructura modular y correcciones) con v09 (identidad verde, inicio "aventura", mascota).
 
-ARCHIVOS PRINCIPALES
-- index.html: estructura de la aplicación.
-- styles.css: diseño, navegación, temas, animaciones y adaptación móvil/escritorio.
-- app.js: lecciones, juegos, vocabulario, progreso, XP, repasos, prueba adaptativa y Pip.
-- sw.js: service worker con actualización stale-while-revalidate y fallback offline.
-- manifest.webmanifest: instalación PWA.
-- icon.svg y icons/ (icon-192, icon-512, icon-maskable-512, apple-touch-icon): iconos de aplicación, todos con el mismo diseño.
+Archivos
+- index.html  Estructura mínima: barra superior, <main id="v"> y navegación.
+- styles.css  Estilos. La "CAPA FINAL" (al final del archivo) define colores, navegación y pantalla de inicio.
+- app.js      Toda la lógica. Pip, recompensas y repaso adaptativo van al final.
+- sw.js       Service worker (caché english-quest-shell-v12).
+- manifest.webmanifest, icon.svg, icons/  Instalación como app (iconos normal, maskable y apple-touch).
 
-PUBLICAR EN GITHUB PAGES
-1. Guarda una copia de la versión publicada y exporta tu progreso desde Perfil.
-2. Descomprime el paquete y sube todos los archivos/carpetas a la raíz publicada del repositorio.
-3. En Settings > Pages confirma la rama y carpeta correctas.
-4. Abre el sitio mediante HTTPS. Para forzar actualización, cierra la app instalada y vuelve a abrirla; si queda código antiguo, borra los datos del sitio una vez.
+Para publicar: sube la carpeta completa y sírvela por HTTPS (el service worker no funciona desde file://).
+Si cambias algún archivo, sube también el número de versión en sw.js.
 
-CORRECCIONES VISUALES (v11)
-- Tema oscuro/claro unificado en un solo bloque de variables al final de styles.css (antes había tres que se pisaban) y sin destello de tema al cargar.
-- Barra inferior móvil: las 7 pestañas caben sin scroll horizontal oculto.
-- Pip aparece solo unos segundos al hablar; ▶, Pip y avisos ya no tapan el contenido.
-- Tarjetas, iconos y niveles que eran solo claros ahora se ven bien en modo oscuro.
-- Marca de la barra lateral y alineación de la barra superior en escritorio.
-- Parejas: columnas iguales y fuente correcta; insignias bloqueadas legibles.
-- Iconos nuevos coherentes con icon.svg, versión maskable y apple-touch-icon; manifest con colores del tema oscuro.
+Diseño
+- Tema: sigue al sistema la primera vez; después recuerda tu elección.
+- Navegación: 5 pestañas en móvil; barra lateral con 7 secciones en escritorio.
+  Progreso está en la barra superior (móvil) y Gramática en el selector Lecciones/Gramática de Ruta.
+- Mascota: Pip (un único dibujo, definido una vez como PIP_PATHS en app.js).
 
-CAMBIOS
-- Inicio rediseñado con resumen, objetivo diario, lección principal, ruta A1-C2 y juegos rápidos.
-- Navegación lateral en escritorio y navegación inferior en móvil.
-- Fecha local unificada para racha, XP y misión diaria (evita el desfase UTC).
-- Eliminado el bloqueo de doble toque y el bloqueo de zoom del viewport.
-- Pip se minimiza en pantallas pequeñas para no cubrir respuestas; la acción rápida queda separada.
-- XP completo de lección diaria solo en la primera finalización del día; las repeticiones dan XP reducido.
-- Service worker cachea solo respuestas correctas y refresca recursos estáticos en segundo plano.
-- Íconos PNG de 192 y 512 para instalación en Android/Chrome e icono táctil para iOS.
-- Mensaje de recordatorios corregido: sin Web Push no se garantiza una notificación con la app cerrada.
-
-DATOS Y LIMITACIONES
-- Se mantiene la clave localStorage `eq` y los datos de progreso existentes; no se requiere backend.
-- Los datos viven en el navegador/dispositivo. Exporta una copia desde Perfil antes de cambiar de dispositivo.
-- Los niveles CEFR son una referencia pedagógica orientativa, no una certificación oficial.
-- La sintaxis JavaScript se valida con Node.js; debe hacerse una prueba manual en navegador y en GitHub Pages antes de sustituir la versión publicada.
+Cambios respecto a v11
+- Rediseño de inicio y paleta verde con contraste >= 4.5:1 (claro y oscuro).
+- Vocabulario ampliado, distractores C1/C2 y esquema v2 recuperados de v09.
+- Corregido un bucle infinito en el observador de Pip que congelaba la página al ganar XP.
+- Manifest: orientación libre, icono maskable propio, colores acordes con el tema.

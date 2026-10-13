@@ -6,6 +6,13 @@ C1:[["elaborate","elaborar"],["ubiquitous","omnipresente"],["undermine","socavar
 C2:[["ephemeral","efímero"],["quintessential","por excelencia"],["serendipity","hallazgo afortunado"],["obfuscate","ofuscar"],["lackadaisical","apático"],["perfunctory","superficial"],["recalcitrant","terco"],["juxtapose","yuxtaponer"]],
 Verbos:[["go – went – gone","ir"],["eat – ate – eaten","comer"],["see – saw – seen","ver"],["take – took – taken","tomar"],["write – wrote – written","escribir"],["buy – bought – bought","comprar"],["think – thought – thought","pensar"],["begin – began – begun","empezar"]],
 Phrasal:[["give up","rendirse"],["look for","buscar"],["turn on","encender"],["find out","descubrir"],["come back","volver"],["put off","posponer"],["carry on","continuar"],["run out of","quedarse sin"]]};
+// Vocabulario ampliado: 20 elementos base por nivel, con traducciones orientadas a hispanohablantes.
+D.A1.push(["family","familia"],["food","comida"],["school","escuela"],["work","trabajo"],["city","ciudad"],["time","tiempo"],["need","necesitar"],["want","querer"],["live","vivir"],["speak","hablar"],["eat","comer"],["read","leer"]);
+D.A2.push(["crowded","lleno de gente"],["appointment","cita"],["journey","trayecto"],["advice","consejo"],["perhaps","quizás"],["reservation","reserva"],["spend","gastar/pasar tiempo"],["healthy","saludable"],["local","local"],["return","regresar"],["immediately","inmediatamente"],["comfortable","cómodo"]);
+D.B1.push(["therefore","por lo tanto"],["opportunity","oportunidad"],["require","requerir"],["avoid","evitar"],["assume","suponer"],["manage","lograr/gestionar"],["contribute","contribuir"],["concern","preocupación"],["evidence","evidencia"],["available","disponible"],["eventually","finalmente"],["purpose","propósito"]);
+D.B2.push(["furthermore","además"],["nevertheless","sin embargo"],["compelling","convincente"],["constraint","limitación"],["assess","evaluar"],["emerge","surgir"],["insight","comprensión profunda"],["sustainable","sostenible"],["pursue","perseguir"],["widespread","generalizado"],["account for","explicar/representar"],["take into account","tener en cuenta"]);
+D.C1.push(["albeit","aunque"],["coherent","coherente"],["discrepancy","discrepancia"],["facilitate","facilitar"],["inherent","inherente"],["plausible","verosímil"],["preliminary","preliminar"],["reconcile","conciliar"],["subsequent","posterior"],["substantiate","respaldar con pruebas"],["tentative","provisional"],["ambiguous","ambiguo"]);
+D.C2.push(["equivocal","ambiguo"],["inexorable","implacable"],["ostensible","aparente"],["pernicious","pernicioso"],["prescient","previsor"],["recondite","difícil de comprender"],["taciturn","taciturno"],["trenchant","contundente"],["unequivocal","inequívoco"],["intransigent","intransigente"],["vindicate","demostrar que se tenía razón"],["epistemic","relativo al conocimiento"]);
 const SENT={A1:[["I ___ a dog.","have","has","am","is"],["She ___ happy.","is","are","am","be"],["They ___ my friends.","are","is","am","be"],["___ you like water?","Do","Does","Are","Is"],["There ___ a book on the table.","is","are","have","has"]],
 A2:[["Yesterday I ___ to the park.","went","go","gone","going"],["My house is ___ than yours.","bigger","big","more big","biggest"],["I am ___ a book right now.","reading","read","reads","to read"],["She ___ TV when I called.","was watching","watched","watches","is watching"],["We ___ visit my aunt tomorrow.","are going to","did","have","were"]],
 B1:[["If it rains, we ___ at home.","will stay","stay","stayed","would stay"],["I have lived here ___ 2015.","since","for","from","during"],["He asked me where I ___.","lived","live","do live","am living"],["The report ___ by the team yesterday.","was finished","finished","is finished","has finish"],["You ___ smoke here; it is forbidden.","must not","don't have to","can","might"]],
@@ -18,9 +25,11 @@ B1:"I want to achieve my goals and improve my career. Though it is hard, I rely 
 B2:"Despite the drawbacks, she was reluctant to quit. She had to overcome fear and cope with change. The outcome was thorough and she seldom regretted it.",
 C1:"Her meticulous plan helped her leverage every resource. Notwithstanding the scrutiny, she did not let doubt undermine her work, and it mitigated the risk.",
 C2:"It was a quintessential, ephemeral moment, pure serendipity. No one tried to obfuscate the truth, and the perfunctory speech did not matter."};
+const PIP_PATHS=`<path d="M17 42 12 12 38 27Q50 21 62 27L88 12 83 43Q91 56 84 72 76 91 50 91 24 91 16 72 9 56 17 42Z" fill="#e98543" stroke="#8f482d" stroke-width="3" stroke-linejoin="round"/><path d="M18 35 17 19 32 30Z M82 35 83 19 68 30Z" fill="#ffb2a2"/><path d="M24 51Q34 42 43 51M57 51Q66 42 76 51" fill="none" stroke="#4a2e2b" stroke-width="4" stroke-linecap="round"/><path d="M28 62Q50 52 72 62L66 77Q50 87 34 77Z" fill="#fff1d8"/><path d="M45 64Q50 59 55 64L50 69Z" fill="#4a2e2b"/><path d="M42 75Q50 81 58 75" fill="none" stroke="#a94d45" stroke-width="2.8" stroke-linecap="round"/><path d="M38 28Q50 20 62 28" fill="none" stroke="#ffbd68" stroke-width="4" stroke-linecap="round"/><circle cx="29" cy="60" r="4" fill="#ff9b9b" opacity=".7"/><circle cx="71" cy="60" r="4" fill="#ff9b9b" opacity=".7"/>`;
 const LV=Object.keys(D);
 let S=JSON.parse(localStorage.getItem("eq")||"null")||{xp:0,streak:0,last:"",box:{},lvl:"A1",theme:"",daily:{d:"",n:0}};
-S.cs=S.cs||{};S.ach=S.ach||[];S.rem=S.rem||{on:false,h:19};
+S.schemaVersion=2;S.cs=S.cs||{};S.ach=S.ach||[];S.rem=S.rem||{on:false,h:19};S.daily=S.daily||{d:"",n:0};S.box=S.box||{};S.review=S.review||{};S.errorLog=S.errorLog||[];
+if(S.theme!=="light"&&S.theme!=="dark")S.theme=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";
 const save=()=>{try{localStorage.setItem("eq",JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s),v=$("#v");
 // Una sola fecha local para que el progreso diario coincida con el calendario del usuario.
@@ -36,24 +45,35 @@ function gain(n,t){if(t)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.dai
 function mark(w,ok){S.box[w.en]=ok?Math.min(5,box(w)+1):1;save();hud()}
 function hud(){const e=$("#sk");if(e)e.textContent=S.streak;ach()}
 function chips(){return `<div class="chips">${LV.map(l=>`<button class="chip ${l==S.lvl?"on":""}" data-l="${l}">${l}</button>`).join("")}</div>`}
-function nav(x){document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v==x))}
+function nav(x){document.querySelectorAll("nav button").forEach(b=>{b.classList.toggle("on",b.dataset.v==x);b.classList.toggle("on-alt",x==="gram"&&b.dataset.v==="learn")})}
 function go(x){nav(x);$(".fab").style.display="";if(S.pv!==2)return gate();({home,games,words,profile,learn,gram})[x]()}
 const ring=(r,p,c)=>{const L=2*Math.PI*r;return `<circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${L*Math.min(1,p)} ${L}" transform="rotate(-90 60 60)"/>`};
 function home(){
-  const goal=Number(S.goal||20),todayXP=S.daily.d===day()?Number(S.daily.n||0):0,progress=Math.min(100,Math.round(todayXP/goal*100));
-  const levels=['A1','A2','B1','B2','C1','C2'];const current=S.base||S.lvl||'A1';const ci=Math.max(0,levels.indexOf(current));
-  const nodes=levels.map((l,i)=>{const active=l===current,done=i<ci;return `<button class="path-node ${active?'current':''} ${done?'completed':''}" data-quest-level="${l}" aria-label="${l}${active?', nivel actual':done?', nivel anterior':''}"><span class="path-icon">${done?'✓':active?'★':i+1}</span><b>${l}</b><small>${done?'Completado':active?'Continuar':'Explorar'}</small></button>`}).join('');
-  const u=nextU();const dailyDone=S.les===day();
-  v.innerHTML=`
-    <section class="welcome-row"><div><div class="eyebrow">TU AVENTURA EMPIEZA AQUÍ</div><h1>¡Hola, explorador!</h1><p>Un poquito de inglés cada día te lleva más lejos.</p></div><div class="welcome-mascot" aria-hidden="true">🦊</div></section>
-    <section class="home-stats" aria-label="Tu resumen"><div class="stat-pill streak-stat"><span>🔥</span><div><b>${S.streak||0}</b><small>racha</small></div></div><div class="stat-pill xp-stat"><span>💎</span><div><b>${S.xp||0}</b><small>XP totales</small></div></div><div class="stat-pill heart-stat"><span>🎯</span><div><b>${mastered()}</b><small>dominadas</small></div></div></section>
-    <section class="daily-card"><div class="daily-copy"><span class="eyebrow">OBJETIVO DIARIO</span><h2>${todayXP>=goal?'¡Meta cumplida!':'Cada día cuenta'}</h2><p>${todayXP>=goal?'¡Buen trabajo! Mantén el impulso mañana.':`${todayXP} de ${goal} XP conseguidos hoy`}</p><div class="daily-track"><span style="width:${progress}%"></span></div></div><div class="daily-ring" style="--progress:${progress}%"><strong>${progress}%</strong></div></section>
-    <section class="continue-card"><div class="continue-art"><span>${dailyDone?'🏆':'🚀'}</span><small>${dailyDone?'MISIÓN COMPLETADA':'TU SIGUIENTE MISIÓN'}</small></div><div class="continue-copy"><div class="eyebrow">LECCIÓN DIARIA · ${current}</div><h2>${dailyDone?'¡Sigue sumando!':'Aprende algo nuevo'}</h2><p>${dailyDone?'Puedes repasar, jugar o avanzar en el mapa.':'14 ejercicios cortos para practicar vocabulario, gramática y frases.'}</p><button class="btn" data-g="les">${dailyDone?'Practicar otra vez':'Continuar aprendiendo'} <span aria-hidden="true">→</span></button></div></section>
-    <section class="path-section"><div class="section-heading"><div><div class="eyebrow">TU CAMINO</div><h2>Explora los niveles</h2></div><button class="text-action" data-v="learn">Ver lecciones →</button></div><div class="level-path">${nodes}</div><p class="path-note">Tu nivel actual es <b>${current}</b>. Elige una zona para practicarla; los niveles CEFR son una referencia orientativa, no una certificación oficial.</p></section>
-    <section class="quick-section"><div class="section-heading"><div><div class="eyebrow">CAMBIA DE RITMO</div><h2>Practica jugando</h2></div><button class="text-action" data-v="games">Todos los juegos →</button></div><div class="quick-games"><button class="quick-game" data-g="quiz"><span class="quick-icon purple">⚡</span><b>Quiz rápido</b><small>Responde y gana XP</small></button><button class="quick-game" data-g="cards"><span class="quick-icon green">🃏</span><b>Tarjetas</b><small>Refuerza tu memoria</small></button><button class="quick-game" data-g="match"><span class="quick-icon yellow">🧩</span><b>Parejas</b><small>Une inglés y español</small></button></div></section>
-    <section class="review-banner"><span>🧠</span><div><b>Tu memoria también entrena</b><p>Repasa palabras que estás a punto de olvidar.</p></div><button class="btn ghost" data-g="cards">Repasar</button></section>
-    ${u?`<section class="next-lesson card"><div class="eyebrow">SIGUIENTE LECCIÓN GUIADA · ${u.l}</div><h2>${u.e} ${u.t}</h2><p class="m">Explicación en español, ejemplos y ejercicios paso a paso.</p><button class="btn" data-u="${u.id}">Empezar lección →</button></section>`:''}
-    ${S.placed?'':`<section class="placement-banner"><span>🧭</span><div><b>¿Cuál es tu nivel de inglés?</b><p>Haz una prueba orientativa para adaptar tu ruta.</p></div><button class="btn ghost" data-g="place">Descubrir nivel</button></section>`}`;
+ const g=Number(S.goal)||20,n=S.daily.d===day()?Number(S.daily.n)||0:0;
+ const u=nextU(),dailyDone=S.les===day(),pct=Math.min(100,Math.round(n/g*100));
+ const name='explorador';
+ const journey=[
+  {e:'🚀',title:'Lección diaria',sub:dailyDone?'Misión completada':'Tu misión de hoy',action:'<button class="btn" data-g="les">'+(dailyDone?'Practicar otra vez':'Empezar misión')+'</button>'},
+  {e:'⚡',title:'Reto relámpago',sub:'5 minutos de práctica',action:'<button class="btn ghost" data-g="quiz">Jugar reto</button>'},
+  {e:'💎',title:'Palabras nuevas',sub:'Amplía tu vocabulario',action:'<button class="btn ghost" data-v="words">Ver palabras</button>'},
+  {e:'🏆',title:'Tus logros',sub:'Mira cuánto has avanzado',action:'<button class="btn ghost" data-v="progress">Ver progreso</button>'}
+ ];
+ v.innerHTML=`
+ <section class="quest-welcome"><div><div class="quest-kicker">English Quest · tu aventura</div><h2>¡Vamos, ${name}! <span>✨</span></h2><p>Un poquito de inglés hoy te acerca a hablar con confianza.</p></div><div class="quest-mascot" role="img" aria-label="Pip, tu compañero de aventura"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">${PIP_PATHS}</svg><i>✦</i></div></section>
+ <section class="quest-stats" aria-label="Tu resumen"><div class="quest-stat"><span>🔥</span><div><b>${S.streak||0}</b><small>días de racha</small></div></div><div class="quest-stat"><span>⭐</span><div><b>${S.xp||0}</b><small>XP ganados</small></div></div><div class="quest-stat"><span>🌱</span><div><b>${mastered()}</b><small>palabras dominadas</small></div></div></section>
+ <div class="home-cols"><div class="home-col">
+ <section class="quest-goal"><div class="quest-goal-top"><div><span class="quest-kicker">Meta diaria</span><h3>${n} <small>/ ${g} XP</small></h3></div><div class="quest-goal-badge">${pct>=100?'🎉':'🎯'}</div></div><div class="quest-progress"><i style="width:${pct}%"></i></div><div class="quest-goal-bottom"><span>${pct>=100?'¡Meta conseguida! Eres constante 💚':`${Math.max(0,g-n)} XP para completar tu meta`}</span><button data-v="progress" class="quest-link">Cambiar meta</button></div></section>
+ <section class="quest-section-head"><div><span class="quest-kicker">Siguiente paso</span><h3>Tu camino de aprendizaje</h3></div><span class="quest-level" aria-label="Nivel actual">${S.base||S.lvl||'A1'}</span></section>
+ <section class="quest-path" aria-label="Ruta de misiones">${journey.map((j,i)=>`<div class="quest-step ${i===0&&!dailyDone?'current':''} ${i===0&&dailyDone?'done':''}"><div class="quest-step-rail"><div class="quest-node">${dailyDone&&i===0?'✓':j.e}</div>${i<journey.length-1?'<div class="quest-connector"></div>':''}</div><div class="quest-step-content"><div class="quest-step-copy"><b>${j.title}</b><small>${j.sub}</small></div>${j.action}</div></div>`).join('')}</section>
+ </div><div class="home-col">
+ ${S.placed?'':`<section class="quest-note"><span>🧭</span><div><b>¿Cuál es tu nivel de inglés?</b><p>Haz una prueba orientativa para adaptar tu ruta.</p><button class="btn ghost" data-g="place">Descubrir nivel</button></div></section>`}
+ ${u?`<section class="quest-next card"><div class="quest-next-art">${u.e||'📚'}</div><div class="quest-next-copy"><span class="quest-kicker">Continúa tu historia</span><h3>${u.t}</h3><p>${u.l} · explicación, ejemplos y ejercicios guiados</p><button class="btn" data-u="${u.id}">Continuar aprendiendo <span aria-hidden="true">→</span></button></div></section>`:''}
+ <section class="quest-side-grid"><button class="quest-side-card" data-review-center><span class="quest-side-icon mint">🧠</span><b>Centro de repaso</b><small>Palabras, errores y habilidades</small><span class="quest-arrow" aria-hidden="true">↗</span></button><button class="quest-side-card" data-v="learn"><span class="quest-side-icon blue">🗺️</span><b>Mapa de niveles</b><small>De A1 a C2, a tu ritmo</small><span class="quest-arrow" aria-hidden="true">↗</span></button><button class="quest-side-card" data-v="gram"><span class="quest-side-icon mint">✍️</span><b>Gramática</b><small>Reglas claras y ejemplos</small><span class="quest-arrow" aria-hidden="true">↗</span></button><button class="quest-side-card" data-v="progress"><span class="quest-side-icon blue">📈</span><b>Mi progreso</b><small>XP, racha y estadísticas</small><span class="quest-arrow" aria-hidden="true">↗</span></button></section>
+ <section class="adaptive-hero"><div class="hr"><div><div class="mini-label">Misión extra</div><h3 style="margin:5px 0">Práctica adaptativa</h3><p class="m" style="margin:0">10 preguntas que se ajustan a tus errores y a lo que necesitas reforzar.</p></div><span style="font-size:32px">🧭</span></div><div class="row" style="gap:8px;margin-top:12px"><button class="btn" data-adaptive-start>Empezar reto</button><button class="btn ghost" data-review-center>Ver repaso</button></div></section>
+ <section class="quest-note"><span>💡</span><p><b>Un consejo de Pip</b><br>${rnd(['Aprende una palabra nueva y úsala hoy en una frase propia.','No necesitas estudiar horas: la constancia de 5 minutos también cuenta.','Equivocarte no es retroceder; es descubrir qué toca practicar.','Escucha una frase, repítela en voz alta y luego intenta escribirla.'])}</p></section>
+ </div></div>
+ <p class="quest-disclaimer">Tu progreso se guarda en este dispositivo. English Quest es una herramienta de práctica, no una certificación oficial CEFR.</p>`;
+ const fab=$('.fab');if(fab)fab.style.display='none';
 }
 function games(){v.innerHTML=`<h2>Juegos · ${S.lvl}</h2>${chips()}<div class="grid">
 <button class="game" data-g="cards"><span>🃏</span><b>Tarjetas</b><small>Voltea y repasa</small></button>
@@ -194,7 +214,7 @@ function learn(){
  const levels=["A1","A2","B1","B2","C1","C2"];
  const names={A1:"Principiante",A2:"Básico",B1:"Intermedio",B2:"Intermedio alto",C1:"Avanzado",C2:"Dominio avanzado"};
  const completed=Object.keys(S.cs).filter(id=>S.cs[id]).length;
- v.innerHTML=`<div class="hr"><div><div class="mini-label">Ruta de aprendizaje</div><h2 style="margin:4px 0">Aprender</h2></div><span class="pill">${completed}/${CU.length}</span></div><p class="m">Cada unidad incluye explicación, ejemplos con audio y tres ejercicios. Avanza a tu ritmo; completar una lección no equivale a una certificación oficial.</p>`+levels.map(L=>{
+ v.innerHTML=`<div class="seg" role="group" aria-label="Sección"><button data-v="learn" class="on" aria-pressed="true">Lecciones</button><button data-v="gram">Gramática</button></div><div class="hr"><div><div class="mini-label">Ruta de aprendizaje</div><h2 style="margin:4px 0">Aprender</h2></div><span class="pill">${completed}/${CU.length}</span></div><p class="m">Cada unidad incluye explicación, ejemplos con audio y tres ejercicios. Avanza a tu ritmo; completar una lección no equivale a una certificación oficial.</p>`+levels.map(L=>{
   const units=CU.map((u,k)=>({...u,_k:k})).filter(u=>u.l===L),done=units.filter(u=>S.cs[u.id]).length,pct=units.length?Math.round(done/units.length*100):0;
   return `<section class="course-level"><div class="hr"><div><span class="level">${L}</span> <b>${names[L]}</b></div><span class="m">${done}/${units.length}</span></div><div class="progress-track"><i style="width:${pct}%"></i></div><div class="m" style="margin:7px 0 12px">${pct}% completado</div>`+units.map(u=>{
    const dn=S.cs[u.id],o=uOpen(u._k);
@@ -224,7 +244,7 @@ const mkg=(x,l)=>({t:"g",p:x[0],a:x[1],o:shuf(x.slice(1,5)),l,u:tg(x)}),mkb=(x,l
 
 const GR=[["Will","S + will + verbo base","I will help you.","Decisión del momento, promesa, predicción. Nunca «will to»."],["Be going to","S + am/is/are + going to + verbo","We are going to travel.","Plan ya decidido o evidencia ahora."],["Presente simple","S + verbo (he/she/it + s)","She works here.","Rutinas. La -s solo en he/she/it. Negar: don't/doesn't + base."],["Presente continuo","S + am/is/are + verbo-ing","I am studying.","Ahora mismo o plan cercano."],["Pasado simple","S + verbo-ed / irregular","I visited Cali.","Terminó en el pasado. Pregunta: did + base."],["Pasado continuo","S + was/were + verbo-ing","I was reading.","Acción en progreso en el pasado."],["Present perfect","S + have/has + participio","I have seen it.","Experiencia o resultado actual. No con fecha pasada."],["Posesivo 's","Dueño + 's + cosa","Ana's phone","'s puede ser de, is o has según el contexto."],["Gerundio / infinitivo","enjoy + -ing · want + to + verbo","I enjoy reading.","Tras preposición siempre -ing."],["Modales","S + should/must/can + base","You should rest.","Sin -s, sin to, verbo en base."],["Contables","many + plural · much + incontable","How much water?","A lot of sirve para ambos."],["Frecuencia","S + always/usually/never + verbo","She always smiles.","Antes del verbo, después de to be."],["Primer condicional","If + presente, will + base","If it rains, I will stay.","Nunca will después de if."],["Voz pasiva","S + be + participio","It was made in Cali.","Importa la acción, no quién la hizo."]];
 const ERR=[["I have 20 years.","I am 20 years old.","La edad se dice con to be."],["She work here.","She works here.","He/she/it lleva -s."],["Is raining.","It is raining.","El sujeto es obligatorio: it."],["I am agree.","I agree.","Agree ya es verbo; no lleva to be."],["He doesn't works.","He doesn't work.","Tras doesn't, verbo en base."],["If it will rain, I stay.","If it rains, I will stay.","No uses will después de if."],["I enjoy to swim.","I enjoy swimming.","Enjoy va con -ing."],["I am here since Monday.","I have been here since Monday.","Since pide present perfect."],["She can to swim.","She can swim.","Tras modal no va to."],["Many water.","Much water.","Water es incontable: much."],["I have a dog big.","I have a big dog.","El adjetivo va antes del sustantivo."],["Yesterday I go to school.","Yesterday I went to school.","Ayer → pasado simple."]];
-function gram(){nav("gram");$(".fab").style.display="";v.innerHTML=`<h2>Gramática</h2><p class="m" style="margin-top:-6px">Guía rápida: fórmula, ejemplo y trampa. Toca la frase para oírla.</p><input class="in" id="gq" placeholder="Buscar: will, -ing, 's…" style="text-align:left;margin-bottom:12px"><div id="gl"></div>`;
+function gram(){nav("gram");$(".fab").style.display="";v.innerHTML=`<div class="seg" role="group" aria-label="Sección"><button data-v="learn">Lecciones</button><button data-v="gram" class="on" aria-pressed="true">Gramática</button></div><h2>Gramática</h2><p class="m" style="margin-top:-6px">Guía rápida: fórmula, ejemplo y trampa. Toca la frase para oírla.</p><input class="in" id="gq" placeholder="Buscar: will, -ing, 's…" style="text-align:left;margin-bottom:12px"><div id="gl"></div>`;
 const r=q=>{q=q.toLowerCase();$("#gl").innerHTML=GR.filter(x=>x.join(" ").toLowerCase().includes(q)).map(x=>`<div class="card"><b>${x[0]}</b><div class="gf">${x[1]}</div><div style="cursor:pointer" data-s="${x[2]}">🔊 ${x[2]}</div><p class="m">💡 ${x[3]}</p></div>`).join("")+(q?"":`<h2 style="margin-top:18px">⚠️ Errores típicos</h2>`+ERR.map(e=>`<div class="card"><div class="bad2">${e[0]}</div><div style="color:var(--ok);font-weight:700">✓ ${e[1]}</div><p class="m">${e[2]}</p></div>`).join(""))};r("");$("#gq").oninput=e=>r(e.target.value)}
 function erg(){if(i>=Q.length)return end("Encuentra el error");const q=Q[i],o=shuf([q[0],...shuf(ERR.filter(x=>x!=q)).slice(0,2).map(x=>x[1])]);
 v.innerHTML=head("Encuentra el error")+`<div class="big" style="font-size:20px">¿Cuál oración tiene un error?</div>`+o.map(x=>`<button class="opt">${x}</button>`).join("")+`<div id="why"></div>`;
@@ -257,7 +277,7 @@ const bs=[],draw=()=>{$("#gt").innerHTML=got.map(x=>`<span class="pill" style="b
 shuf(T).forEach(t=>{const b=document.createElement("button");b.className="opt";b.style.cssText="width:auto;margin:0;padding:10px 14px";b.textContent=t;
 b.onclick=()=>{b.disabled=1;b.style.opacity=.3;got.push(t);draw();if(got.length==T.length){const ok=got.join(" ")==q.a;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";say(q.a);fin(q,ok)}};bs.push(b);$("#ls").appendChild(b)});
 $("#un").onclick=()=>{if(got.length==T.length)return;got=[];draw();bs.forEach(b=>{b.disabled=0;b.style.opacity=1})}}}
-function lessonEnd(){const T=TOT,pc=Math.round(sc/T*100),ok=pc>=80,L=S.base||"A1",k=LV.indexOf(L),first=S.dailyReward!==day(),xp=(first?sc*10:Math.min(sc*2,10))+(ok&&first?30:0);let msg="";
+function lessonEnd(){const T=TOT,pc=Math.round(sc/T*100),ok=pc>=80,L=S.base||"A1",k=LV.indexOf(L),first=S.dailyReward!==day()&&S.dailyLessonRewardDay!==day(),xp=(first?sc*10:Math.min(sc*2,10))+(ok&&first?30:0);let msg="";
 S.dailyReward=day();
 if(ok)S.les=day();
 if(pc>=90){if(S.up===L&&k<5){S.base=LV[k+1];S.up=S.dn=null;msg="🚀 ¡Subes a "+S.base+"!"}else{S.up=L;msg="Otro 90 % o más y subirás de nivel."}}
@@ -339,8 +359,8 @@ hud();go("home");
     {title:'Pedir en una cafetería',level:'A2',prompt:'You want to order politely. Choose the most natural sentence.',options:[['I want coffee now.','Se entiende, pero suena directo.'],['Could I have a coffee, please?','Muy buena fórmula cortés.'],['I take a coffee yesterday.','El tiempo verbal no corresponde.']],correct:1,tip:'“Could I have…?” y “I’d like…” son fórmulas útiles para pedir.'},
     {title:'Explicar una meta',level:'B1',prompt:'Tell a friend why you are learning English.',options:[['I learn English since two years.','Con “since” para duración hasta ahora, normalmente usamos present perfect.'],['I have been learning English for two years.','Excelente: present perfect continuous + “for”.'],['I am learning English two years ago.','“Two years ago” exige pasado.']],correct:1,tip:'“I’ve been learning English because I want to travel and meet new people.”'},
     {title:'Dar una opinión',level:'B2',prompt:'You disagree respectfully during a discussion.',options:[['You are totally wrong, obviously.','Puede sonar agresivo.'],['I see your point, although I would argue that…','Reconoce la otra postura y presenta la tuya.'],['I am not agree in this.','La forma correcta es “I don’t agree”.']],correct:1,tip:'Matiza tu opinión con “I see what you mean, but…” o “That said, …”.'},
-    {title:'Matizar una conclusión',level:'C1',prompt:'You need to express a careful, nuanced conclusion.',options:[['This proves everything without doubt.','Es una afirmación demasiado absoluta.'],['The evidence appears to suggest a more nuanced interpretation.','Registro académico y cauteloso apropiado.'],['The evidence are saying a nuance.','La estructura no es natural.']],correct:1,tip:'En registros avanzados, usa “appears to suggest”, “to some extent” y “nevertheless” con precisión.'},
-    {title:'Argumentación avanzada',level:'C2',prompt:'You want to concede one point while maintaining your argument.',options:[['Be that as it may, the broader implications remain unresolved.','Concesión formal y argumento matizado.'],['Anyway, this thing is bad.','Demasiado vago para un argumento sofisticado.'],['Despite of the evidence, I disagree.','Se dice “despite the evidence” o “in spite of the evidence”.']],correct:0,tip:'“Be that as it may” es formal; úsalo cuando el registro y el contexto lo permitan.'}
+    {title:'Matizar una conclusión',level:'C1',prompt:'You need to express a careful, nuanced conclusion.',options:[['The evidence proves the policy failed in every respect.','Es una conclusión demasiado absoluta para los datos descritos.'],['The evidence appears to support a more nuanced interpretation.','Mantiene cautela y evita presentar la conclusión como definitiva.'],['The findings suggest the policy has no meaningful effect.','También es una conclusión fuerte; no expresa la misma cautela.']],correct:1,tip:'En registros avanzados, usa “appears to suggest”, “to some extent” y “nevertheless” con precisión.'},
+    {title:'Argumentación avanzada',level:'C2',prompt:'You want to concede one point while maintaining your argument.',options:[['That concession notwithstanding, the wider implications remain unresolved.','Concesión formal y prudente; reconoce un punto sin cerrar el debate.'],['I accept that point, but the main claim still needs evidence.','Es razonable, aunque menos formal que la opción buscada.'],['Even if that point holds, it does not settle the broader question.','Es una concesión válida, pero menos formal en su construcción.']],correct:0,tip:'“Be that as it may” es formal; úsalo cuando el registro y el contexto lo permitan.'}
   ];
   let ci=0,cs=0;
   function coach(){ci=0;cs=0;coachQuestion()}
@@ -530,7 +550,7 @@ hud();go("home");
       themeButton.title=light?'Cambiar a tema oscuro':'Cambiar a tema claro';
     }
     const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta)meta.content=light?'#f4f5ff':'#0d1022';
+    if(meta)meta.content=light?'#f6f8ef':'#0f1311';
   };
   if(themeButton){
     themeButton.onclick=()=>{
@@ -595,34 +615,7 @@ hud();go("home");
   }
 })();
 
-/* English Quest module */
 
-(()=>{
- const originalHome=window.home;
- if(typeof originalHome!=='function')return;
- const levels=['A1','A2','B1','B2','C1','C2'];
- const emoji={A1:'🌱',A2:'🧭',B1:'🏕️',B2:'🚀',C1:'🏰',C2:'👑'};
- window.home=function(){
-   originalHome();
-   const heading=[...document.querySelectorAll('#v h2')].find(x=>x.textContent.includes('Inicio'));
-   if(!heading||document.querySelector('#quest-adventure-map-ui'))return;
-   const map=document.createElement('section');
-   map.className='quest-map';map.id='quest-adventure-map-ui';
-   const current=levels.indexOf(S.base||S.lvl||'A1');
-   map.innerHTML=`<div class="quest-map-head"><div><h3>🗺️ Tu ruta de aventura</h3><p>Un paso pequeño cada día te lleva más lejos.</p></div><span style="font-size:26px">✨</span></div>
-    <div class="pip"><div class="pip-face" aria-label="Pip, tu compañero">🦊</div><div><strong>¡Hey, explorador!</strong><small>Soy Pip. ¿Listo para desbloquear nuevas palabras? ¡Vamos a por la siguiente misión!</small></div></div>
-    <div class="quest-path">${levels.map((l,i)=>`<button class="quest-node ${i===current?'current':i<current?'done':''}" data-quest-level="${l}" aria-label="Explorar nivel ${l}"><span>${i<current?'⭐':emoji[l]}</span>${l}<small>${i<current?'¡Completado!':i===current?'Tu aventura':'Próxima zona'}</small></button>`).join('')}</div>
-    <div class="quest-map-foot"><span>🎯 Meta de hoy: 20 XP</span><span>🏆 Nivel ${Math.floor((S.xp||0)/100)+1}</span></div>`;
-   heading.insertAdjacentElement('afterend',map);
- };
- document.addEventListener('click',e=>{
-   const b=e.target.closest('[data-quest-level]');if(!b)return;
-   const level=b.dataset.questLevel;
-   S.lvl=level;try{localStorage.setItem('eq',JSON.stringify(S))}catch(_){}
-   if(typeof toast==='function')toast('🗺️ Zona '+level+' seleccionada');
-   if(typeof home==='function')home();
- },true);
-})();
 
 /* English Quest module */
 
@@ -636,7 +629,7 @@ hud();go("home");
     celebrate:[['¡MISIÓN COMPLETADA!','¡Mira todo lo que has avanzado!'],['¡Nivel de energía al máximo!','Tus XP van creciendo. ¡Sigue así!'],['¡Fiesta de aprendizaje!','Cada paso te acerca a tu siguiente meta.']],
     sleep:[['Pausa de explorador','Descansar también forma parte del aprendizaje.']]
   };
-  const fox=`<svg viewBox="0 0 100 100" role="img" aria-label="Pip, zorro compañero de aprendizaje"><path d="M17 42 12 12 38 27Q50 21 62 27L88 12 83 43Q91 56 84 72 76 91 50 91 24 91 16 72 9 56 17 42Z" fill="#e98543" stroke="#8f482d" stroke-width="3" stroke-linejoin="round"/><path d="M18 35 17 19 32 30Z M82 35 83 19 68 30Z" fill="#ffb2a2"/><path d="M24 51Q34 42 43 51M57 51Q66 42 76 51" fill="none" stroke="#4a2e2b" stroke-width="4" stroke-linecap="round"/><path d="M28 62Q50 52 72 62L66 77Q50 87 34 77Z" fill="#fff1d8"/><path d="M45 64Q50 59 55 64L50 69Z" fill="#4a2e2b"/><path d="M42 75Q50 81 58 75" fill="none" stroke="#a94d45" stroke-width="2.8" stroke-linecap="round"/><path d="M38 28Q50 20 62 28" fill="none" stroke="#ffbd68" stroke-width="4" stroke-linecap="round"/><circle cx="29" cy="60" r="4" fill="#ff9b9b" opacity=".7"/><circle cx="71" cy="60" r="4" fill="#ff9b9b" opacity=".7"/></svg>`;
+  const fox=`<svg viewBox="0 0 100 100" role="img" aria-label="Pip, zorro compañero de aprendizaje">${PIP_PATHS}</svg>`;
   const el=document.createElement('button');el.type='button';el.id='pip-companion';el.className='pip-companion';el.dataset.mood='idle';el.setAttribute('aria-label','Hablar con Pip, tu compañero de inglés');
   el.innerHTML=`<i class="pip-spark" aria-hidden="true">✨</i><div class="pip-avatar">${fox}</div><div class="pip-bubble"><strong id="pip-title">¡Hola, explorador!</strong><span id="pip-message">Soy Pip. ¡Vamos a aprender algo nuevo!</span></div>`;
   document.body.appendChild(el);
@@ -658,7 +651,7 @@ hud();go("home");
   }
   if(root){new MutationObserver(()=>setTimeout(scan,120)).observe(root,{subtree:true,childList:true,characterData:true});}
   // React to XP rewards and level-ups emitted by the app's existing reward UI.
-  new MutationObserver(()=>{const reward=document.querySelector('.eq-reward');if(reward){const txt=reward.innerText||'';react(/nivel|buen trabajo/i.test(txt)?'celebrate':'happy',true)}}).observe(document.body,{subtree:true,childList:true});
+  new MutationObserver(recs=>{for(const r of recs)for(const n of r.addedNodes){if(n.nodeType===1&&n.classList.contains('eq-reward')){react(/nivel|buen trabajo/i.test(n.innerText||'')?'celebrate':'happy',true);return}}}).observe(document.body,{childList:true});
   // Start with a friendly greeting, then react gently when the learner is idle.
   setTimeout(()=>react('idle',true),250);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)react('sleep',true);else react('idle',true)});
