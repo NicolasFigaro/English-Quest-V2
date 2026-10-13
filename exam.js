@@ -304,7 +304,7 @@ function logErrors(sec){
   sec.items.forEach(it=>{const r=X.res[it.k];if(!r||eff(r)===r.t)return;
     const ep=esc((it.n+". "+it.p).replace(/\s+/g," ").slice(0,220));
     if(S.errorLog.some(e=>!e.reviewed&&e.prompt===ep))return;
-    S.errorLog.unshift({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),date:day(),reviewed:false,kind:"exam",level:"A2",source:"Simulacro: "+SETS[X.set].short,prompt:ep,answer:esc(modelText(it)),chosen:esc(r.ans.filter(Boolean).join(" / ")||"(vacío)"),explanation:fmt(esc(it.why||""))})});
+    S.errorLog.unshift({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),date:day(),reviewed:false,kind:"exam",level:"A2",source:"Simulacro: "+SETS[X.set].short,unit:it.u||"",prompt:ep,answer:esc(modelText(it)),chosen:esc(r.ans.filter(Boolean).join(" / ")||"(vacío)"),explanation:fmt(esc(it.why||""))})});
   S.errorLog=S.errorLog.slice(0,200)}
 
 function checkSection(){

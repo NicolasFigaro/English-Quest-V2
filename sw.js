@@ -1,7 +1,7 @@
 /* English Quest PWA — cache versioned and safe offline fallback. */
-const CACHE_NAME = 'english-quest-shell-v14';
-const SHELL = ['./', './index.html', './styles.css', './app.js', './guide-data.js', './study-guide.js', './exam.js', './manifest.webmanifest', './icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png'];
-const STATIC_ASSETS = new Set(['styles.css', 'app.js', 'guide-data.js', 'study-guide.js', 'exam.js', 'manifest.webmanifest', 'icon.svg']);
+const CACHE_NAME = 'english-quest-shell-v15';
+const SHELL = ['./', './index.html', './styles.css', './app.js', './guide-data.js', './study-guide.js', './exam.js', './extras.js', './manifest.webmanifest', './icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png'];
+const STATIC_ASSETS = new Set(['styles.css', 'app.js', 'guide-data.js', 'study-guide.js', 'exam.js', 'extras.js', 'manifest.webmanifest', 'icon.svg']);
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {

@@ -54,3 +54,15 @@ FIXES
 - Reminders don't crash without a service worker.
 - Error log cap raised to 200.
 - Service worker cache: english-quest-shell-v14 (new files added).
+
+==================== v15 ====================
+NEW FILE: extras.js (loaded last)
+- Repaso de errores: spaced review (1/3/7/14 days) of mistakes from lessons, adaptive practice and the exam. Home plan card, Games card.
+- Temas débiles: ranks lessons by how many related mistakes you made; "Practicar" opens the lesson.
+- Cuenta atrás: set your exam date on Home; get a daily mini-plan (due errors, weakest topic, next exam section).
+- Copia de seguridad (Perfil): export/import progress as a .json file.
+- Juegos: "Escucha y escribe" (dictation with word-by-word diff) and "Repite la frase" (speech recognition where the browser supports it, otherwise self-rating).
+- Home: secondary cards grouped in a "Más práctica y recursos" drawer.
+- Bigger tap targets (44px) and visible keyboard focus.
+- exam.js: exam mistakes now store the related lesson (unit) for the weak-topics ranking.
+- sw.js cache: english-quest-shell-v15.

@@ -626,3 +626,21 @@ textarea.exi{resize:vertical;line-height:1.5}
 .exf.okk{border-left-color:var(--ok)}.exf.bad{border-left-color:var(--bad)}.exf p{margin:6px 0 0}.exl{margin:6px 0;padding-left:18px}
 .exchk{display:flex;gap:10px;align-items:flex-start;margin:8px 0;line-height:1.4}.exchk input{width:20px;height:20px;flex:none;margin-top:1px}
 .exscore{text-align:center;margin:12px 0}
+
+/* ===== v15 extras ===== */
+.btn,.chip,.pill-action,nav button,.ib,.game,summary{min-height:44px}
+.ib{min-width:44px}
+button:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--p);outline-offset:2px}
+.xt-plan{list-style:none;margin:12px 0 8px;padding:0;display:grid;gap:8px}
+.xt-plan li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:14px}
+.xt-plan li span{flex:1;min-width:0}
+.xt-ok{color:var(--ok);font-weight:700}
+.xt-bad{color:var(--bad);font-weight:700;text-decoration:underline wavy}
+details.more-home{padding:0}
+details.more-home>summary{cursor:pointer;font-weight:800;padding:14px 16px;list-style:none;display:flex;align-items:center;justify-content:space-between}
+details.more-home>summary::after{content:"▾";transition:transform .2s}
+details.more-home[open]>summary::after{transform:rotate(180deg)}
+details.more-home>summary::-webkit-details-marker{display:none}
+details.more-home>.card,details.more-home>section,details.more-home>div{margin:0 10px 10px}
+.xt-card .exi{min-width:0}
+@media(max-width:420px){.xt-plan li{flex-direction:column;align-items:stretch}.xt-plan li .btn{width:100%}}
