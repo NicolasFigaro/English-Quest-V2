@@ -1,5 +1,5 @@
 /* English Quest PWA — cache versioned and safe offline fallback. */
-const CACHE_NAME = 'english-quest-shell-v12';
+const CACHE_NAME = 'english-quest-shell-v13';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png'];
 const STATIC_ASSETS = new Set(['styles.css', 'app.js', 'manifest.webmanifest', 'icon.svg']);
 

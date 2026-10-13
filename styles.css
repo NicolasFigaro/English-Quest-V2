@@ -587,3 +587,19 @@ main>*{animation:eq-fade .12s ease-out both}
 .eq-reveal{animation:none;animation-delay:0s}
 @keyframes eq-fade{from{opacity:0}to{opacity:1}}
 .hero .btn{background:#fff;color:#0f2d08}
+
+/* ===== Corrección con "Continuar" ===== */
+.fbx{margin:16px 0;text-align:left}
+.fbx p{margin:10px 0 0;line-height:1.5}
+.fbx .fx-pick{opacity:.8;font-size:14px}
+.fbx .fx-ans{font-size:19px;font-weight:800}
+.fbx .fx-tr{opacity:.85}
+.fbx .fx-rule{margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.1)}
+.fbx .fx-rule p{margin:6px 0 0}
+.fbx .fx-tip{font-size:14px;opacity:.9}
+.fbx #cont{margin-top:16px;scroll-margin-bottom:120px}
+
+/* ===== Sin zoom, comportamiento de app ===== */
+html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,select{-webkit-user-select:text;user-select:text;font-size:max(16px,1em)}

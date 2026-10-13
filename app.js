@@ -60,6 +60,20 @@ const box=w=>S.box[w.en]||1;
 function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 function touch(){const d=day();if(S.last!==d){const y=yesterday();S.streak=S.last===y?S.streak+1:1;S.last=d}}
 function gain(n,t){if(t)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.daily.n+=n;S.xp+=n;save();hud();if(window.Pip&&n>0)window.Pip.react('happy')}
+
+/* Corrección: si fallas, se muestra la respuesta, el motivo y esperas a pulsar "Continuar". Si aciertas, avanza rápido. */
+function after(ok,info,go){let done=0;const next=()=>{if(done)return;done=1;go()};
+if(ok){setTimeout(next,700);return}
+const u=info.u&&typeof CU!=="undefined"?CU.find(x=>x.id==info.u):null;
+let h=`<span class="pill">✗ ASÍ ES</span>`;
+if(info.pick)h+=`<p class="fx-pick">Tu respuesta: <s>${esc(info.pick)}</s></p>`;
+h+=`<p class="fx-ans">${esc(info.ans)}</p>`;
+if(info.tr)h+=`<p class="fx-tr">${esc(info.tr)}</p>`;
+if(u)h+=`<div class="fx-rule"><b>${u.e} ${u.t}</b><p>${fmt(u.x[0])}</p>${u.k?`<p class="fx-tip">💡 ${fmt(u.k)}</p>`:""}</div>`;
+else if(info.hint)h+=`<p class="fx-tip">💡 ${info.hint}</p>`;
+const d=document.createElement("div");d.className="glass fbx";d.innerHTML=h+`<button class="btn" id="cont">Continuar</button>`;
+v.appendChild(d);const b=d.querySelector("#cont");b.onclick=next;
+try{b.focus({preventScroll:true});b.scrollIntoView({block:"end",behavior:"smooth"})}catch(e){}}
 function mark(w,ok){S.box[w.en]=ok?Math.min(5,box(w)+1):1;save();hud()}
 function hud(){const e=$("#sk");if(e)e.textContent=S.streak;ach()}
 function chips(){return `<div class="chips">${LV.map(l=>`<button class="chip ${l==S.lvl?"on":""}" data-l="${l}">${l}</button>`).join("")}</div>`}
@@ -112,7 +126,7 @@ function end(title){const pc=Math.round(sc/Q.length*100);v.innerHTML=`<div class
 function start(g){R=g;i=0;sc=0;nav("games");$(".fab").style.display="none";
 if(g=="cards"){Q=pick(6);cards()}else if(g=="quiz"){Q=pick(8);quiz()}else if(g=="match")match();
 else if(g=="scr"){Q=pick(6).filter(w=>!w.en.includes(" "));Q.length?scr():v.innerHTML=`<div class="card">Este juego solo funciona con palabras sueltas.<br><br><button class="btn" data-v="games">Volver</button></div>`}
-else if(g=="les"){LM="les";PL={};lesson()}else if(g=="place"){LM="place";PL={};placeInit()}else if(g=="gap"){PM=0;PL={};const mk=(l,x)=>({s:x[0],a:x[1],d:x.slice(2,5),l}),b=LV.indexOf(SENT[S.lvl]?S.lvl:"B1");
+else if(g=="les"){LM="les";PL={};lesson()}else if(g=="place"){LM="place";PL={};placeInit()}else if(g=="gap"){PM=0;PL={};const mk=(l,x)=>({s:x[0],a:x[1],d:x.slice(2,5),l,u:tg(x)}),b=LV.indexOf(SENT[S.lvl]?S.lvl:"B1");
 Q=PM?LV.slice(0,6).flatMap(l=>SENT[l].map(x=>mk(l,x))):shuf([-1,0,1].flatMap(o=>(SENT[LV[b+o]]||[]).map(x=>mk(LV[b+o],x))));gap()}
 else if(g=="pron"){Q=pick(5);pron()}else if(g=="story")story();else if(g=="listen"){Q=pick(6);typ(true)}else{Q=pick(6);typ(false)}}
 function head(t){return `<div class="m">${t} · ${i+1}/${Q.length}</div><div class="bar" style="background:var(--line)"><i style="width:${i/Q.length*100}%;background:var(--p)"></i></div>`}
@@ -125,7 +139,7 @@ function quiz(){if(i>=Q.length)return end("Quiz terminado");const w=Q[i],r=Math.
 a=r?w.en:w.es,ans=r?w.es:w.en,o=shuf([ans,...shuf(pool().filter(x=>x.en!=w.en)).slice(0,3).map(x=>r?x.es:x.en)]);
 v.innerHTML=head("Quiz")+`<div class="big">${a}</div><div id="o">${o.map(x=>`<button class="opt">${x}</button>`).join("")}</div>`;
 document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==ans;b.classList.add(ok?"ok":"bad");
-document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==ans)x.classList.add("ok")});mark(w,ok);if(ok)sc++;say(w.en);setTimeout(()=>{i++;quiz()},ok?550:1300)})}
+document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==ans)x.classList.add("ok")});mark(w,ok);if(ok)sc++;say(w.en);after(ok,{pick:b.textContent,ans:w.en+" = "+w.es,hint:"Repite la palabra en voz alta y úsala en una frase propia."},()=>{i++;quiz()})})}
 function match(){const p=pick(6);let t=shuf(p.flatMap(w=>[{k:w.en,t:w.en,l:"en"},{k:w.en,t:w.es,l:"es"}])),sel=null,left=6,miss=0;
 v.innerHTML=`<div class="m">Une cada palabra con su traducción</div><div class="mem">${t.map((x,j)=>`<button class="tile" data-j="${j}">${x.t}</button>`).join("")}</div><div class="fb" id="fb"></div>`;
 const B=[...document.querySelectorAll(".tile")];
@@ -139,12 +153,12 @@ let ls=shuf(L.split("")),tries=0;while(L.length>2&&ls.join("")==L&&tries++<9)ls=
 v.innerHTML=head("Ordena")+`<div class="big">${w.es}</div><div class="letters" id="gt"></div><div class="letters" id="ls"></div><div class="fb" id="fb"></div><button class="btn ghost" id="sk2">Saltar</button>`;
 const draw=()=>{$("#gt").innerHTML=L.split("").map((_,k)=>`<div class="lt slot" style="display:grid;place-items:center">${got[k]||""}</div>`).join("");}
 draw();ls.forEach(c=>{const b=document.createElement("button");b.className="lt";b.textContent=c;b.onclick=()=>{b.disabled=1;b.style.opacity=.3;got+=c;draw();
-if(got.length==L.length){const ok=got==L;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+w.en;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";mark(w,ok);if(ok)sc++;say(w.en);setTimeout(()=>{i++;scr()},ok?600:1400)}};$("#ls").appendChild(b)});
+if(got.length==L.length){const ok=got==L;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+w.en;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";mark(w,ok);if(ok)sc++;say(w.en);after(ok,{pick:got,ans:w.en,tr:w.es,hint:"Fíjate en el orden exacto de las letras."},()=>{i++;scr()})}};$("#ls").appendChild(b)});
 $("#sk2").onclick=()=>{mark(w,0);i++;scr()}}
 function typ(listen){if(i>=Q.length)return end(listen?"Oído entrenado":"Escritura completa");const w=Q[i];
 v.innerHTML=head(listen?"Escucha":"Escribe en inglés")+(listen?`<div class="big"><button class="btn" style="width:auto;font-size:30px" id="pl">🔊</button></div><p class="m" style="text-align:center">Pista: ${w.es}</p>`:`<div class="big">${w.es}</div>`)+`<input class="in" id="ti" autocomplete="off" autocapitalize="off" placeholder="Escribe aquí"><div class="fb" id="fb"></div><button class="btn" id="ck">Comprobar</button>`;
 if(listen){$("#pl").onclick=()=>say(w.en);setTimeout(()=>say(w.en),300)}
-const chk=()=>{const ok=norm($("#ti").value)==norm(w.en);$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+w.en;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";mark(w,ok);if(ok)sc++;say(w.en);$("#ck").disabled=1;setTimeout(()=>{i++;typ(listen)},ok?600:1400)};
+const chk=()=>{const ok=norm($("#ti").value)==norm(w.en);$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+w.en;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";mark(w,ok);if(ok)sc++;say(w.en);$("#ck").disabled=1;$("#ti").disabled=1;after(ok,{pick:$("#ti").value.trim()||"(vacío)",ans:w.en,tr:w.es,hint:"Compara letra por letra con tu respuesta."},()=>{i++;typ(listen)})};
 $("#ck").onclick=chk;$("#ti").onkeydown=e=>{if(e.key=="Enter")chk()};$("#ti").focus()}
 let PM=0,PL={};
 const norm=t=>t.toLowerCase().replace(/[^a-z' ]+/g," ").replace(/\s+/g," ").trim();
@@ -156,7 +170,7 @@ function ach(){let n=0;AC.forEach(([e,t,f],k)=>{if(!S.ach.includes(k)&&f(S)){S.a
 function gap(){if(i>=Q.length)return PM?placeEnd():end("Frases completadas");const q=Q[i],o=shuf([q.a,...q.d]);
 v.innerHTML=head(PM?"Prueba de nivel":"Frases")+`<div class="big" style="font-size:22px">${q.s}</div><div>${o.map(x=>`<button class="opt">${x}</button>`).join("")}</div>`;
 document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==q.a;b.classList.add(ok?"ok":"bad");
-document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q.a)x.classList.add("ok")});if(ok){sc++;PL[q.l]=(PL[q.l]||0)+1}setTimeout(()=>{i++;gap()},ok?550:1300)})}
+document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q.a)x.classList.add("ok")});if(ok){sc++;PL[q.l]=(PL[q.l]||0)+1}after(ok,{pick:b.textContent,ans:q.s.replace("___",q.a),u:q.u},()=>{i++;gap()})})}
 function pron(){if(i>=Q.length)return end("Pronunciación");const w=Q[i],SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 v.innerHTML=head("Pronunciación")+`<div class="big">${w.en}</div><p class="m" style="text-align:center">${w.es}</p><div class="row"><button class="btn ghost" id="pl">🔊 Escuchar</button><button class="btn" id="mic">🎤 Hablar</button></div><div class="fb" id="fb"></div><button class="btn ghost" id="sk2">Saltar</button>`;
 if(!SR)$("#fb").textContent="Tu navegador no soporta reconocimiento de voz (prueba Chrome).";
@@ -300,22 +314,28 @@ function placeInit(){LW=new Set();Q=LV.slice(0,6).flatMap(l=>[...shuf(SENT[l]).s
 function lesson(){LW=new Set();const L=S.base||"A1",k=LV.indexOf(L),pv=LV[k-1];
 const ws=shuf([...wp(L),...wp(pv)]).sort((a,b)=>box(a)-box(b)+(Math.random()-.5)*2).slice(0,8),ss=shuf([...SENT[L],...(pv?shuf(SENT[pv]).slice(0,1):[])]);
 Q=[...ws.slice(0,3).map(w=>ch(w,Math.random()<.5,L)),...ss.slice(0,3).map(x=>mkg(x,L)),...ws.slice(3,6).map(w=>({t:"w",p:w.es,a:w.en,w,l:L})),...ws.slice(6,8).map(w=>({t:"l",a:w.en,w,l:L})),...ss.slice(3,6).map(x=>mkb(x,L))];TOT=Q.length;ex()}
-function fin(q,ok){if(!q.r){if(ok)sc++;PL[q.l]=(PL[q.l]||0)+(ok?1:0)}
+function fin(q,ok,pick){if(!q.r){if(ok)sc++;PL[q.l]=(PL[q.l]||0)+(ok?1:0)}
 if(!ok&&!q.r&&q.u)LW.add(q.u);
 if(!ok&&!q.r&&LM=="les")Q.push({...q,r:1});
 if(LM=="place"&&q.last&&(PL[q.l]||0)<2)Q.length=i+1;
-setTimeout(()=>{i++;ex()},ok?800:1600)}
+const info={pick,u:q.u};
+if(q.t=="g"){info.ans=q.p.replace("___",q.a)}
+else if(q.t=="q"){info.ans=q.w?q.w.en+" = "+q.w.es:q.a}
+else if(q.t=="b"){info.ans=q.a}
+else{info.ans=q.a;if(q.w)info.tr=q.w.es}
+if(!q.u&&q.w)info.hint="Repite la palabra en voz alta y úsala en una frase propia.";
+after(ok,info,()=>{i++;ex()})}
 function ex(){if(i>=Q.length)return LM=="place"?placeEnd():lessonEnd();const q=Q[i],h=head((LM=="place"?"Prueba de nivel":"Lección diaria")+(q.r?" · repaso":""));
 if(q.t=="g"||q.t=="q"){v.innerHTML=h+`<div class="big" style="font-size:${q.t=="g"?22:30}px">${q.p}</div><div>${q.o.map(x=>`<button class="opt">${x}</button>`).join("")}</div>`;
-document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==q.a;b.classList.add(ok?"ok":"bad");document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q.a)x.classList.add("ok")});if(q.w)mark(q.w,ok);fin(q,ok)})}
+document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==q.a;b.classList.add(ok?"ok":"bad");document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q.a)x.classList.add("ok")});if(q.w)mark(q.w,ok);fin(q,ok,b.textContent)})}
 else if(q.t=="w"||q.t=="l"){v.innerHTML=h+(q.t=="l"?`<div class="big"><button class="btn" style="width:auto;font-size:30px" id="pl">🔊</button></div><p class="m" style="text-align:center">Escribe lo que oyes</p>`:`<div class="big">${q.p}</div>`)+`<input class="in" id="ti" autocomplete="off" autocapitalize="off" placeholder="Escribe aquí"><div class="fb" id="fb"></div><button class="btn" id="ck">Comprobar</button>`;
 if(q.t=="l"){$("#pl").onclick=()=>say(q.a);setTimeout(()=>say(q.a),300)}
-const chk=()=>{const ok=norm($("#ti").value)==norm(q.a);$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";$("#ck").disabled=1;$("#ti").disabled=1;mark(q.w,ok);say(q.a);fin(q,ok)};
+const chk=()=>{const ok=norm($("#ti").value)==norm(q.a);$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";$("#ck").disabled=1;$("#ti").disabled=1;mark(q.w,ok);say(q.a);fin(q,ok,$("#ti").value.trim()||"(vacío)")};
 $("#ck").onclick=chk;$("#ti").onkeydown=e=>{if(e.key=="Enter"&&!$("#ck").disabled)chk()};$("#ti").focus()}
 else{const T=q.a.split(" ");let got=[];v.innerHTML=h+`<p class="m" style="text-align:center">Ordena la oración</p><div class="letters" id="gt" style="min-height:56px"></div><div class="letters" id="ls"></div><div class="fb" id="fb"></div><button class="btn ghost" id="un">Borrar</button>`;
 const bs=[],draw=()=>{$("#gt").innerHTML=got.map(x=>`<span class="pill" style="background:var(--mint);font-size:16px;letter-spacing:0">${x}</span>`).join(" ")};
 shuf(T).forEach(t=>{const b=document.createElement("button");b.className="opt";b.style.cssText="width:auto;margin:0;padding:10px 14px";b.textContent=t;
-b.onclick=()=>{b.disabled=1;b.style.opacity=.3;got.push(t);draw();if(got.length==T.length){const ok=got.join(" ")==q.a;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";say(q.a);fin(q,ok)}};bs.push(b);$("#ls").appendChild(b)});
+b.onclick=()=>{b.disabled=1;b.style.opacity=.3;got.push(t);draw();if(got.length==T.length){const ok=got.join(" ")==q.a;$("#fb").textContent=ok?"✓ ¡Correcto!":"✗ Era: "+q.a;$("#fb").style.color=ok?"var(--ok)":"var(--bad)";say(q.a);fin(q,ok,got.join(" "))}};bs.push(b);$("#ls").appendChild(b)});
 $("#un").onclick=()=>{if(got.length==T.length)return;got=[];draw();bs.forEach(b=>{b.disabled=0;b.style.opacity=1})}}}
 function lessonEnd(){const T=TOT,pc=Math.round(sc/T*100),ok=pc>=80,L=S.base||"A1",k=LV.indexOf(L),first=S.dailyReward!==day()&&S.dailyLessonRewardDay!==day(),xp=(first?sc*10:Math.min(sc*2,10))+(ok&&first?30:0);let msg="";
 S.dailyReward=day();
@@ -710,4 +730,12 @@ hud();go("home");
   c.innerHTML='<b>👤 Tu perfil</b><input class="in" id="nm" maxlength="20" placeholder="Cómo quieres que te llame" value="'+esc(S.name||'')+'" style="margin:10px 0">'+
    '<div class="m" style="margin-bottom:8px">Mi nivel</div><div class="row" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">'+LV.slice(0,6).map(l=>'<button class="chip'+((S.base||S.lvl)===l?' on':'')+'" data-pick="'+l+'">'+l+'</button>').join('')+'</div>';
   v.insertBefore(c,v.children[1]||null)};
+})();
+
+/* Sin zoom: la app se comporta como una app nativa. */
+(function(){const stop=e=>e.preventDefault();
+["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,stop,{passive:false}));
+document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener("wheel",e=>{if(e.ctrlKey)e.preventDefault()},{passive:false});
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&["+","-","=","_","0"].includes(e.key))e.preventDefault()});
 })();

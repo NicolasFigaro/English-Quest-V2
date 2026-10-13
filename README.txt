@@ -1,4 +1,4 @@
-English Quest v12
+English Quest v13
 =================
 Fusión de v11 (estructura modular y correcciones) con v09 (identidad verde, inicio "aventura", mascota).
 
@@ -6,7 +6,7 @@ Archivos
 - index.html  Estructura mínima: barra superior, <main id="v"> y navegación.
 - styles.css  Estilos. La "CAPA FINAL" (al final del archivo) define colores, navegación y pantalla de inicio.
 - app.js      Toda la lógica. Pip, recompensas y repaso adaptativo van al final.
-- sw.js       Service worker (caché english-quest-shell-v12).
+- sw.js       Service worker (caché english-quest-shell-v13).
 - manifest.webmanifest, icon.svg, icons/  Instalación como app (iconos normal, maskable y apple-touch).
 
 Para publicar: sube la carpeta completa y sírvela por HTTPS (el service worker no funciona desde file://).
@@ -30,3 +30,9 @@ Cambios respecto a v11
 - Vocabulario ampliado, distractores C1/C2 y esquema v2 recuperados de v09.
 - Corregido un bucle infinito en el observador de Pip que congelaba la página al ganar XP.
 - Manifest: orientación libre, icono maskable propio, colores acordes con el tema.
+
+Cambios v13
+- Al fallar una pregunta (quiz, letras, escribir, escuchar, frases, lección diaria y prueba de nivel) ya no avanza sola:
+  muestra tu respuesta, la correcta, la traducción y la regla de gramática, y esperas a pulsar "Continuar".
+  Si aciertas, avanza rápido (0,7 s).
+- Zoom bloqueado (pellizco, doble toque, Ctrl+rueda, Ctrl +/-). Inputs a 16 px mínimo para que iOS no haga zoom al enfocar.
