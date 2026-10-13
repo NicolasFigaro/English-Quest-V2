@@ -1,3 +1,5 @@
+/* Contenido de la guía de estudio (guide-data.js). Si el archivo no cargó, la app sigue funcionando sin él. */
+const G=typeof GUIDE!=="undefined"?GUIDE:{units:[],err:[],gr:[],vocab:{},stories:{}};
 const D={A1:[["house","casa"],["water","agua"],["friend","amigo"],["happy","feliz"],["book","libro"],["morning","mañana"],["window","ventana"],["dog","perro"]],
 A2:[["travel","viajar"],["weather","clima"],["borrow","pedir prestado"],["tired","cansado"],["cheap","barato"],["neighbor","vecino"],["sometimes","a veces"],["ticket","boleto"]],
 B1:[["achieve","lograr"],["improve","mejorar"],["though","aunque"],["afford","permitirse"],["reliable","confiable"],["career","carrera"],["growth","crecimiento"],["rely on","depender de"]],
@@ -25,9 +27,11 @@ add("C1",[["accommodate","dar cabida a"],["adjacent","adyacente"],["arbitrary","
 add("C2",[["abstruse","abstruso"],["acquiesce","consentir"],["alacrity","presteza"],["ameliorate","mejorar"],["anachronistic","anacrónico"],["antithesis","antítesis"],["apocryphal","apócrifo"],["ascetic","asceta"],["assiduous","asiduo"],["bellwether","indicador de tendencia"],["capricious","caprichoso"],["circumspect","circunspecto"],["cogent","convincente"],["conflate","fusionar"],["copious","copioso"],["corroborate","corroborar"],["cursory","superficial"],["dichotomy","dicotomía"],["diffident","tímido"],["disparage","menospreciar"],["ebullient","eufórico"],["equanimity","ecuanimidad"],["erudite","erudito"],["esoteric","esotérico"],["exculpate","exculpar"],["fastidious","meticuloso"],["fortuitous","fortuito"],["garrulous","hablador"],["gregarious","sociable"],["hegemony","hegemonía"],["iconoclast","iconoclasta"],["idiosyncratic","idiosincrásico"],["impetuous","impetuoso"],["inchoate","incipiente"],["ineffable","inefable"],["insidious","insidioso"],["laconic","lacónico"],["magnanimous","magnánimo"],["mellifluous","melifluo"],["mercurial","voluble"],["nebulous","nebuloso"],["obdurate","obstinado"],["ostentatious","ostentoso"],["parsimonious","tacaño"],["penchant","inclinación"],["perspicacious","perspicaz"],["plethora","abundancia"],["propensity","propensión"],["pugnacious","pendenciero"],["quixotic","quijotesco"],["sanguine","optimista"],["sycophant","adulador"],["tenuous","tenue"],["vacillate","vacilar"],["venerable","venerable"],["wistful","nostálgico"],["zealous","fervoroso"]]);
 add("Verbos",[["give – gave – given","dar"],["know – knew – known","saber / conocer"],["make – made – made","hacer / fabricar"],["say – said – said","decir"],["come – came – come","venir"],["find – found – found","encontrar"],["tell – told – told","contar / decir"],["leave – left – left","salir / dejar"],["feel – felt – felt","sentir"],["bring – brought – brought","traer"],["speak – spoke – spoken","hablar"],["drink – drank – drunk","beber"],["drive – drove – driven","conducir"],["run – ran – run","correr"],["swim – swam – swum","nadar"],["sing – sang – sung","cantar"],["sleep – slept – slept","dormir"],["win – won – won","ganar"],["lose – lost – lost","perder"],["meet – met – met","conocer / reunirse"],["pay – paid – paid","pagar"],["send – sent – sent","enviar"],["build – built – built","construir"],["choose – chose – chosen","elegir"],["forget – forgot – forgotten","olvidar"],["understand – understood – understood","entender"],["teach – taught – taught","enseñar"],["catch – caught – caught","atrapar"],["fly – flew – flown","volar"],["wear – wore – worn","llevar puesto"],["break – broke – broken","romper"],["hide – hid – hidden","esconder"],["steal – stole – stolen","robar"],["throw – threw – thrown","lanzar"],["grow – grew – grown","crecer"],["draw – drew – drawn","dibujar"],["ride – rode – ridden","montar"],["shake – shook – shaken","sacudir"],["sell – sold – sold","vender"],["get – got – got","conseguir"]]);
 add("Phrasal",[["get up","levantarse"],["set up","montar / fundar"],["break down","averiarse"],["bring up","criar / sacar un tema"],["call off","cancelar"],["check in","registrarse"],["fill in","rellenar"],["figure out","averiguar"],["get along with","llevarse bien con"],["go on","continuar"],["hold on","esperar un momento"],["look after","cuidar"],["look forward to","tener ganas de"],["make up","inventar"],["pick up","recoger"],["point out","señalar"],["put on","ponerse"],["take off","despegar"],["turn down","rechazar"],["work out","resolver / hacer ejercicio"],["sort out","solucionar"],["deal with","ocuparse de"],["cut down on","reducir"],["end up","acabar"],["come up with","idear"],["get over","superar"],["give in","ceder"],["back up","respaldar"],["turn out","resultar"],["show up","aparecer"]]);
+// Vocabulario de la guía de estudio (Word): phrasal verbs con GET, verbos irregulares y vocabulario de trabajo
+Object.entries(G.vocab).forEach(([l,a])=>add(l,a));
 // Duplicados: cada palabra queda solo en su nivel más bajo
 const seen=new Set();
-["A1","A2","B1","B2","C1","C2","Verbos","Phrasal"].forEach(l=>{D[l]=D[l].filter(x=>{const k=x[0].toLowerCase();if(seen.has(k))return false;seen.add(k);return true})});
+["A1","A2","B1","B2","C1","C2","Verbos","Phrasal","Trabajo"].forEach(l=>{if(!D[l])return;D[l]=D[l].filter(x=>{const k=x[0].toLowerCase();if(seen.has(k))return false;seen.add(k);return true})});
 })();
 
 const SENT={A1:[["I ___ a dog.","have","has","am","is"],["She ___ happy.","is","are","am","be"],["They ___ my friends.","are","is","am","be"],["___ you like water?","Do","Does","Are","Is"],["There ___ a book on the table.","is","are","have","has"]],
@@ -42,10 +46,17 @@ B1:"I want to achieve my goals and improve my career. Though it is hard, I rely 
 B2:"Despite the drawbacks, she was reluctant to quit. She had to overcome fear and cope with change. The outcome was thorough and she seldom regretted it.",
 C1:"Her meticulous plan helped her leverage every resource. Notwithstanding the scrutiny, she did not let doubt undermine her work, and it mitigated the risk.",
 C2:"It was a quintessential, ephemeral moment, pure serendipity. No one tried to obfuscate the truth, and the perfunctory speech did not matter."};
+Object.assign(ST,G.stories);
 const PIP_PATHS=`<path d="M17 42 12 12 38 27Q50 21 62 27L88 12 83 43Q91 56 84 72 76 91 50 91 24 91 16 72 9 56 17 42Z" fill="#e98543" stroke="#8f482d" stroke-width="3" stroke-linejoin="round"/><path d="M18 35 17 19 32 30Z M82 35 83 19 68 30Z" fill="#ffb2a2"/><path d="M24 51Q34 42 43 51M57 51Q66 42 76 51" fill="none" stroke="#4a2e2b" stroke-width="4" stroke-linecap="round"/><path d="M28 62Q50 52 72 62L66 77Q50 87 34 77Z" fill="#fff1d8"/><path d="M45 64Q50 59 55 64L50 69Z" fill="#4a2e2b"/><path d="M42 75Q50 81 58 75" fill="none" stroke="#a94d45" stroke-width="2.8" stroke-linecap="round"/><path d="M38 28Q50 20 62 28" fill="none" stroke="#ffbd68" stroke-width="4" stroke-linecap="round"/><circle cx="29" cy="60" r="4" fill="#ff9b9b" opacity=".7"/><circle cx="71" cy="60" r="4" fill="#ff9b9b" opacity=".7"/>`;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LV=Object.keys(D);
-let S=JSON.parse(localStorage.getItem("eq")||"null")||{xp:0,streak:0,last:"",box:{},lvl:"A1",theme:"",daily:{d:"",n:0}};
+/* Carga segura: si el almacenamiento está bloqueado o el JSON está dañado, la app arranca igualmente con datos nuevos. */
+let S=null;
+try{const raw=JSON.parse(localStorage.getItem("eq")||"null");if(raw&&typeof raw==="object"&&!Array.isArray(raw))S=raw}catch(e){}
+S=S||{xp:0,streak:0,last:"",box:{},lvl:"A1",theme:"",daily:{d:"",n:0}};
+if(!LV.includes(S.lvl))S.lvl="A1";
+if(typeof S.xp!=="number"||!isFinite(S.xp))S.xp=0;
+if(typeof S.streak!=="number"||!isFinite(S.streak))S.streak=0;
 S.schemaVersion=2;S.cs=S.cs||{};S.ach=S.ach||[];S.rem=S.rem||{on:false,h:19};S.daily=S.daily||{d:"",n:0};S.box=S.box||{};S.review=S.review||{};S.errorLog=S.errorLog||[];
 if(S.theme!=="light"&&S.theme!=="dark")S.theme=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";
 const save=()=>{try{localStorage.setItem("eq",JSON.stringify(S))}catch(e){}};
@@ -54,12 +65,14 @@ const $=s=>document.querySelector(s),v=$("#v");
 const day=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
 const yesterday=()=>{const d=new Date();d.setDate(d.getDate()-1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
+/* Distractores sin repetidos ni coincidencias con la respuesta (antes dos botones podían tener el mismo texto y ambos contar como correctos). */
+const dist=(w,list,r)=>{const seen=new Set([r?w.es:w.en]),out=[];for(const x of list.map(y=>[Math.random(),y]).sort((a,b)=>a[0]-b[0]).map(y=>y[1])){if(x.en==w.en)continue;const t=r?x.es:x.en;if(seen.has(t))continue;seen.add(t);out.push(t);if(out.length==3)break}return out};
 const shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
 const pool=()=>D[S.lvl].map(([en,es])=>({en,es}));
 const box=w=>S.box[w.en]||1;
 function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 function touch(){const d=day();if(S.last!==d){const y=yesterday();S.streak=S.last===y?S.streak+1:1;S.last=d}}
-function gain(n,t){if(t)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.daily.n+=n;S.xp+=n;save();hud();if(window.Pip&&n>0)window.Pip.react('happy')}
+function gain(n,t){if(t||n>0)touch();if(S.daily.d!==day())S.daily={d:day(),n:0};S.daily.n+=n;S.xp+=n;save();hud();if(window.Pip&&n>0)window.Pip.react('happy')}
 
 /* Corrección: si fallas, se muestra la respuesta, el motivo y esperas a pulsar "Continuar". Si aciertas, avanza rápido. */
 function after(ok,info,go){let done=0;const next=()=>{if(done)return;done=1;go()};
@@ -136,7 +149,7 @@ v.innerHTML=head("Tarjetas")+`<div class="flip"><div class="fi" id="fi"><div cla
 say(w.en);$("#fi").onclick=()=>$("#fi").classList.toggle("f");
 $("#no").onclick=()=>{mark(w,0);i++;cards()};$("#yes").onclick=()=>{mark(w,1);sc++;i++;cards()}}
 function quiz(){if(i>=Q.length)return end("Quiz terminado");const w=Q[i],r=Math.random()<.5,
-a=r?w.en:w.es,ans=r?w.es:w.en,o=shuf([ans,...shuf(pool().filter(x=>x.en!=w.en)).slice(0,3).map(x=>r?x.es:x.en)]);
+a=r?w.en:w.es,ans=r?w.es:w.en,o=shuf([ans,...dist(w,pool(),r)]);
 v.innerHTML=head("Quiz")+`<div class="big">${a}</div><div id="o">${o.map(x=>`<button class="opt">${x}</button>`).join("")}</div>`;
 document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==ans;b.classList.add(ok?"ok":"bad");
 document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==ans)x.classList.add("ok")});mark(w,ok);if(ok)sc++;say(w.en);after(ok,{pick:b.textContent,ans:w.en+" = "+w.es,hint:"Repite la palabra en voz alta y úsala en una frase propia."},()=>{i++;quiz()})})}
@@ -163,7 +176,7 @@ $("#ck").onclick=chk;$("#ti").onkeydown=e=>{if(e.key=="Enter")chk()};$("#ti").fo
 let PM=0,PL={};
 const norm=t=>t.toLowerCase().replace(/[^a-z' ]+/g," ").replace(/\s+/g," ").trim();
 const mastered=()=>Object.values(S.box).filter(b=>b>=4).length;
-const DICT={};Object.values(D).flat().forEach(([en,es])=>DICT[en.toLowerCase()]=es);
+const DICT={};const fillDict=()=>Object.values(D).flat().forEach(([en,es])=>{const k=en.toLowerCase();if(!(k in DICT))DICT[k]=es});fillDict();
 function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
 const AC=[["🔥","Racha de 3 días",s=>s.streak>=3],["🔥","Racha de 7 días",s=>s.streak>=7],["⭐","100 XP",s=>s.xp>=100],["🌟","500 XP",s=>s.xp>=500],["📚","10 palabras dominadas",()=>mastered()>=10],["🎓","30 palabras dominadas",()=>mastered()>=30],["🎮","10 partidas",s=>(s.played||0)>=10],["💯","Partida perfecta",s=>(s.perfect||0)>=1],["🧭","Prueba de nivel",s=>!!s.placed]];
 function ach(){let n=0;AC.forEach(([e,t,f],k)=>{if(!S.ach.includes(k)&&f(S)){S.ach.push(k);n++;toast(e+" ¡Logro: "+t+"!")}});if(n)save()}
@@ -238,7 +251,10 @@ const COURSE_MORE=[
 {l:"C2",id:"c2-4",e:"🧠",t:"Síntesis y argumentación matizada",x:["Una argumentación sólida distingue **claim** (tesis), **evidence** (evidencia), **warrant** (por qué la evidencia apoya la tesis) y **counterargument** (objeción). No basta con usar vocabulario sofisticado.","Para sintetizar fuentes, compara acuerdos y diferencias, atribuye las ideas y evita exagerar: **Taken together, these findings suggest…**, **One limitation is…**, **A plausible alternative explanation is…**."],g:[["Taken together, the findings suggest a cautious conclusion.","En conjunto, los hallazgos sugieren una conclusión prudente."],["One limitation of the study is its small sample size.","Una limitación del estudio es el tamaño reducido de la muestra."],["A plausible alternative explanation is that the groups differed at baseline.","Una explicación alternativa plausible es que los grupos diferían desde el inicio."]],k:"Tesis + evidencia + razonamiento + límites = argumento más sólido y honesto.",q:[["Which phrase signals a limitation rather than certainty?","One limitation is…","This proves everything…","There can be no doubt…","Everyone knows…","Una limitación explicita el alcance del argumento."],["To synthesize several findings, use…","Taken together, the findings suggest…","This one thing proves all…","No evidence matters…","I refuse to compare…","La síntesis integra fuentes y matiza la conclusión."],["A strong argument should…","address relevant counterarguments","hide contradictory evidence","replace evidence with confidence","use complex words only","Considerar objeciones mejora la solidez del argumento."]] }
 ];
 CU.push(...COURSE_MORE);
-CU.push(...NU);CU.sort((a,b)=>LV.indexOf(a.l)-LV.indexOf(b.l));
+CU.push(...NU);
+// Unidades de la guía de estudio: se insertan junto al tema relacionado y después se ordena por nivel (orden estable).
+G.units.forEach(u=>{const nu={...u};delete nu.after;const k=CU.findIndex(x=>x.id===u.after);if(k>=0)CU.splice(k+1,0,nu);else CU.push(nu)});
+CU.sort((a,b)=>LV.indexOf(a.l)-LV.indexOf(b.l));
 const uOpen=k=>LV.indexOf(CU[k].l)<=LV.indexOf(S.base||"A1")||k==0||!!S.cs[CU[k-1].id];
 const nextU=()=>CU.find((u,k)=>!S.cs[u.id]&&uOpen(k));
 let CS=null;
@@ -257,17 +273,17 @@ function learn(){
 function lu(id){CS={u:CU.find(x=>x.id==id),st:0,qi:0,sc:0};nav("learn");$(".fab").style.display="none";rl()}
 function rl(){const u=CS.u,hd=`<div class="m">${u.l} · Lección</div><h2 style="font-size:28px;margin-top:6px">${u.e} ${u.t}</h2>`;window.scrollTo(0,0);
 if(CS.st==0){v.innerHTML=hd+`<div class="card">${u.x.map(t=>`<p style="line-height:1.55">${fmt(t)}</p>`).join("")}</div><div class="glass"><span class="pill">TRUCO</span><p style="font-size:17px;font-weight:700;margin:12px 0 0">${fmt(u.k)}</p></div><button class="btn" id="nx">Ver ejemplos →</button><br><br><button class="btn ghost" data-v="learn">Salir</button>`;$("#nx").onclick=()=>{CS.st=1;rl()}}
-else if(CS.st==1){v.innerHTML=hd+`<p class="m">Toca cada frase para escucharla.</p>`+u.g.map(([a,b])=>`<div class="card" data-s="${a}" style="cursor:pointer"><div style="font-size:20px;font-weight:700">🔊 ${a}</div><div class="m" style="margin-top:6px">${b}</div></div>`).join("")+`<button class="btn" id="nx">Practicar →</button>`;$("#nx").onclick=()=>{CS.st=2;rl()}}
-else if(CS.st==2){const q=u.q[CS.qi],o=shuf(q.slice(1,5));v.innerHTML=hd+`<div class="m">Ejercicio ${CS.qi+1}/3</div><div class="big" style="font-size:22px">${q[0]}</div><div>${o.map(x=>`<button class="opt">${x}</button>`).join("")}</div><div id="why"></div>`;
+else if(CS.st==1){v.innerHTML=hd+`<p class="m">Toca cada frase para escucharla.</p>`+u.g.map(([a,b])=>`<div class="card" data-s="${esc(a)}" style="cursor:pointer"><div style="font-size:20px;font-weight:700">🔊 ${esc(a)}</div><div class="m" style="margin-top:6px">${esc(b)}</div></div>`).join("")+`<button class="btn" id="nx">Practicar →</button>`;$("#nx").onclick=()=>{CS.st=2;rl()}}
+else if(CS.st==2){const q=u.q[CS.qi],n=u.q.length,o=shuf(q.slice(1,5));v.innerHTML=hd+`<div class="m">Ejercicio ${CS.qi+1}/${n}</div><div class="big" style="font-size:22px">${q[0]}</div><div>${o.map(x=>`<button class="opt">${x}</button>`).join("")}</div><div id="why"></div>`;
 document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==q[1];b.classList.add(ok?"ok":"bad");document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q[1])x.classList.add("ok")});if(ok)CS.sc++;say(q[0].replace("___",q[1]));
-$("#why").innerHTML=`<div class="glass"><span class="pill">${ok?"✓ ¡BIEN!":"✗ ASÍ ES"}</span><p style="margin:12px 0 0;line-height:1.5">${fmt(q[5])}</p></div><button class="btn" id="nx">${CS.qi<2?"Siguiente":"Ver resultado"}</button>`;$("#nx").scrollIntoView({block:"end"});$("#nx").onclick=()=>{CS.qi++;if(CS.qi>2)CS.st=3;rl()}})}
-else{const sc=CS.sc,ok=sc>=2,first=!S.cs[u.id],k=CU.indexOf(u),nx=CU[k+1];
-if(ok)S.cs[u.id]=Math.max(S.cs[u.id]||0,sc==3?3:2);
-v.innerHTML=`<div class="card" style="text-align:center"><div class="big pop">${sc==3?"🏆":ok?"👏":"💪"}</div><h2>${ok?"¡Lección superada!":"Repasemos otra vez"}</h2><p>${sc}/3 correctas${ok&&first?" · +25 XP":""}</p><p class="m">${ok?"Ahora refuerza con la lección diaria o los juegos.":"Lee la explicación otra vez y vuelve a intentarlo."}</p>${ok&&nx?`<button class="btn" data-u="${nx.id}">Siguiente lección</button><br><br>`:""}<button class="btn ghost" data-u="${u.id}">Repetir lección</button><br><br><button class="btn ghost" data-v="learn">Todas las lecciones</button></div>`;
+$("#why").innerHTML=`<div class="glass"><span class="pill">${ok?"✓ ¡BIEN!":"✗ ASÍ ES"}</span><p style="margin:12px 0 0;line-height:1.5">${fmt(q[5])}</p></div><button class="btn" id="nx">${CS.qi<n-1?"Siguiente":"Ver resultado"}</button>`;$("#nx").scrollIntoView({block:"end"});$("#nx").onclick=()=>{CS.qi++;if(CS.qi>=n)CS.st=3;rl()}})}
+else{const n=u.q.length,sc=CS.sc,ok=sc>=Math.ceil(n*2/3),first=!S.cs[u.id],k=CU.indexOf(u),nx=CU[k+1];
+if(ok)S.cs[u.id]=Math.max(S.cs[u.id]||0,sc==n?3:2);
+v.innerHTML=`<div class="card" style="text-align:center"><div class="big pop">${sc==3?"🏆":ok?"👏":"💪"}</div><h2>${ok?"¡Lección superada!":"Repasemos otra vez"}</h2><p>${sc}/${n} correctas${ok&&first?" · +25 XP":""}</p><p class="m">${ok?"Ahora refuerza con la lección diaria o los juegos.":"Lee la explicación otra vez y vuelve a intentarlo."}</p>${ok&&nx?`<button class="btn" data-u="${nx.id}">Siguiente lección</button><br><br>`:""}<button class="btn ghost" data-u="${u.id}">Repetir lección</button><br><br><button class="btn ghost" data-v="learn">Todas las lecciones</button></div>`;
 if(ok&&first)gain(25,0);else save()}}
 let LM="",TOT=0;
 const wp=l=>(D[l]||[]).map(([en,es])=>({en,es}));
-const ch=(w,r,L)=>{const o=shuf(wp(L).filter(x=>x.en!=w.en)).slice(0,3).map(x=>r?x.es:x.en);return{t:"q",p:r?w.en:w.es,a:r?w.es:w.en,o:shuf([r?w.es:w.en,...o]),w,l:L}};
+const ch=(w,r,L)=>{const o=dist(w,wp(L),r);return{t:"q",p:r?w.en:w.es,a:r?w.es:w.en,o:shuf([r?w.es:w.en,...o]),w,l:L}};
 const TG={A1:["a1-1","a1-1","a1-1","a1-5","a2-6"],A2:["a2-1","a2-3","a2-2","a2-2",0],B1:["b1-1","b1-2",0,"b1-4","a2-7"],B2:[0,"b2-2",0,0,"b1-1"],C1:["c1-1","c1-1",0,"c1-1","c1-2"],C2:["c2-1","c2-2","c1-1",0,"c1-1"]};
 const tg=x=>{for(const l in TG){const k=SENT[l].indexOf(x);if(k>=0)return TG[l][k]}};
 let LW=new Set();
@@ -276,8 +292,9 @@ const mkg=(x,l)=>({t:"g",p:x[0],a:x[1],o:shuf(x.slice(1,5)),l,u:tg(x)}),mkb=(x,l
 
 const GR=[["Will","S + will + verbo base","I will help you.","Decisión del momento, promesa, predicción. Nunca «will to»."],["Be going to","S + am/is/are + going to + verbo","We are going to travel.","Plan ya decidido o evidencia ahora."],["Presente simple","S + verbo (he/she/it + s)","She works here.","Rutinas. La -s solo en he/she/it. Negar: don't/doesn't + base."],["Presente continuo","S + am/is/are + verbo-ing","I am studying.","Ahora mismo o plan cercano."],["Pasado simple","S + verbo-ed / irregular","I visited Cali.","Terminó en el pasado. Pregunta: did + base."],["Pasado continuo","S + was/were + verbo-ing","I was reading.","Acción en progreso en el pasado."],["Present perfect","S + have/has + participio","I have seen it.","Experiencia o resultado actual. No con fecha pasada."],["Posesivo 's","Dueño + 's + cosa","Ana's phone","'s puede ser de, is o has según el contexto."],["Gerundio / infinitivo","enjoy + -ing · want + to + verbo","I enjoy reading.","Tras preposición siempre -ing."],["Modales","S + should/must/can + base","You should rest.","Sin -s, sin to, verbo en base."],["Contables","many + plural · much + incontable","How much water?","A lot of sirve para ambos."],["Frecuencia","S + always/usually/never + verbo","She always smiles.","Antes del verbo, después de to be."],["Primer condicional","If + presente, will + base","If it rains, I will stay.","Nunca will después de if."],["Voz pasiva","S + be + participio","It was made in Cali.","Importa la acción, no quién la hizo."]];
 const ERR=[["I have 20 years.","I am 20 years old.","La edad se dice con to be."],["She work here.","She works here.","He/she/it lleva -s."],["Is raining.","It is raining.","El sujeto es obligatorio: it."],["I am agree.","I agree.","Agree ya es verbo; no lleva to be."],["He doesn't works.","He doesn't work.","Tras doesn't, verbo en base."],["If it will rain, I stay.","If it rains, I will stay.","No uses will después de if."],["I enjoy to swim.","I enjoy swimming.","Enjoy va con -ing."],["I am here since Monday.","I have been here since Monday.","Since pide present perfect."],["She can to swim.","She can swim.","Tras modal no va to."],["Many water.","Much water.","Water es incontable: much."],["I have a dog big.","I have a big dog.","El adjetivo va antes del sustantivo."],["Yesterday I go to school.","Yesterday I went to school.","Ayer → pasado simple."]];
+GR.push(...G.gr);ERR.push(...G.err);
 function gram(){nav("gram");$(".fab").style.display="";v.innerHTML=`<div class="seg" role="group" aria-label="Sección"><button data-v="learn">Lecciones</button><button data-v="gram" class="on" aria-pressed="true">Gramática</button></div><h2>Gramática</h2><p class="m" style="margin-top:-6px">Guía rápida: fórmula, ejemplo y trampa. Toca la frase para oírla.</p><input class="in" id="gq" placeholder="Buscar: will, -ing, 's…" style="text-align:left;margin-bottom:12px"><div id="gl"></div>`;
-const r=q=>{q=q.toLowerCase();$("#gl").innerHTML=GR.filter(x=>x.join(" ").toLowerCase().includes(q)).map(x=>`<div class="card"><b>${x[0]}</b><div class="gf">${x[1]}</div><div style="cursor:pointer" data-s="${x[2]}">🔊 ${x[2]}</div><p class="m">💡 ${x[3]}</p></div>`).join("")+(q?"":`<h2 style="margin-top:18px">⚠️ Errores típicos</h2>`+ERR.map(e=>`<div class="card"><div class="bad2">${e[0]}</div><div style="color:var(--ok);font-weight:700">✓ ${e[1]}</div><p class="m">${e[2]}</p></div>`).join(""))};r("");$("#gq").oninput=e=>r(e.target.value)}
+const r=q=>{q=q.toLowerCase();$("#gl").innerHTML=GR.filter(x=>x.join(" ").toLowerCase().includes(q)).map(x=>`<div class="card"><b>${x[0]}</b><div class="gf">${x[1]}</div><div style="cursor:pointer" data-s="${esc(x[2])}">🔊 ${esc(x[2])}</div><p class="m">💡 ${x[3]}</p></div>`).join("")+(q?"":`<h2 style="margin-top:18px">⚠️ Errores típicos</h2>`+ERR.map(e=>`<div class="card"><div class="bad2">${e[0]}</div><div style="color:var(--ok);font-weight:700">✓ ${e[1]}</div><p class="m">${e[2]}</p></div>`).join(""))};r("");$("#gq").oninput=e=>r(e.target.value)}
 function erg(){if(i>=Q.length)return end("Encuentra el error");const q=Q[i],o=shuf([q[0],...shuf(ERR.filter(x=>x!=q)).slice(0,2).map(x=>x[1])]);
 v.innerHTML=head("Encuentra el error")+`<div class="big" style="font-size:20px">¿Cuál oración tiene un error?</div>`+o.map(x=>`<button class="opt">${x}</button>`).join("")+`<div id="why"></div>`;
 document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.textContent==q[0];b.classList.add(ok?"ok":"bad");document.querySelectorAll(".opt").forEach(x=>{x.disabled=1;if(x.textContent==q[0])x.classList.add("ok")});if(ok)sc++;say(q[1]);
@@ -364,7 +381,8 @@ $("#im").onclick=()=>$("#imf").click();
 $("#imf").onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{try{const o=JSON.parse(t);if(typeof o.xp!="number")throw 0;localStorage.setItem("eq",JSON.stringify(o));location.reload()}catch(_){toast("Archivo no válido")}})}}
 function remind(){const r=S.rem;if(!r.on||!("Notification" in window)||Notification.permission!="granted")return;
 if(new Date().getHours()>=r.h&&S.last!==day()&&S.nt!==day()){S.nt=day();save();const m="¡Hoy aún no practicas! 5 minutos bastan.";
-navigator.serviceWorker.ready.then(g=>g.showNotification("English Quest 🔥",{body:m,icon:"icon.svg"})).catch(()=>new Notification("English Quest",{body:m}))}}
+const fallback=()=>{try{new Notification("English Quest",{body:m})}catch(_){}};
+if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(g=>g.showNotification("English Quest 🔥",{body:m,icon:"icon.svg"})).catch(fallback);else fallback()}}
 setInterval(remind,6e4);remind();
 document.addEventListener("click",e=>{const t=e.target.closest("[data-l],[data-g],[data-v],[data-s],[data-w],[data-u]");if(!t)return;
 if(t.dataset.l){S.lvl=t.dataset.l;save();const on=document.querySelector("nav .on").dataset.v;go(on)}
@@ -390,6 +408,7 @@ hud();go("home");
     C2:[['albeit','aunque'],['conundrum','dilema complejo'],['delineate','delimitar'],['discerning','perspicaz'],['eloquent','elocuente'],['exacerbate','agravar'],['inadvertent','involuntario'],['incongruous','incongruente'],['ostensibly','aparentemente'],['pervasive','generalizado'],['predicament','aprieto'],['reconcile','conciliar'],['scrutinize','examinar minuciosamente'],['ubiquitous','omnipresente'],['unprecedented','sin precedentes'],['vindicate','vindicar'],['ambivalent','ambivalente'],['convoluted','enrevesado'],['disparate','dispar'],['epitomize','personificar'],['meticulous','meticuloso'],['unequivocal','inequívoco']]
   };
   for(const [level,items] of Object.entries(EXTRA)) if(Array.isArray(D[level])){const seen=new Set(Object.values(D).flat().map(x=>String(x[0]).toLowerCase()));D[level].push(...items.filter(x=>!seen.has(x[0].toLowerCase())))}
+  fillDict(); // las palabras añadidas arriba también deben traducirse en «Historia»
   // Daily goal and spaced-repetition records survive app upgrades.
   S.goal=Number(S.goal)||20; S.review=S.review||{}; S.history=S.history||{}; S.practiceMinutes=S.practiceMinutes||0;
   const originalGain=gain, originalMark=mark;
@@ -502,7 +521,7 @@ hud();go("home");
   S.mastery=S.mastery||{};S.errorLog=S.errorLog||[];
   let active=null;
   const persist=()=>{try{save()}catch(_){try{localStorage.setItem("eq",JSON.stringify(S))}catch(__){}}};
-  const recordError=(entry)=>{S.errorLog=S.errorLog||[];S.errorLog.unshift({...entry,id:Date.now()+"-"+Math.random().toString(36).slice(2,7),date:day(),reviewed:false});S.errorLog=S.errorLog.slice(0,100);persist()};
+  const recordError=(entry)=>{S.errorLog=S.errorLog||[];S.errorLog.unshift({...entry,id:Date.now()+"-"+Math.random().toString(36).slice(2,7),date:day(),reviewed:false});S.errorLog=S.errorLog.slice(0,200);persist()};
   const oldMark=mark;
   mark=function(w,ok){oldMark(w,ok);if(w&&!ok&&w.en)recordError({kind:"vocab",prompt:w.en,answer:w.es,level:S.lvl||"A1",source:"Práctica de vocabulario"})};
   const oldLearn=learn;
@@ -571,7 +590,7 @@ hud();go("home");
   }
   function answerAdaptive(i){if(!run||run.answered)return;const q=run.items[run.index],choice=q.options[i],ok=choice===q.answer;run.answered=true;if(ok)run.correct++;addStat(q.skill,ok);
     document.querySelectorAll('[data-adaptive-answer]').forEach((b,j)=>{b.disabled=true;if(q.options[j]===q.answer)b.classList.add('correct');else if(j===i)b.classList.add('incorrect')});
-    if(!ok){S.errorLog.unshift({id:Date.now()+'-'+Math.random().toString(36).slice(2,6),date:todayKey(),reviewed:false,kind:'adaptive',level:q.level,source:'Práctica adaptativa',prompt:q.prompt,answer:q.answer,chosen:choice,explanation:q.explanation});S.errorLog=S.errorLog.slice(0,100);S.adaptiveStats.missed=(S.adaptiveStats.missed||0)+1;saveAdaptive()}
+    if(!ok){S.errorLog.unshift({id:Date.now()+'-'+Math.random().toString(36).slice(2,6),date:todayKey(),reviewed:false,kind:'adaptive',level:q.level,source:'Práctica adaptativa',prompt:q.prompt,answer:q.answer,chosen:choice,explanation:q.explanation});S.errorLog=S.errorLog.slice(0,200);S.adaptiveStats.missed=(S.adaptiveStats.missed||0)+1;saveAdaptive()}
     const fb=$('#adaptive-feedback');if(fb)fb.innerHTML=`<div class="glass" style="margin-top:14px"><b>${ok?'✓ Correcto':'💡 Respuesta correcta: '+q.answer}</b><p class="m">${q.explanation}</p><button class="btn" id="adaptive-next">${run.index===run.items.length-1?'Ver resultado':'Siguiente'}</button></div>`;$('#adaptive-next').onclick=()=>{run.index++;run.answered=false;renderAdaptive()};
   }
   function reviewCenter(){run=null;nav('learn');$('.fab').style.display='none';const due=Object.entries(S.review).filter(([,r])=>r.due&&r.due<=todayKey());const pending=(S.errorLog||[]).filter(e=>!e.reviewed);const skills=['Gramática','Vocabulario','Comprensión','Comunicación'];

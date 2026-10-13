@@ -36,3 +36,21 @@ Cambios v13
   muestra tu respuesta, la correcta, la traducción y la regla de gramática, y esperas a pulsar "Continuar".
   Si aciertas, avanza rápido (0,7 s).
 - Zoom bloqueado (pellizco, doble toque, Ctrl+rueda, Ctrl +/-). Inputs a 16 px mínimo para que iOS no haga zoom al enfocar.
+
+==================== v14 ====================
+NEW FILES
+- guide-data.js : content from the Word guide (17 new lessons, 12 grammar cards, 15 "find the error" items, GET phrasal verbs, irregular verbs, "Trabajo" vocabulary, 2 stories).
+- study-guide.js: "Guía de estudio" screen (tables, 5-day plan with checkboxes, links). Open it from Grammar or the Learn/Home card.
+- exam.js       : "Simulacro Basic English" (80 questions / 10 sections from the PDF, with explanations, timer, manual override) and "Mini-práctica de la guía".
+- icons/        : apple-touch-icon, icon-192, icon-512, icon-maskable-512.
+
+FIXES
+- Corrupt localStorage no longer causes a white screen.
+- Quiz options can no longer repeat or duplicate the answer.
+- Escaped data-s attributes (quotes in sentences broke buttons).
+- Lessons use their real number of exercises (not always 3).
+- Search dictionary now includes words added later.
+- Streak counts any XP-earning activity.
+- Reminders don't crash without a service worker.
+- Error log cap raised to 200.
+- Service worker cache: english-quest-shell-v14 (new files added).

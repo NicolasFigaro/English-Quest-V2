@@ -603,3 +603,26 @@ main>*{animation:eq-fade .12s ease-out both}
 html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea,select{-webkit-user-select:text;user-select:text;font-size:max(16px,1em)}
+
+/* ===== Guía de estudio y simulacro de examen ===== */
+.gtw{overflow-x:auto;margin:10px 0;-webkit-overflow-scrolling:touch}
+.gt{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+.gt th,.gt td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.4}
+.gt th{background:var(--ib);font-weight:800}
+details.gd{background:var(--card);border:2px solid var(--line);border-radius:18px;margin:10px 0;box-shadow:0 3px 0 var(--line)}
+details.gd>summary{cursor:pointer;padding:14px 16px;font-weight:800;list-style:none;min-height:48px;display:flex;align-items:center}
+details.gd>summary::-webkit-details-marker{display:none}
+details.gd[open]>summary{border-bottom:1px solid var(--line)}
+.gdb{padding:6px 16px 14px;line-height:1.55}.gdb ul{padding-left:20px}.gdb a{color:var(--accent-ink);font-weight:700}
+.exi{font:inherit;font-size:16px;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);max-width:100%;min-height:38px;margin:2px 0}
+.exi.wide{width:100%;display:block;margin-top:8px}
+.exi.ok{border-color:var(--ok);background:var(--mint)}.exi.bad{border-color:var(--bad)}
+textarea.exi{resize:vertical;line-height:1.5}
+.exitem{display:flex;gap:12px}.exn{flex:none;min-width:34px;height:34px;padding:0 6px;border-radius:12px;background:var(--mint);color:var(--accent-ink);font-weight:900;display:grid;place-items:center;font-size:13px}
+.exb{min-width:0;flex:1}.exp{margin:0 0 4px;line-height:1.9}
+.exread p{line-height:1.6;margin:6px 0 0}.exh{margin:18px 0 6px;font-size:16px}
+.excl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.excl label{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.exf{margin-top:10px;padding:10px 12px;border-radius:14px;background:var(--ib);border-left:4px solid var(--line)}
+.exf.okk{border-left-color:var(--ok)}.exf.bad{border-left-color:var(--bad)}.exf p{margin:6px 0 0}.exl{margin:6px 0;padding-left:18px}
+.exchk{display:flex;gap:10px;align-items:flex-start;margin:8px 0;line-height:1.4}.exchk input{width:20px;height:20px;flex:none;margin-top:1px}
+.exscore{text-align:center;margin:12px 0}
